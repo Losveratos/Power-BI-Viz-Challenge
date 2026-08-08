@@ -33,7 +33,7 @@ table Date
 		lineageTag: 9052b411-c7dc-5e5c-bd43-ac152eaefd74
 		summarizeBy: none
 		sourceColumn: Month Name
-		sortByColumn: Month Number
+		sortByColumn: 'Month Number'
 
 		annotation SummarizationSetBy = Automatic
 

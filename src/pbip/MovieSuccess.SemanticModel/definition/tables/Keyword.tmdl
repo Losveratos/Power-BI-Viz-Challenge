@@ -22,8 +22,8 @@ table Keyword
 		mode: import
 		source =
 				let
-				    Source = Source,
-				    Keywords = Table.SelectColumns(Source, {"keywords"}),
+				    Src = Source,
+				    Keywords = Table.SelectColumns(Src, {"keywords"}),
 				    SplitKeywords = Table.ExpandListColumn(
 				        Table.TransformColumns(Keywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
 				        "keywords"),

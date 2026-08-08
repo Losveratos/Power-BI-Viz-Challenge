@@ -35,7 +35,19 @@ PBIP = REPO / "src" / "pbip"
 REPORT = PBIP / "MovieSuccess.Report"
 DEFN = REPORT / "definition"
 THEME_SOURCE = REPO / "assets" / "theme" / "movie-success-dark.json"
-THEME_NAME = "movie-success-dark"
+
+
+def _theme_name() -> str:
+    """Theme filename with a content-derived suffix.
+
+    Power BI Desktop caches a registered theme by filename, so an edited theme
+    under the same name can keep serving the old one. Deriving the suffix from
+    the file's own contents means it changes exactly when the theme changes,
+    and not on every build.
+    """
+    import hashlib
+    digest = hashlib.sha256(THEME_SOURCE.read_bytes()).hexdigest()[:8]
+    return f"movie-success-dark-{digest}"
 
 # Schema versions, taken from the official starter file so that Desktop reads
 # exactly the shapes it wrote.
@@ -257,8 +269,8 @@ def panel(page: Page, key: str, x: int, y: int, w: int, h: int, *,
                 "tileShape": lit("'rectangleRounded'"),
                 "rectangleRoundedCurve": lit(f"{radius}L"),
             }}],
-            "fill": [{"properties": {"show": lit("true"), "fillColor": color(fill),
-                                     "transparency": num(0)},
+            "fill": [{"properties": {"fillColor": color(fill),
+                                      "transparency": num(0)},
                       "selector": {"id": "default"}}],
             "outline": [{"properties": {"show": lit("false")}}],
             "text": [{"properties": {"show": lit("false")}}],
@@ -270,19 +282,28 @@ def panel(page: Page, key: str, x: int, y: int, w: int, h: int, *,
 
 def card(page: Page, key: str, x: int, y: int, w: int, h: int, *,
          measure: str, label: str, alt: str, value_size: int = 40) -> dict:
+    """A KPI tile.
+
+    `cardVisual`, not the legacy `card`. The legacy visual is deprecated and,
+    more importantly, neither type accepts a `Values` query role — `cardVisual`
+    binds its measures to `Data`. Getting that wrong renders an empty tile with
+    no error. Its formatting objects are `value`/`label`/`outline`, each
+    requiring the default id selector, and background/border belong to the
+    container rather than the visual.
+    """
+    default = {"id": "default"}
     body = {
-        "visualType": "card",
-        "query": {"queryState": {"Values": {"projections": [proj_measure(measure)]}}},
+        "visualType": "cardVisual",
+        "query": {"queryState": {"Data": {"projections": [proj_measure(measure)]}}},
         "objects": {
-            "labels": [{"properties": {
-                "color": color(INK), "fontSize": num(value_size),
+            "value": [{"properties": {
+                "fontColor": color(INK), "fontSize": num(value_size),
                 "fontFamily": lit(f"'{FONT_SB}'"),
-            }}],
-            "categoryLabels": [{"properties": {"show": lit("false")}}],
-            "background": [{"properties": {"show": lit("true"), "color": color(CARD_BG),
-                                           "transparency": num(0)}}],
-            "border": [{"properties": {"show": lit("true"), "color": color(HAIRLINE),
-                                       "radius": num(6)}}],
+            }, "selector": default}],
+            # The measure name would only repeat the container title, which
+            # carries the human-readable label instead.
+            "label": [{"properties": {"show": lit("false")}, "selector": default}],
+            "outline": [{"properties": {"show": lit("false")}, "selector": default}],
         },
         "visualContainerObjects": {
             "title": [{"properties": {
@@ -291,6 +312,12 @@ def card(page: Page, key: str, x: int, y: int, w: int, h: int, *,
                 "fontColor": color(INK_2), "alignment": lit("'left'"),
                 "titleWrap": lit("true"),
             }}],
+            "background": [{"properties": {"show": lit("true"), "color": color(CARD_BG),
+                                           "transparency": num(0)}}],
+            "border": [{"properties": {"show": lit("true"), "color": color(HAIRLINE),
+                                       "radius": num(6)}}],
+            "padding": [{"properties": {"left": num(14), "right": num(14),
+                                        "top": num(10), "bottom": num(10)}}],
             "visualHeader": [{"properties": {"show": lit("false")}}],
         },
         "drillFilterOtherVisuals": True,
@@ -429,22 +456,35 @@ def table(page: Page, key: str, x: int, y: int, w: int, h: int, *,
             "grid": [{"properties": {
                 "gridVertical": lit("false"), "gridHorizontal": lit("true"),
                 "gridHorizontalColor": color(HAIRLINE),
-                "outlineColor": color(HAIRLINE), "rowPadding": num(6, "D"),
+                "outlineColor": color(HAIRLINE), "rowPadding": num(6, "L"),
             }}],
             "columnHeaders": [{"properties": {
                 "fontColor": color(INK_2), "backColor": color(CARD_BG),
                 "fontSize": num(10), "fontFamily": lit(f"'{FONT_SB}'"),
                 "outline": lit("'BottomOnly'"), "wordWrap": lit("true"),
+                # Without these two, columns shrink-wrap their content.
+                "autoSizeColumnWidth": lit("true"),
+                "columnAdjustment": lit("'growToFit'"),
             }}],
+            # tableEx has no `fontColor` on values, and `backColor` is the
+            # conditional-formatting slot. Static row colours must use the
+            # Primary/Secondary pair or they are silently ignored.
             "values": [{"properties": {
-                "fontColor": color(INK), "backColor": color(CARD_BG),
+                "fontColorPrimary": color(INK), "fontColorSecondary": color(INK),
+                "backColorPrimary": color(CARD_BG),
                 "backColorSecondary": color(CARD_BG),
                 "fontSize": num(10), "fontFamily": lit(f"'{FONT}'"),
                 "wordWrap": lit("true"),
             }}],
             "total": [{"properties": {"totals": lit("false")}}],
         },
-        "visualContainerObjects": _chart_common(title, subtitle),
+        "visualContainerObjects": {
+            **_chart_common(title, subtitle),
+            # The default table style preset sets its own row background and
+            # would quietly overrule every colour set above. Turning it off is
+            # the documented fix for light rows in a dark report.
+            "stylePreset": [{"properties": {"name": lit("'None'")}}],
+        },
         "drillFilterOtherVisuals": True,
     }
     return container(page, key, x, y, w, h, body, alt=alt)
@@ -1112,7 +1152,8 @@ def main() -> int:
     )
 
     # ---- theme -------------------------------------------------------------
-    theme_target = REPORT / "StaticResources" / "RegisteredResources" / f"{THEME_NAME}.json"
+    theme_name = _theme_name()
+    theme_target = REPORT / "StaticResources" / "RegisteredResources" / f"{theme_name}.json"
     shutil.copyfile(THEME_SOURCE, theme_target)
 
     (DEFN / "version.json").write_text(
@@ -1123,16 +1164,17 @@ def main() -> int:
         json.dumps({
             "$schema": S_REPORT,
             "themeCollection": {
-                "customTheme": {"name": f"{THEME_NAME}.json", "type": "RegisteredResources"}
+                "customTheme": {"name": f"{theme_name}.json", "type": "RegisteredResources"}
             },
+            # Only outspacePane belongs at report level; `outspace` is a page
+            # object and every page already sets its own.
             "objects": {
-                "outspace": [{"properties": {"color": color(PAGE_BG)}}],
                 "outspacePane": [{"properties": {"expanded": lit("false")}}],
             },
             "resourcePackages": [{
                 "name": "RegisteredResources",
                 "type": "RegisteredResources",
-                "items": [{"name": f"{THEME_NAME}.json", "path": f"{THEME_NAME}.json",
+                "items": [{"name": f"{theme_name}.json", "path": f"{theme_name}.json",
                            "type": "CustomTheme"}],
             }],
             "settings": {

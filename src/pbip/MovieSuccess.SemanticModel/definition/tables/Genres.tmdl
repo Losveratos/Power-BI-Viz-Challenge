@@ -22,8 +22,8 @@ table Genres
 		mode: import
 		source =
 				let
-				    Source = Source,
-				    Genres = Table.SelectColumns(Source, {"genres"}),
+				    Src = Source,
+				    Genres = Table.SelectColumns(Src, {"genres"}),
 				    SplitGenres = Table.ExpandListColumn(
 				        Table.TransformColumns(Genres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
 				        "genres"),

@@ -29,7 +29,7 @@ table 'Top By Return'
 
 	partition 'Top By Return' = calculated
 		mode: import
-		source =
+		source = ```
 				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 				VAR Picked = TOPN ( 10, Pool, 'Movies'[ROI], DESC )
 				VAR Ranked =
@@ -44,5 +44,4 @@ table 'Top By Return'
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[ROI] * 1.0
 				    )
-
-	annotation PBI_Id = 5108fc066e645630ad4e
+				```

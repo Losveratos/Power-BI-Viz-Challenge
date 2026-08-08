@@ -16,7 +16,7 @@ table Funnel
 		lineageTag: 54e4280b-cb76-599d-9aa6-eba708e16201
 		summarizeBy: none
 		sourceColumn: [Step]
-		sortByColumn: Step Order
+		sortByColumn: 'Step Order'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -39,7 +39,7 @@ table Funnel
 
 	partition Funnel = calculated
 		mode: import
-		source =
+		source = ```
 				VAR Pool = ALL ( 'Movies' )
 				VAR Released = FILTER ( Pool, 'Movies'[Status] = "Released" )
 				VAR Dated = FILTER ( Released, NOT ISBLANK ( 'Movies'[Release Date] ) )
@@ -91,5 +91,4 @@ table Funnel
 				            "Why", "An average built from a handful of votes is noise dressed as a score."
 				        )
 				    )
-
-	annotation PBI_Id = 8e34d57c85db5bd184ed
+				```

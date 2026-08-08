@@ -23,8 +23,8 @@ table 'Genre Bridge'
 		mode: import
 		source =
 				let
-				    Source = Source,
-				    MovieGenres = Table.SelectColumns(Source, {"id", "genres"}),
+				    Src = Source,
+				    MovieGenres = Table.SelectColumns(Src, {"id", "genres"}),
 				    SplitGenres = Table.SelectRows(
 				        Table.ExpandListColumn(
 				            Table.TransformColumns(MovieGenres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),

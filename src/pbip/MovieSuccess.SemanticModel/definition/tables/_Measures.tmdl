@@ -1,130 +1,118 @@
 table _Measures
 	lineageTag: 17578769-d97d-56c9-b4a5-4655132410ce
 
-	measure 'Films Measured' =
-			CALCULATE ( COUNTROWS ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
+	/// Films that clear every quality gate: released, dated, budget and revenue both at least $10,000, and at least 50 ratings.
+	measure 'Films Measured' = CALCULATE ( COUNTROWS ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: #,0
 		lineageTag: 64cca21e-cb11-5dd7-b1b2-a1d7bcc01d0a
-		description: Films that clear every quality gate: released, dated, budget and revenue both at least $10,000, and at least 50 ratings.
 
-	measure 'Films In Starter File' =
-			COUNTROWS ( ALL ( 'Movies' ) )
+	/// Every row the supplied starter file loads, after its own Budget > 0 filter.
+	measure 'Films In Starter File' = COUNTROWS ( ALL ( 'Movies' ) )
 		formatString: #,0
 		lineageTag: 75bf5d70-eeeb-5772-b50e-c0721e42f520
-		description: Every row the supplied starter file loads, after its own Budget > 0 filter.
 
-	measure 'Films Measured Overall' =
-			CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
+	/// Films Measured ignoring all report filters, for scope statements that must not move when a slicer moves.
+	measure 'Films Measured Overall' = CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: #,0
 		lineageTag: bd244a4c-5e2b-5555-bf5d-ad0c8acbfc4a
-		description: Films Measured ignoring all report filters, for scope statements that must not move when a slicer moves.
 
-	measure 'Source Films As Published' =
-			930000
+	/// The film count the challenge brief attributes to the source dataset. A stated figure, not one this model can verify.
+	measure 'Source Films As Published' = 930000
 		formatString: #,0
 		lineageTag: 789be302-fd3f-5c4c-b199-5c5d3ed7ed49
-		description: The film count the challenge brief attributes to the source dataset. A stated figure, not one this model can verify.
 
-	measure 'Share Of Source Measurable' =
-			DIVIDE ( [Films Measured Overall], [Source Films As Published] )
+	/// How much of the published dataset survives to the point where a financial question can be asked of it.
+	measure 'Share Of Source Measurable' = DIVIDE ( [Films Measured Overall], [Source Films As Published] )
 		formatString: 0.0%
 		lineageTag: 5a7af84c-d2d5-5c45-bbea-5b9dca92a3cc
-		description: How much of the published dataset survives to the point where a financial question can be asked of it.
 
-	measure 'Median Return' =
-			CALCULATE ( MEDIAN ( 'Movies'[ROI] ), 'Movies'[Is Measurable] = TRUE() )
+	/// Median revenue divided by production budget. Median, because the distribution is extreme enough that a mean describes nothing.
+	measure 'Median Return' = CALCULATE ( MEDIAN ( 'Movies'[ROI] ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: 0.00\x
 		lineageTag: 4d8890e5-4fa0-5804-9e5d-d958ac02f6bd
-		description: Median revenue divided by production budget. Median, because the distribution is extreme enough that a mean describes nothing.
 
-	measure 'Median Budget' =
-			CALCULATE ( MEDIAN ( 'Movies'[Budget] ), 'Movies'[Is Measurable] = TRUE() )
+	/// Median production budget in nominal dollars. Never compare across eras.
+	measure 'Median Budget' = CALCULATE ( MEDIAN ( 'Movies'[Budget] ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: \$#,0
 		lineageTag: 9863aec1-8d48-5d88-9bbd-829ac35b2145
-		description: Median production budget in nominal dollars. Never compare across eras.
 
-	measure 'Median Revenue' =
-			CALCULATE ( MEDIAN ( 'Movies'[Revenue] ), 'Movies'[Is Measurable] = TRUE() )
+	/// Median reported gross revenue in nominal dollars.
+	measure 'Median Revenue' = CALCULATE ( MEDIAN ( 'Movies'[Revenue] ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: \$#,0
 		lineageTag: 1e7205fb-879c-53c9-8ecf-36eb8c043bc0
-		description: Median reported gross revenue in nominal dollars.
 
-	measure 'Median Rating' =
-			CALCULATE ( MEDIAN ( 'Movies'[Vote Average] ), 'Movies'[Is Measurable] = TRUE() )
+	/// Median audience rating out of 10.
+	measure 'Median Rating' = CALCULATE ( MEDIAN ( 'Movies'[Vote Average] ), 'Movies'[Is Measurable] = TRUE() )
 		formatString: 0.00
 		lineageTag: f50509c5-8064-580e-bf1d-c3f73f0df175
-		description: Median audience rating out of 10.
 
-	measure 'Break-even Rate' =
+	/// Share of films whose gross revenue reached 2.5 times their production budget. The multiple is an industry rule of thumb, not a figure derived from this data.
+	measure 'Break-even Rate' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', 'Movies'[Is Measurable] = TRUE() )
 			VAR Cleared = FILTER ( Pool, 'Movies'[ROI] >= 2.5 )
 			RETURN
 			    DIVIDE ( COUNTROWS ( Cleared ), COUNTROWS ( Pool ) )
+			```
 		formatString: 0.0%
 		lineageTag: 5fbb2084-528a-5aac-b124-ec005705d910
-		description: Share of films whose gross revenue reached 2.5 times their production budget. The multiple is an industry rule of thumb, not a figure derived from this data.
 
-	measure 'Recovered Budget Rate' =
+	/// Share of films whose gross revenue merely exceeded their budget. The gap between this and Break-even Rate is the cost of distribution and marketing.
+	measure 'Recovered Budget Rate' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', 'Movies'[Is Measurable] = TRUE() )
 			VAR Cleared = FILTER ( Pool, 'Movies'[ROI] >= 1 )
 			RETURN
 			    DIVIDE ( COUNTROWS ( Cleared ), COUNTROWS ( Pool ) )
+			```
 		formatString: 0.0%
 		lineageTag: f0d27d9c-5ce7-5c60-98aa-c9016de44d49
-		description: Share of films whose gross revenue merely exceeded their budget. The gap between this and Break-even Rate is the cost of distribution and marketing.
 
-	measure 'Median Return (reliable)' =
-			IF ( [Films Measured] >= 100, [Median Return] )
+	/// Median Return, suppressed for categories with fewer than 100 measured films.
+	measure 'Median Return (reliable)' = IF ( [Films Measured] >= 100, [Median Return] )
 		formatString: 0.00\x
 		lineageTag: 571ec6b4-123d-5a0f-a96a-33f84d71e31d
-		description: Median Return, suppressed for categories with fewer than 100 measured films.
 
-	measure 'Break-even Rate (reliable)' =
-			IF ( [Films Measured] >= 100, [Break-even Rate] )
+	/// Break-even Rate, suppressed below 100 measured films.
+	measure 'Break-even Rate (reliable)' = IF ( [Films Measured] >= 100, [Break-even Rate] )
 		formatString: 0.0%
 		lineageTag: 0ff58ca2-48dc-58ad-b547-b94ea6152f7f
-		description: Break-even Rate, suppressed below 100 measured films.
 
-	measure 'Median Budget (reliable)' =
-			IF ( [Films Measured] >= 100, [Median Budget] )
+	/// Median Budget, suppressed below 100 measured films.
+	measure 'Median Budget (reliable)' = IF ( [Films Measured] >= 100, [Median Budget] )
 		formatString: \$#,0
 		lineageTag: 2c3bdeb7-9341-58c6-92ef-18583e299d76
-		description: Median Budget, suppressed below 100 measured films.
 
-	measure 'Rows With Unreported Revenue' =
-			CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Revenue] = 0 )
+	/// Rows whose revenue is recorded as 0. Zero here means not reported, which is not the same as earned nothing.
+	measure 'Rows With Unreported Revenue' = CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Revenue] = 0 )
 		formatString: #,0
 		lineageTag: 178ebf7f-e0ee-533f-a03f-0616844d4b1d
-		description: Rows whose revenue is recorded as 0. Zero here means not reported, which is not the same as earned nothing.
 
-	measure 'Share Revenue Unreported' =
-			DIVIDE ( [Rows With Unreported Revenue], [Films In Starter File] )
+	/// How much of the starter file cannot answer a revenue question at all.
+	measure 'Share Revenue Unreported' = DIVIDE ( [Rows With Unreported Revenue], [Films In Starter File] )
 		formatString: 0.0%
 		lineageTag: b2c81e80-de98-57c4-89c3-fb0f3538e464
-		description: How much of the starter file cannot answer a revenue question at all.
 
-	measure 'Rows With Placeholder Budget' =
-			CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Budget Looks Like A Placeholder] = TRUE() )
+	/// Rows whose budget is under $10,000. Real budgets are near-continuous; values shared by thousands of unrelated films are data-entry defaults.
+	measure 'Rows With Placeholder Budget' = CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), 'Movies'[Budget Looks Like A Placeholder] = TRUE() )
 		formatString: #,0
 		lineageTag: f35f1bd0-ce36-52b2-b109-cfd6555e91ea
-		description: Rows whose budget is under $10,000. Real budgets are near-continuous; values shared by thousands of unrelated films are data-entry defaults.
 
-	measure 'Rows Missing Release Date' =
-			CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), ISBLANK ( 'Movies'[Release Date] ) )
+	/// Rows that cannot be placed in time.
+	measure 'Rows Missing Release Date' = CALCULATE ( COUNTROWS ( 'Movies' ), ALL ( 'Movies' ), ISBLANK ( 'Movies'[Release Date] ) )
 		formatString: #,0
 		lineageTag: e83c2b12-0f39-518b-b6c2-2aa3af4dbb0b
-		description: Rows that cannot be placed in time.
 
-	measure 'English Language Share' =
+	/// Share of the measurable subset originally in English. This is the single clearest reason the report cannot speak about world cinema.
+	measure 'English Language Share' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 			VAR English = FILTER ( Pool, 'Movies'[Original Language] = "en" )
 			RETURN
 			    DIVIDE ( COUNTROWS ( English ), COUNTROWS ( Pool ) )
+			```
 		formatString: 0.0%
 		lineageTag: 717a703c-0628-5872-a63f-30fb8905ca5d
-		description: Share of the measurable subset originally in English. This is the single clearest reason the report cannot speak about world cinema.
 
-	measure 'Top 100 Overlap Box Office And Return' =
+	/// How many films appear in both the top 100 by gross revenue and the top 100 by return on budget.
+	measure 'Top 100 Overlap Box Office And Return' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 			VAR ByRevenue = TOPN ( 100, Pool, 'Movies'[Revenue], DESC )
 			VAR ByReturn = TOPN ( 100, Pool, 'Movies'[ROI], DESC )
@@ -135,11 +123,12 @@ table _Measures
 			            SELECTCOLUMNS ( ByReturn, "@id", 'Movies'[Movie ID] )
 			        )
 			    ) + 0
+			```
 		formatString: #,0
 		lineageTag: a90b3fc5-4c05-55e5-b90d-70d3b4a57eb1
-		description: How many films appear in both the top 100 by gross revenue and the top 100 by return on budget.
 
-	measure 'Top 100 Overlap Box Office And Acclaim' =
+	/// How many films appear in both the top 100 by gross revenue and the top 100 by audience rating.
+	measure 'Top 100 Overlap Box Office And Acclaim' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 			VAR ByRevenue = TOPN ( 100, Pool, 'Movies'[Revenue], DESC )
 			VAR ByRating = TOPN ( 100, Pool, 'Movies'[Vote Average], DESC, 'Movies'[Vote Count], DESC )
@@ -150,11 +139,12 @@ table _Measures
 			            SELECTCOLUMNS ( ByRating, "@id", 'Movies'[Movie ID] )
 			        )
 			    ) + 0
+			```
 		formatString: #,0
 		lineageTag: 68b56948-07da-53af-9c9e-f37114829a09
-		description: How many films appear in both the top 100 by gross revenue and the top 100 by audience rating.
 
-	measure 'Top 100 Overlap Box Office And Profit' =
+	/// How many films appear in both the top 100 by gross revenue and the top 100 by gross profit. A high number means profit adds nothing to the story that revenue did not already tell.
+	measure 'Top 100 Overlap Box Office And Profit' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 			VAR ByRevenue = TOPN ( 100, Pool, 'Movies'[Revenue], DESC )
 			VAR ByProfit = TOPN ( 100, Pool, 'Movies'[Gross Profit], DESC )
@@ -165,29 +155,31 @@ table _Measures
 			            SELECTCOLUMNS ( ByProfit, "@id", 'Movies'[Movie ID] )
 			        )
 			    ) + 0
+			```
 		formatString: #,0
 		lineageTag: 8e042638-8031-5e32-a4e1-68014539c4d6
-		description: How many films appear in both the top 100 by gross revenue and the top 100 by gross profit. A high number means profit adds nothing to the story that revenue did not already tell.
 
-	measure 'Return Uplift Of Well Rated Films' =
+	/// How many times more a film rated 7.0 or better returns, compared with the rest of the same selection. An association, not a cause.
+	measure 'Return Uplift Of Well Rated Films' = ```
 			VAR WellRated =
 			    CALCULATE ( MEDIAN ( 'Movies'[ROI] ), 'Movies'[Is Measurable] = TRUE(), 'Movies'[Vote Average] >= 7 )
 			VAR Rest =
 			    CALCULATE ( MEDIAN ( 'Movies'[ROI] ), 'Movies'[Is Measurable] = TRUE(), 'Movies'[Vote Average] < 7 )
 			RETURN
 			    DIVIDE ( WellRated, Rest )
+			```
 		formatString: 0.00\x
 		lineageTag: d69a562c-f9ac-56d3-b88a-203fa2cbc7fe
-		description: How many times more a film rated 7.0 or better returns, compared with the rest of the same selection. An association, not a cause.
 
-	measure 'Revenue Reporting Rate' =
+	/// Share of films with a credible budget that also report revenue. This rate climbs steeply with budget size, which is the survivorship problem the report has to disclose.
+	measure 'Revenue Reporting Rate' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', 'Movies'[Budget] >= 10000 )
 			VAR Reported = FILTER ( Pool, 'Movies'[Revenue] >= 10000 )
 			RETURN
 			    DIVIDE ( COUNTROWS ( Reported ), COUNTROWS ( Pool ) )
+			```
 		formatString: 0.0%
 		lineageTag: 382b6028-6ca0-5c08-8a83-a6ce8e001cec
-		description: Share of films with a credible budget that also report revenue. This rate climbs steeply with budget size, which is the survivorship problem the report has to disclose.
 
 	column Value
 		isHidden
@@ -202,5 +194,3 @@ table _Measures
 	partition _Measures = calculated
 		mode: import
 		source = { BLANK() }
-
-	annotation PBI_Id = 7b396c16ac2c51a0815b

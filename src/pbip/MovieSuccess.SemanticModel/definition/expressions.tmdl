@@ -3,7 +3,6 @@
 /// contest instructions ask for exactly this edit.
 expression CsvPath = "C:\Users\Public\Documents\TMDB\TMDB_movie_dataset_v11.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 72fb6360-b471-5bc9-b723-c11920977a7e
-	queryGroup: '00 Source'
 
 	annotation PBI_ResultType = Text
 
@@ -20,7 +19,6 @@ expression Source =
 		in
 		    #"Changed Type"
 	lineageTag: 5bbd41ca-e281-59ae-8294-c15c16fd0218
-	queryGroup: '00 Source'
 
 	annotation PBI_ResultType = Table
 
@@ -34,6 +32,5 @@ expression Schema =
 		in
 		    #"Renamed Columns"
 	lineageTag: 0e7280be-07f7-5753-bf7b-7b9418d2447b
-	queryGroup: '00 Source'
 
 	annotation PBI_ResultType = Table

@@ -58,10 +58,28 @@ def tag(*parts: str) -> str:
 
 
 def block(text: str, indent: int) -> str:
-    """Indent a multi-line M or DAX expression for TMDL's block syntax."""
+    """Indent a multi-line M expression for TMDL's indentation-delimited block.
+
+    Every line is padded, including blank ones: a column-zero line inside an
+    indentation-delimited block would end the block early.
+    """
     pad = "\t" * indent
     lines = [line.rstrip() for line in text.strip("\n").split("\n")]
-    return "\n".join(f"{pad}{line}" if line else "" for line in lines)
+    return "\n".join(f"{pad}{line}" for line in lines)
+
+
+def dax(text: str, indent: int) -> str:
+    """A DAX expression, fenced in triple backticks when it spans lines.
+
+    TMDL requires the fence for multi-line DAX; bare indentation is valid only
+    for Power Query. A single-line expression stays on the declaration line.
+    """
+    body = text.strip()
+    if "\n" not in body:
+        return body
+    pad = "\t" * indent
+    lines = "\n".join(f"{pad}{line.rstrip()}" for line in body.split("\n"))
+    return f"```\n{lines}\n{pad}```"
 
 
 # --------------------------------------------------------------------------- #
@@ -104,9 +122,9 @@ in
 
 M_MOVIES = f"""
 let
-    Source = Source,
+    Src = Source,
     // ---- transcribed unchanged from the starter file ----------------------
-    #"Filtered Rows" = Table.SelectRows(Source, each [budget] > 0),
+    #"Filtered Rows" = Table.SelectRows(Src, each [budget] > 0),
     #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{{{"id", "Movie ID"}}, {{"title", "Title"}}, {{"vote_average", "Vote Average"}}, {{"vote_count", "Vote Count"}}, {{"release_date", "Release Date"}}, {{"revenue", "Revenue"}}, {{"backdrop_path", "Backdrop Path"}}, {{"budget", "Budget"}}, {{"homepage", "Homepage"}}, {{"popularity", "Popularity"}}, {{"runtime", "Runtime"}}}}),
     #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}}),
     #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{{{"genres", "genres"}}, {{"adult", "Adult"}}, {{"original_language", "Original Language"}}, {{"original_title", "Original Title"}}, {{"tagline", "Tagline"}}, {{"poster_path", "Poster Path"}}, {{"status", "Status"}}}}),
@@ -215,8 +233,8 @@ in
 
 M_PRODUCTION_COMPANY = """
 let
-    Source = Source,
-    Companies = Table.SelectColumns(Source, {"production_companies"}),
+    Src = Source,
+    Companies = Table.SelectColumns(Src, {"production_companies"}),
     SplitCompanies = Table.ExpandListColumn(
         Table.TransformColumns(Companies, {{"production_companies", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
         "production_companies"),
@@ -234,8 +252,8 @@ in
 
 M_GENRES = """
 let
-    Source = Source,
-    Genres = Table.SelectColumns(Source, {"genres"}),
+    Src = Source,
+    Genres = Table.SelectColumns(Src, {"genres"}),
     SplitGenres = Table.ExpandListColumn(
         Table.TransformColumns(Genres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
         "genres"),
@@ -252,8 +270,8 @@ in
 
 M_GENRE_BRIDGE = """
 let
-    Source = Source,
-    MovieGenres = Table.SelectColumns(Source, {"id", "genres"}),
+    Src = Source,
+    MovieGenres = Table.SelectColumns(Src, {"id", "genres"}),
     SplitGenres = Table.SelectRows(
         Table.ExpandListColumn(
             Table.TransformColumns(MovieGenres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
@@ -271,8 +289,8 @@ in
 
 M_PRODUCTION_COMPANY_BRIDGE = """
 let
-    Source = Source,
-    MovieCompanies = Table.SelectColumns(Source, {"id", "production_companies"}),
+    Src = Source,
+    MovieCompanies = Table.SelectColumns(Src, {"id", "production_companies"}),
     SplitCompanies = Table.SelectRows(
         Table.ExpandListColumn(
             Table.TransformColumns(MovieCompanies, {{"production_companies", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
@@ -335,11 +353,11 @@ MOVIES_COLUMNS = [
     ("Release Year", "int64", "0", "none", []),
     ("Release Month", "int64", "0", "none", []),
     ("Release Month Name", "string", None, "none", []),
-    ("Budget Band", "string", None, "none", ["sortByColumn: Budget Band Sort"]),
+    ("Budget Band", "string", None, "none", ["sortByColumn: 'Budget Band Sort'"]),
     ("Budget Band Sort", "int64", "0", "none", ["isHidden"]),
-    ("Rating Band", "string", None, "none", ["sortByColumn: Rating Band Sort"]),
+    ("Rating Band", "string", None, "none", ["sortByColumn: 'Rating Band Sort'"]),
     ("Rating Band Sort", "int64", "0", "none", ["isHidden"]),
-    ("Era", "string", None, "none", ["sortByColumn: Era Sort"]),
+    ("Era", "string", None, "none", ["sortByColumn: 'Era Sort'"]),
     ("Era Sort", "int64", "0", "none", ["isHidden"]),
     ("Budget Looks Like A Placeholder", "boolean", None, "none", []),
 ]
@@ -358,7 +376,7 @@ SIMPLE_TABLES = [
     ("Date", M_DATE, [("Date", "dateTime", "Long Date", "none", []),
                       ("Year", "int64", "0", "none", []),
                       ("Month Number", "int64", "0", "none", []),
-                      ("Month Name", "string", None, "none", ["sortByColumn: Month Number"]),
+                      ("Month Name", "string", None, "none", ["sortByColumn: 'Month Number'"]),
                       ("Week Number", "int64", "0", "none", [])]),
 ]
 
@@ -753,7 +771,7 @@ def emit_m_table(name: str, m_expression: str,
     return "\n".join(parts)
 
 
-def emit_calculated_table(name: str, dax: str,
+def emit_calculated_table(name: str, expression: str,
                           columns: list[tuple[str, str, str | None, str, list[str]]]) -> str:
     quoted = f"'{name}'" if " " in name else name
     parts = [f"table {quoted}", f"\tlineageTag: {tag(name, 'table')}", ""]
@@ -761,26 +779,23 @@ def emit_calculated_table(name: str, dax: str,
         parts.append(emit_calc_column(name, *col))
     parts.append(f"\tpartition {quoted} = calculated")
     parts.append("\t\tmode: import")
-    parts.append("\t\tsource =")
-    parts.append(block(dax, 4))
-    parts.append("")
-    parts.append("\tannotation PBI_Id = " + tag(name, "pbi_id").replace("-", "")[:20])
+    # PBI_Id is Power BI internal metadata and must never be hand-authored.
+    parts.append(f"\t\tsource = {dax(expression, 4)}")
     parts.append("")
     return "\n".join(parts)
 
 
 def emit_measures_table() -> str:
     parts = ["table _Measures", f"\tlineageTag: {tag('_Measures', 'table')}", ""]
-    for name, dax, fmt, description in MEASURES:
-        parts.append(f"\tmeasure '{name}' =")
-        parts.append(block(dax, 3))
+    for name, expression, fmt, description in MEASURES:
+        # TMDL has no `description` property. A description is a `///` comment
+        # above the object; Desktop surfaces it as the field tooltip, so an
+        # assumption stays documented at the point it is used.
+        parts.append(f"\t/// {' '.join(description.split())}")
+        parts.append(f"\tmeasure '{name}' = {dax(expression, 3)}")
         if fmt:
             parts.append(f"\t\tformatString: {fmt}")
         parts.append(f"\t\tlineageTag: {tag('_Measures', 'measure', name)}")
-        # The description becomes the tooltip in Desktop and travels with the
-        # model, so an assumption is documented where it is used.
-        safe = description.replace("\n", " ")
-        parts.append(f"\t\tdescription: {safe}")
         parts.append("")
     # Mirrors the starter file's own holder table: partition `{ BLANK() }`
     # yields a single inferred column named Value, which stays hidden.
@@ -798,8 +813,6 @@ def emit_measures_table() -> str:
     parts.append("\t\tmode: import")
     parts.append("\t\tsource = { BLANK() }")
     parts.append("")
-    parts.append("\tannotation PBI_Id = " + tag("_Measures", "pbi_id").replace("-", "")[:20])
-    parts.append("")
     return "\n".join(parts)
 
 
@@ -816,8 +829,8 @@ RELATIONSHIPS = [
 
 M_KEYWORD = """
 let
-    Source = Source,
-    Keywords = Table.SelectColumns(Source, {"keywords"}),
+    Src = Source,
+    Keywords = Table.SelectColumns(Src, {"keywords"}),
     SplitKeywords = Table.ExpandListColumn(
         Table.TransformColumns(Keywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
         "keywords"),
@@ -834,8 +847,8 @@ in
 
 M_KEYWORD_BRIDGE = """
 let
-    Source = Source,
-    MovieKeywords = Table.SelectColumns(Source, {"id", "keywords"}),
+    Src = Source,
+    MovieKeywords = Table.SelectColumns(Src, {"id", "keywords"}),
     SplitKeywords = Table.SelectRows(
         Table.ExpandListColumn(
             Table.TransformColumns(MovieKeywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
@@ -915,7 +928,6 @@ def main() -> int:
         "/// contest instructions ask for exactly this edit.",
         f"expression CsvPath = {M_CSV_PATH}",
         f"\tlineageTag: {tag('expression', 'CsvPath')}",
-        "\tqueryGroup: '00 Source'",
         "",
         "\tannotation PBI_ResultType = Text",
         "",
@@ -923,7 +935,6 @@ def main() -> int:
         "expression Source =",
         block(M_SOURCE, 2),
         f"\tlineageTag: {tag('expression', 'Source')}",
-        "\tqueryGroup: '00 Source'",
         "",
         "\tannotation PBI_ResultType = Table",
         "",
@@ -931,7 +942,6 @@ def main() -> int:
         "expression Schema =",
         block(M_SCHEMA, 2),
         f"\tlineageTag: {tag('expression', 'Schema')}",
-        "\tqueryGroup: '00 Source'",
         "",
         "\tannotation PBI_ResultType = Table",
         "",
@@ -977,7 +987,7 @@ def main() -> int:
             FUNNEL_DAX,
             [
                 ("Step Order", "int64", "0", "none", ["isHidden"]),
-                ("Step", "string", None, "none", ["sortByColumn: Step Order"]),
+                ("Step", "string", None, "none", ["sortByColumn: 'Step Order'"]),
                 ("Films", "double", "#,0", "sum", []),
                 ("Why", "string", None, "none", []),
             ],
