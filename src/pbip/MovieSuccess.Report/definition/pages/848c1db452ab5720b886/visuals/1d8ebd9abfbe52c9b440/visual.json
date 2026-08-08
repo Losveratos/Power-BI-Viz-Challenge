@@ -46,7 +46,7 @@
                 }
               },
               "queryRef": "Sum(Funnel.Films)",
-              "nativeQueryRef": "Films"
+              "nativeQueryRef": "Sum of Films"
             },
             {
               "field": {
@@ -75,13 +75,13 @@
                     "Entity": "Funnel"
                   }
                 },
-                "Property": "Step Order"
+                "Property": "Step"
               }
             },
             "direction": "Ascending"
           }
         ],
-        "isDefaultSort": true
+        "isDefaultSort": false
       }
     },
     "objects": {
@@ -392,28 +392,41 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "12L"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "12L"
+                  "Value": "12D"
                 }
               }
             },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "8D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }

@@ -146,8 +146,10 @@ def proj_measure(prop: str, entity: str = "_Measures") -> dict:
 
 
 def proj_sum(entity: str, prop: str) -> dict:
+    # nativeQueryRef must be "Sum of <Column>" for an aggregation projection.
+    # The bare column name yields a blank visual with no error message.
     return {"field": sum_field(entity, prop), "queryRef": f"Sum({entity}.{prop})",
-            "nativeQueryRef": prop}
+            "nativeQueryRef": f"Sum of {prop}"}
 
 
 # --------------------------------------------------------------------------- #
@@ -289,6 +291,7 @@ def card(page: Page, key: str, x: int, y: int, w: int, h: int, *,
                 "fontColor": color(INK_2), "alignment": lit("'left'"),
                 "titleWrap": lit("true"),
             }}],
+            "visualHeader": [{"properties": {"show": lit("false")}}],
         },
         "drillFilterOtherVisuals": True,
     }
@@ -307,8 +310,12 @@ def _chart_common(title: str, subtitle: str | None) -> dict:
                                        "transparency": num(0)}}],
         "border": [{"properties": {"show": lit("true"), "color": color(HAIRLINE),
                                    "radius": num(6)}}],
-        "padding": [{"properties": {"left": num(12, "L"), "right": num(12, "L"),
-                                    "top": num(8, "L"), "bottom": num(8, "L")}}],
+        "padding": [{"properties": {"left": num(12), "right": num(12),
+                                    "top": num(8), "bottom": num(8)}}],
+        # background, border, padding and visualHeader must be set together:
+        # a partial visualContainerObjects block makes Power BI reset the
+        # properties it does not find back to system defaults.
+        "visualHeader": [{"properties": {"show": lit("false")}}],
     }
     if subtitle:
         vco["subTitle"] = [{"properties": {
@@ -320,8 +327,7 @@ def _chart_common(title: str, subtitle: str | None) -> dict:
     return vco
 
 
-def _axis_objects(*, value_labels: bool, series_colour: str,
-                  label_format: str | None = None) -> dict:
+def _axis_objects(*, value_labels: bool, series_colour: str) -> dict:
     objects: dict = {
         "categoryAxis": [{"properties": {
             "show": lit("true"), "showAxisTitle": lit("false"),
@@ -333,22 +339,22 @@ def _axis_objects(*, value_labels: bool, series_colour: str,
             "show": lit("true"), "showAxisTitle": lit("false"),
             "labelColor": color(INK_3), "fontSize": num(10),
             "fontFamily": lit(f"'{FONT}'"), "gridlineShow": lit("true"),
-            "gridlineColor": color("#262220"), "gridlineThickness": num(1, "L"),
+            "gridlineColor": color("#262220"), "gridlineThickness": num(1),
         }}],
-        "dataPoint": [{"properties": {"fill": color(series_colour)},
-                       "selector": {"id": "default"}}],
+        # `defaultColor` with NO selector, not `fill` with an id selector.
+        # dataPoint accepts only metadata/data selectors, so `fill` with
+        # selector {"id": "default"} matches nothing and the marks render
+        # invisible while tooltips still show data — a documented failure mode.
+        # Safe here only because every chart is single-measure with no Series.
+        "dataPoint": [{"properties": {"defaultColor": color(series_colour)}}],
         "legend": [{"properties": {"show": lit("false")}}],
         "plotArea": [{"properties": {"transparency": num(100)}}],
     }
     if value_labels:
-        props = {
+        objects["labels"] = [{"properties": {
             "show": lit("true"), "color": color(INK),
             "fontSize": num(10), "fontFamily": lit(f"'{FONT_SB}'"),
-            "backgroundTransparency": num(100),
-        }
-        if label_format:
-            props["labelDisplayUnits"] = lit("0D")
-        objects["labels"] = [{"properties": props}]
+        }}]
     else:
         objects["labels"] = [{"properties": {"show": lit("false")}}]
     return objects
@@ -360,6 +366,10 @@ def bar_or_column(page: Page, key: str, x: int, y: int, w: int, h: int, *,
                   series_colour: str = GOLD, value_labels: bool = True,
                   sort_desc_by_value: bool = False,
                   reference_line: tuple[float, str] | None = None) -> dict:
+    # Every documented cartesian example sets active on the Category
+    # projection; it records the drill state. Deliberately not applied to
+    # tableEx, where `active` triggers drill behaviour and hides columns.
+    category = {**category, "active": True}
     query: dict = {"queryState": {
         "Category": {"projections": [category]},
         "Y": {"projections": [value]},
@@ -367,7 +377,10 @@ def bar_or_column(page: Page, key: str, x: int, y: int, w: int, h: int, *,
     if sort_desc_by_value:
         query["sortDefinition"] = {
             "sort": [{"field": value["field"], "direction": "Descending"}],
-            "isDefaultSort": True,
+            # false marks the sort as user-explicit. With true, Power BI is
+            # free to replace it with the visual type's default order, which
+            # would silently undo a chart sorted by value on purpose.
+            "isDefaultSort": False,
         }
 
     objects = _axis_objects(value_labels=value_labels, series_colour=series_colour)
@@ -408,7 +421,7 @@ def table(page: Page, key: str, x: int, y: int, w: int, h: int, *,
     if sort:
         field, direction = sort
         query["sortDefinition"] = {"sort": [{"field": field, "direction": direction}],
-                                   "isDefaultSort": True}
+                                   "isDefaultSort": False}
     body = {
         "visualType": "tableEx",
         "query": query,
@@ -927,7 +940,9 @@ def page_five() -> Page:
             "films surviving it, and the reason for the step. It runs from about "
             "930,000 films in the published dataset down to 7,733 films with at "
             "least fifty ratings.",
-        sort=(column_field("Funnel", "Step Order"), "Ascending"),
+        # Step carries sortByColumn: Step Order in the model, so sorting on
+        # Step gives funnel order without projecting the sort column.
+        sort=(column_field("Funnel", "Step"), "Ascending"),
     ))
 
     quality = [
