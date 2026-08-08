@@ -1,5 +1,5 @@
 {
-  "name": "Movie Success — Dark Editorial",
+  "name": "movie-success-dark",
   "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.114.json",
   "dataColors": [
     "#C98500",
@@ -133,21 +133,26 @@
         "plotArea": [{ "transparency": 100 }]
       }
     },
-    "card": {
+    "cardVisual": {
       "*": {
-        "labels": [
+        "value": [
           {
-            "color": { "solid": { "color": "#F5F1EC" } },
+            "$id": "default",
+            "fontColor": { "solid": { "color": "#F5F1EC" } },
             "fontSize": 40,
             "fontFamily": "Segoe UI Semibold"
           }
         ],
-        "categoryLabels": [
+        "label": [
           {
-            "show": true,
-            "color": { "solid": { "color": "#A8A29B" } },
-            "fontSize": 11,
-            "fontFamily": "Segoe UI"
+            "$id": "default",
+            "show": false
+          }
+        ],
+        "outline": [
+          {
+            "$id": "default",
+            "show": false
           }
         ]
       }
@@ -175,19 +180,23 @@
             "rowPadding": 6
           }
         ],
+        "stylePreset": [{ "name": "None" }],
         "columnHeaders": [
           {
             "fontColor": { "solid": { "color": "#A8A29B" } },
             "backColor": { "solid": { "color": "#1C1917" } },
             "fontSize": 10,
             "fontFamily": "Segoe UI Semibold",
-            "outline": "BottomOnly"
+            "outline": "BottomOnly",
+            "autoSizeColumnWidth": true,
+            "columnAdjustment": "growToFit"
           }
         ],
         "values": [
           {
-            "fontColor": { "solid": { "color": "#F5F1EC" } },
-            "backColor": { "solid": { "color": "#1C1917" } },
+            "fontColorPrimary": { "solid": { "color": "#F5F1EC" } },
+            "fontColorSecondary": { "solid": { "color": "#F5F1EC" } },
+            "backColorPrimary": { "solid": { "color": "#1C1917" } },
             "backColorSecondary": { "solid": { "color": "#1C1917" } },
             "fontSize": 10,
             "fontFamily": "Segoe UI"

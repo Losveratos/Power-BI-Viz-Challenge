@@ -29,7 +29,7 @@ table 'Top By Acclaim'
 
 	partition 'Top By Acclaim' = calculated
 		mode: import
-		source =
+		source = ```
 				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 				VAR Picked = TOPN ( 10, Pool, 'Movies'[Vote Average], DESC )
 				VAR Ranked =
@@ -44,5 +44,4 @@ table 'Top By Acclaim'
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[Vote Average] * 1.0
 				    )
-
-	annotation PBI_Id = d1b64e422b7258b5846c
+				```

@@ -23,8 +23,8 @@ table 'Keyword Bridge'
 		mode: import
 		source =
 				let
-				    Source = Source,
-				    MovieKeywords = Table.SelectColumns(Source, {"id", "keywords"}),
+				    Src = Source,
+				    MovieKeywords = Table.SelectColumns(Src, {"id", "keywords"}),
 				    SplitKeywords = Table.SelectRows(
 				        Table.ExpandListColumn(
 				            Table.TransformColumns(MovieKeywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),

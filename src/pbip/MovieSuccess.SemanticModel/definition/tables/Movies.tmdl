@@ -211,7 +211,7 @@ table Movies
 		lineageTag: a0611167-2cc1-5fe7-a5fd-8d29085664a7
 		summarizeBy: none
 		sourceColumn: Budget Band
-		sortByColumn: Budget Band Sort
+		sortByColumn: 'Budget Band Sort'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -230,7 +230,7 @@ table Movies
 		lineageTag: 8d842c23-251f-5f42-ad28-d1d38332f4ea
 		summarizeBy: none
 		sourceColumn: Rating Band
-		sortByColumn: Rating Band Sort
+		sortByColumn: 'Rating Band Sort'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -249,7 +249,7 @@ table Movies
 		lineageTag: 5ebc8976-43cc-567b-a174-7c17b8d289c1
 		summarizeBy: none
 		sourceColumn: Era
-		sortByColumn: Era Sort
+		sortByColumn: 'Era Sort'
 
 		annotation SummarizationSetBy = Automatic
 
@@ -275,14 +275,14 @@ table Movies
 		mode: import
 		source =
 				let
-				    Source = Source,
+				    Src = Source,
 				    // ---- transcribed unchanged from the starter file ----------------------
-				    #"Filtered Rows" = Table.SelectRows(Source, each [budget] > 0),
+				    #"Filtered Rows" = Table.SelectRows(Src, each [budget] > 0),
 				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"id", "Movie ID"}, {"title", "Title"}, {"vote_average", "Vote Average"}, {"vote_count", "Vote Count"}, {"release_date", "Release Date"}, {"revenue", "Revenue"}, {"backdrop_path", "Backdrop Path"}, {"budget", "Budget"}, {"homepage", "Homepage"}, {"popularity", "Popularity"}, {"runtime", "Runtime"}}),
 				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"genres", "genres"}, {"adult", "Adult"}, {"original_language", "Original Language"}, {"original_title", "Original Title"}, {"tagline", "Tagline"}, {"poster_path", "Poster Path"}, {"status", "Status"}}),
 				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"}),
-
+				
 				    // ---- our additions: derived columns, no source values altered ---------
 				    // "Measurable" is the single gate every financial figure in the report
 				    // passes through. It is a column rather than a report filter so that it is
@@ -293,27 +293,27 @@ table Movies
 				        and [Budget] >= 10000
 				        and [Revenue] >= 10000
 				        and [Vote Count] >= 50, type logical),
-
+				
 				    // Return on production budget. Null, never zero, when it cannot be formed:
 				    // a film with unreported revenue has an unknown return, not a zero one.
 				    AddROI = Table.AddColumn(AddMeasurable, "ROI", each
 				        if [Is Measurable] then [Revenue] / [Budget] else null, type number),
-
+				
 				    AddProfit = Table.AddColumn(AddROI, "Gross Profit", each
 				        if [Is Measurable] then [Revenue] - [Budget] else null, Int64.Type),
-
+				
 				    AddBreakEven = Table.AddColumn(AddProfit, "Breaks Even", each
 				        if [Is Measurable] then [ROI] >= 2.5 else null, type logical),
-
+				
 				    AddYear = Table.AddColumn(AddBreakEven, "Release Year", each
 				        if [Release Date] = null then null else Date.Year([Release Date]), Int64.Type),
-
+				
 				    AddMonth = Table.AddColumn(AddYear, "Release Month", each
 				        if [Release Date] = null then null else Date.Month([Release Date]), Int64.Type),
-
+				
 				    AddMonthName = Table.AddColumn(AddMonth, "Release Month Name", each
 				        if [Release Date] = null then null else Date.MonthName([Release Date]), type text),
-
+				
 				    // Fixed dollar bands rather than deciles: a reader understands "$15-30M",
 				    // and a decile boundary shifts every time the filter context changes.
 				    AddBudgetBand = Table.AddColumn(AddMonthName, "Budget Band", each
@@ -325,7 +325,7 @@ table Movies
 				        else if [Budget] < 60000000 then "$30M to $60M"
 				        else if [Budget] < 100000000 then "$60M to $100M"
 				        else "$100M and above", type text),
-
+				
 				    AddBudgetBandSort = Table.AddColumn(AddBudgetBand, "Budget Band Sort", each
 				        if [Budget Band] = null then null
 				        else if [Budget Band] = "Under $1M" then 1
@@ -335,7 +335,7 @@ table Movies
 				        else if [Budget Band] = "$30M to $60M" then 5
 				        else if [Budget Band] = "$60M to $100M" then 6
 				        else 7, Int64.Type),
-
+				
 				    AddRatingBand = Table.AddColumn(AddBudgetBandSort, "Rating Band", each
 				        if not [Is Measurable] then null
 				        else if [Vote Average] < 5 then "Below 5.0"
@@ -344,7 +344,7 @@ table Movies
 				        else if [Vote Average] < 7 then "6.5 to 7.0"
 				        else if [Vote Average] < 7.5 then "7.0 to 7.5"
 				        else "7.5 and above", type text),
-
+				
 				    AddRatingBandSort = Table.AddColumn(AddRatingBand, "Rating Band Sort", each
 				        if [Rating Band] = null then null
 				        else if [Rating Band] = "Below 5.0" then 1
@@ -353,7 +353,7 @@ table Movies
 				        else if [Rating Band] = "6.5 to 7.0" then 4
 				        else if [Rating Band] = "7.0 to 7.5" then 5
 				        else 6, Int64.Type),
-
+				
 				    // Eras exist so that dollars are never compared across them. See
 				    // docs/09-decision-log.md ADR-006.
 				    AddEra = Table.AddColumn(AddRatingBandSort, "Era", each
@@ -363,7 +363,7 @@ table Movies
 				        else if [Release Year] < 2005 then "1995 to 2004"
 				        else if [Release Year] < 2015 then "2005 to 2014"
 				        else "2015 onward", type text),
-
+				
 				    AddEraSort = Table.AddColumn(AddEra, "Era Sort", each
 				        if [Era] = null then null
 				        else if [Era] = "Before 1980" then 1
@@ -371,7 +371,7 @@ table Movies
 				        else if [Era] = "1995 to 2004" then 3
 				        else if [Era] = "2005 to 2014" then 4
 				        else 5, Int64.Type),
-
+				
 				    // The report needs to name the placeholder budgets, so it needs to be able
 				    // to count them.
 				    AddPlaceholder = Table.AddColumn(AddEraSort, "Budget Looks Like A Placeholder", each

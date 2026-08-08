@@ -29,7 +29,7 @@ table 'Top By Box Office'
 
 	partition 'Top By Box Office' = calculated
 		mode: import
-		source =
+		source = ```
 				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
 				VAR Picked = TOPN ( 10, Pool, 'Movies'[Revenue], DESC )
 				VAR Ranked =
@@ -44,5 +44,4 @@ table 'Top By Box Office'
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[Revenue] * 1.0
 				    )
-
-	annotation PBI_Id = fccc8ce0a0aa52ceaa4f
+				```

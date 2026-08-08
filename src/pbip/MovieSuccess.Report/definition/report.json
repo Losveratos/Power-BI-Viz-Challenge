@@ -2,28 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
   "themeCollection": {
     "customTheme": {
-      "name": "movie-success-dark.json",
+      "name": "movie-success-dark-5b43ea60.json",
       "type": "RegisteredResources"
     }
   },
   "objects": {
-    "outspace": [
-      {
-        "properties": {
-          "color": {
-            "solid": {
-              "color": {
-                "expr": {
-                  "Literal": {
-                    "Value": "'#131110'"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    ],
     "outspacePane": [
       {
         "properties": {
@@ -44,8 +27,8 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "movie-success-dark.json",
-          "path": "movie-success-dark.json",
+          "name": "movie-success-dark-5b43ea60.json",
+          "path": "movie-success-dark-5b43ea60.json",
           "type": "CustomTheme"
         }
       ]

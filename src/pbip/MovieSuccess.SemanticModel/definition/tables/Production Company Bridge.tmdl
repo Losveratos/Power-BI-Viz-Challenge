@@ -23,8 +23,8 @@ table 'Production Company Bridge'
 		mode: import
 		source =
 				let
-				    Source = Source,
-				    MovieCompanies = Table.SelectColumns(Source, {"id", "production_companies"}),
+				    Src = Source,
+				    MovieCompanies = Table.SelectColumns(Src, {"id", "production_companies"}),
 				    SplitCompanies = Table.SelectRows(
 				        Table.ExpandListColumn(
 				            Table.TransformColumns(MovieCompanies, {{"production_companies", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
