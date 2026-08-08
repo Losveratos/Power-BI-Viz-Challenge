@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Movies.Rating Band",
-              "nativeQueryRef": "Rating Band"
+              "nativeQueryRef": "Rating Band",
+              "active": true
             }
           ]
         },
@@ -178,7 +179,7 @@
             "gridlineThickness": {
               "expr": {
                 "Literal": {
-                  "Value": "1L"
+                  "Value": "1D"
                 }
               }
             }
@@ -188,7 +189,7 @@
       "dataPoint": [
         {
           "properties": {
-            "fill": {
+            "defaultColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -199,9 +200,6 @@
                 }
               }
             }
-          },
-          "selector": {
-            "id": "default"
           }
         }
       ],
@@ -263,13 +261,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'Segoe UI Semibold'"
-                }
-              }
-            },
-            "backgroundTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "100D"
                 }
               }
             }
@@ -499,28 +490,41 @@
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "12L"
+                  "Value": "12D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "12L"
+                  "Value": "12D"
                 }
               }
             },
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "8D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "8L"
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
