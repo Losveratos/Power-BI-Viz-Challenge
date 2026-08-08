@@ -1,0 +1,710 @@
+{
+  "correlations": [
+    {
+      "Driver": "Budget",
+      "Revenue": 0.676,
+      "ROI": -0.105,
+      "Profit": 0.261,
+      "n": 7733
+    },
+    {
+      "Driver": "Runtime",
+      "Revenue": 0.236,
+      "ROI": 0.06,
+      "Profit": 0.141,
+      "n": 7733
+    },
+    {
+      "Driver": "Vote Average",
+      "Revenue": 0.18,
+      "ROI": 0.331,
+      "Profit": 0.276,
+      "n": 7733
+    },
+    {
+      "Driver": "Vote Count",
+      "Revenue": 0.698,
+      "ROI": 0.386,
+      "Profit": 0.583,
+      "n": 7733
+    },
+    {
+      "Driver": "Popularity",
+      "Revenue": 0.627,
+      "ROI": 0.33,
+      "Profit": 0.503,
+      "n": 7733
+    }
+  ],
+  "budget_deciles": [
+    {
+      "Budget decile": 1,
+      "Films": 774,
+      "Median budget": 800000.0,
+      "Median revenue": 2500000.0,
+      "Median ROI": 4.0191333333333334,
+      "Median profit": 1713500.0,
+      "Share breaking even": 0.6149870801033591,
+      "Median rating": 6.8
+    },
+    {
+      "Budget decile": 2,
+      "Films": 807,
+      "Median budget": 3000000.0,
+      "Median revenue": 7537453.0,
+      "Median ROI": 2.7174515235457064,
+      "Median profit": 4650000.0,
+      "Share breaking even": 0.5192069392812887,
+      "Median rating": 6.714
+    },
+    {
+      "Budget decile": 3,
+      "Films": 840,
+      "Median budget": 5500000.0,
+      "Median revenue": 10448377.5,
+      "Median ROI": 1.8432292142857143,
+      "Median profit": 4989024.5,
+      "Share breaking even": 0.4119047619047619,
+      "Median rating": 6.5245
+    },
+    {
+      "Budget decile": 4,
+      "Films": 684,
+      "Median budget": 9000000.0,
+      "Median revenue": 14926142.0,
+      "Median ROI": 1.6940418,
+      "Median profit": 6003112.5,
+      "Share breaking even": 0.3611111111111111,
+      "Median rating": 6.457000000000001
+    },
+    {
+      "Budget decile": 5,
+      "Films": 840,
+      "Median budget": 13000000.0,
+      "Median revenue": 22176498.0,
+      "Median ROI": 1.7604548988095239,
+      "Median profit": 9415376.0,
+      "Share breaking even": 0.3880952380952381,
+      "Median rating": 6.553
+    },
+    {
+      "Budget decile": 6,
+      "Films": 725,
+      "Median budget": 19000000.0,
+      "Median revenue": 26877589.0,
+      "Median ROI": 1.39877145,
+      "Median profit": 7728118.0,
+      "Share breaking even": 0.33793103448275863,
+      "Median rating": 6.409
+    },
+    {
+      "Budget decile": 7,
+      "Films": 879,
+      "Median budget": 25000000.0,
+      "Median revenue": 36400360.0,
+      "Median ROI": 1.4119298148148147,
+      "Median profit": 10800000.0,
+      "Share breaking even": 0.3117178612059158,
+      "Median rating": 6.39
+    },
+    {
+      "Budget decile": 8,
+      "Films": 711,
+      "Median budget": 38000000.0,
+      "Median revenue": 61601280.0,
+      "Median ROI": 1.6575789393939393,
+      "Median profit": 25321861.0,
+      "Share breaking even": 0.3530239099859353,
+      "Median rating": 6.4
+    },
+    {
+      "Budget decile": 9,
+      "Films": 726,
+      "Median budget": 60000000.0,
+      "Median revenue": 107752810.5,
+      "Median ROI": 1.8082498723076923,
+      "Median profit": 48127885.0,
+      "Share breaking even": 0.34573002754820936,
+      "Median rating": 6.4005
+    },
+    {
+      "Budget decile": 10,
+      "Films": 747,
+      "Median budget": 117000000.0,
+      "Median revenue": 300257475.0,
+      "Median ROI": 2.476044346153846,
+      "Median profit": 176743061.0,
+      "Share breaking even": 0.49129852744310576,
+      "Median rating": 6.639
+    }
+  ],
+  "decile_contrast": {
+    "lowest_budget_median": 800000.0,
+    "lowest_median_roi": 4.0191333333333334,
+    "lowest_share_breakeven": 0.6149870801033591,
+    "highest_budget_median": 117000000.0,
+    "highest_median_revenue": 300257475.0,
+    "highest_median_roi": 2.476044346153846,
+    "highest_share_breakeven": 0.49129852744310576,
+    "revenue_multiple": 120.10299
+  },
+  "definition_overlap": [
+    {
+      "Definition": "Box office (Revenue)",
+      "Box office (Revenue)": 1.0,
+      "Return (ROI)": 0.0,
+      "Acclaim (Vote Average)": 0.11,
+      "Profit (Revenue - Budget)": 0.91
+    },
+    {
+      "Definition": "Return (ROI)",
+      "Box office (Revenue)": 0.0,
+      "Return (ROI)": 1.0,
+      "Acclaim (Vote Average)": 0.01,
+      "Profit (Revenue - Budget)": 0.02
+    },
+    {
+      "Definition": "Acclaim (Vote Average)",
+      "Box office (Revenue)": 0.11,
+      "Return (ROI)": 0.01,
+      "Acclaim (Vote Average)": 1.0,
+      "Profit (Revenue - Budget)": 0.12
+    },
+    {
+      "Definition": "Profit (Revenue - Budget)",
+      "Box office (Revenue)": 0.91,
+      "Return (ROI)": 0.02,
+      "Acclaim (Vote Average)": 0.12,
+      "Profit (Revenue - Budget)": 1.0
+    }
+  ],
+  "films_in_all_four_top100": 0,
+  "breakeven": {
+    "multiple": 2.5,
+    "share_breaking_even": 0.4140695719643088,
+    "share_revenue_above_budget": 0.6862795810164232,
+    "median_roi": 1.9576023
+  },
+  "genre_performance": [
+    {
+      "Genre": "TV Movie",
+      "Films": 4,
+      "Median budget": 5250000.0,
+      "Median revenue": 25450000.0,
+      "Median ROI": 4.835714285714285,
+      "Share breaking even": 0.5,
+      "Median rating": 6.082000000000001,
+      "Reliable": false
+    },
+    {
+      "Genre": "Documentary",
+      "Films": 66,
+      "Median budget": 2750000.0,
+      "Median revenue": 7819567.5,
+      "Median ROI": 4.042431333333333,
+      "Share breaking even": 0.6515151515151515,
+      "Median rating": 7.057499999999999,
+      "Reliable": false
+    },
+    {
+      "Genre": "Animation",
+      "Films": 447,
+      "Median budget": 40000000.0,
+      "Median revenue": 84460846.0,
+      "Median ROI": 2.437499857142857,
+      "Share breaking even": 0.4899328859060403,
+      "Median rating": 6.87,
+      "Reliable": true
+    },
+    {
+      "Genre": "Family",
+      "Films": 810,
+      "Median budget": 32000000.0,
+      "Median revenue": 65117408.5,
+      "Median ROI": 2.275351014,
+      "Share breaking even": 0.4580246913580247,
+      "Median rating": 6.5375,
+      "Reliable": true
+    },
+    {
+      "Genre": "Horror",
+      "Films": 948,
+      "Median budget": 8000000.0,
+      "Median revenue": 17086310.0,
+      "Median ROI": 2.2647756880607313,
+      "Share breaking even": 0.46835443037974683,
+      "Median rating": 6.118,
+      "Reliable": true
+    },
+    {
+      "Genre": "Music",
+      "Films": 263,
+      "Median budget": 13000000.0,
+      "Median revenue": 20100000.0,
+      "Median ROI": 2.213395428571429,
+      "Share breaking even": 0.46387832699619774,
+      "Median rating": 6.721,
+      "Reliable": true
+    },
+    {
+      "Genre": "Romance",
+      "Films": 1401,
+      "Median budget": 14000000.0,
+      "Median revenue": 22390000.0,
+      "Median ROI": 2.166469564527038,
+      "Share breaking even": 0.4439685938615275,
+      "Median rating": 6.592,
+      "Reliable": true
+    },
+    {
+      "Genre": "Adventure",
+      "Films": 1418,
+      "Median budget": 37755900.0,
+      "Median revenue": 68353784.0,
+      "Median ROI": 2.126074513333333,
+      "Share breaking even": 0.43441466854724964,
+      "Median rating": 6.495,
+      "Reliable": true
+    },
+    {
+      "Genre": "Comedy",
+      "Films": 2799,
+      "Median budget": 15500000.0,
+      "Median revenue": 29359216.0,
+      "Median ROI": 2.1231594875,
+      "Share breaking even": 0.43837084673097537,
+      "Median rating": 6.344,
+      "Reliable": true
+    },
+    {
+      "Genre": "Fantasy",
+      "Films": 799,
+      "Median budget": 32000000.0,
+      "Median revenue": 58292295.0,
+      "Median ROI": 1.94874212,
+      "Share breaking even": 0.392991239048811,
+      "Median rating": 6.501,
+      "Reliable": true
+    },
+    {
+      "Genre": "Science Fiction",
+      "Films": 887,
+      "Median budget": 27000000.0,
+      "Median revenue": 38793283.0,
+      "Median ROI": 1.9040866153846154,
+      "Share breaking even": 0.38669673055242393,
+      "Median rating": 6.3,
+      "Reliable": true
+    },
+    {
+      "Genre": "Action",
+      "Films": 1974,
+      "Median budget": 29000000.0,
+      "Median revenue": 47160313.0,
+      "Median ROI": 1.900941756748154,
+      "Share breaking even": 0.38855116514690985,
+      "Median rating": 6.365,
+      "Reliable": true
+    },
+    {
+      "Genre": "Mystery",
+      "Films": 696,
+      "Median budget": 15000000.0,
+      "Median revenue": 21871449.0,
+      "Median ROI": 1.8068181818181817,
+      "Share breaking even": 0.40373563218390807,
+      "Median rating": 6.425,
+      "Reliable": true
+    },
+    {
+      "Genre": "Thriller",
+      "Films": 2008,
+      "Median budget": 17000000.0,
+      "Median revenue": 28000000.0,
+      "Median ROI": 1.8033414393939395,
+      "Share breaking even": 0.3849601593625498,
+      "Median rating": 6.382,
+      "Reliable": true
+    },
+    {
+      "Genre": "Crime",
+      "Films": 1234,
+      "Median budget": 16000000.0,
+      "Median revenue": 22831479.5,
+      "Median ROI": 1.7799037147826087,
+      "Share breaking even": 0.37439222042139386,
+      "Median rating": 6.552,
+      "Reliable": true
+    },
+    {
+      "Genre": "Drama",
+      "Films": 3521,
+      "Median budget": 12500000.0,
+      "Median revenue": 17807569.0,
+      "Median ROI": 1.7050166091954022,
+      "Share breaking even": 0.37886963930701506,
+      "Median rating": 6.768,
+      "Reliable": true
+    },
+    {
+      "Genre": "War",
+      "Films": 301,
+      "Median budget": 16000000.0,
+      "Median revenue": 20416563.0,
+      "Median ROI": 1.6963988083333332,
+      "Share breaking even": 0.38205980066445183,
+      "Median rating": 6.917,
+      "Reliable": true
+    },
+    {
+      "Genre": "Western",
+      "Films": 129,
+      "Median budget": 12000000.0,
+      "Median revenue": 13565059.0,
+      "Median ROI": 1.568,
+      "Share breaking even": 0.3178294573643411,
+      "Median rating": 6.768,
+      "Reliable": true
+    },
+    {
+      "Genre": "History",
+      "Films": 423,
+      "Median budget": 20000000.0,
+      "Median revenue": 23800000.0,
+      "Median ROI": 1.394895970876764,
+      "Share breaking even": 0.3049645390070922,
+      "Median rating": 7.0,
+      "Reliable": true
+    }
+  ],
+  "seasonality": [
+    {
+      "Release Month": 1,
+      "Films": 451,
+      "Median budget": 11800000.0,
+      "Median revenue": 21011500.0,
+      "Median ROI": 1.8984770666666666,
+      "Share breaking even": 0.4057649667405765
+    },
+    {
+      "Release Month": 2,
+      "Films": 533,
+      "Median budget": 16000000.0,
+      "Median revenue": 27450189.0,
+      "Median ROI": 1.9130434782608696,
+      "Share breaking even": 0.4071294559099437
+    },
+    {
+      "Release Month": 3,
+      "Films": 603,
+      "Median budget": 16000000.0,
+      "Median revenue": 26533200.0,
+      "Median ROI": 1.9172374166666666,
+      "Share breaking even": 0.41459369817578773
+    },
+    {
+      "Release Month": 4,
+      "Films": 567,
+      "Median budget": 15000000.0,
+      "Median revenue": 20036737.0,
+      "Median ROI": 1.85,
+      "Share breaking even": 0.3844797178130511
+    },
+    {
+      "Release Month": 5,
+      "Films": 571,
+      "Median budget": 15000000.0,
+      "Median revenue": 24538513.0,
+      "Median ROI": 2.139372631578947,
+      "Share breaking even": 0.44658493870402804
+    },
+    {
+      "Release Month": 6,
+      "Films": 654,
+      "Median budget": 16000000.0,
+      "Median revenue": 38317973.5,
+      "Median ROI": 2.5881034047619047,
+      "Share breaking even": 0.5091743119266054
+    },
+    {
+      "Release Month": 7,
+      "Films": 611,
+      "Median budget": 18000000.0,
+      "Median revenue": 40000000.0,
+      "Median ROI": 2.3388102,
+      "Share breaking even": 0.4779050736497545
+    },
+    {
+      "Release Month": 8,
+      "Films": 687,
+      "Median budget": 14000000.0,
+      "Median revenue": 21972336.0,
+      "Median ROI": 1.7857142857142858,
+      "Share breaking even": 0.388646288209607
+    },
+    {
+      "Release Month": 9,
+      "Films": 844,
+      "Median budget": 13000000.0,
+      "Median revenue": 15761958.5,
+      "Median ROI": 1.3521409113636365,
+      "Share breaking even": 0.32109004739336494
+    },
+    {
+      "Release Month": 10,
+      "Films": 789,
+      "Median budget": 13000000.0,
+      "Median revenue": 17869048.0,
+      "Median ROI": 1.608482488888889,
+      "Share breaking even": 0.3650190114068441
+    },
+    {
+      "Release Month": 11,
+      "Films": 609,
+      "Median budget": 18000000.0,
+      "Median revenue": 30000000.0,
+      "Median ROI": 2.0254474,
+      "Share breaking even": 0.41379310344827586
+    },
+    {
+      "Release Month": 12,
+      "Films": 814,
+      "Median budget": 20000000.0,
+      "Median revenue": 40369329.5,
+      "Median ROI": 2.258429747368421,
+      "Share breaking even": 0.4619164619164619
+    }
+  ],
+  "companies_top": [
+    {
+      "Production Company": "Blumhouse Productions",
+      "Films": 65,
+      "Median budget": 5000000.0,
+      "Median revenue": 78903124.0,
+      "Median ROI": 11.2983889,
+      "Share breaking even": 0.8153846153846154,
+      "Median rating": 6.295
+    },
+    {
+      "Production Company": "Walt Disney Productions",
+      "Films": 33,
+      "Median budget": 4000000.0,
+      "Median revenue": 36359037.0,
+      "Median ROI": 8.0712,
+      "Share breaking even": 0.6666666666666666,
+      "Median rating": 7.014
+    },
+    {
+      "Production Company": "Lucasfilm Ltd.",
+      "Films": 25,
+      "Median budget": 37000000.0,
+      "Median revenue": 392952373.0,
+      "Median ROI": 6.0058696,
+      "Share breaking even": 0.68,
+      "Median rating": 7.024
+    },
+    {
+      "Production Company": "EON Productions",
+      "Films": 28,
+      "Median budget": 29000000.0,
+      "Median revenue": 170802844.0,
+      "Median ROI": 5.892333703017242,
+      "Share breaking even": 0.8928571428571429,
+      "Median rating": 6.5105
+    },
+    {
+      "Production Company": "Marvel Studios",
+      "Films": 35,
+      "Median budget": 200000000.0,
+      "Median revenue": 772776600.0,
+      "Median ROI": 3.9947074230769233,
+      "Share breaking even": 0.8285714285714286,
+      "Median rating": 7.303
+    },
+    {
+      "Production Company": "CJ Entertainment",
+      "Films": 34,
+      "Median budget": 8547500.0,
+      "Median revenue": 33081227.0,
+      "Median ROI": 3.933676338582677,
+      "Share breaking even": 0.6470588235294118,
+      "Median rating": 7.029999999999999
+    },
+    {
+      "Production Company": "Pixar",
+      "Films": 28,
+      "Median budget": 175000000.0,
+      "Median revenue": 530147533.5,
+      "Median ROI": 3.7838288049999997,
+      "Share breaking even": 0.6785714285714286,
+      "Median rating": 7.6465
+    },
+    {
+      "Production Company": "Amblin Entertainment",
+      "Films": 76,
+      "Median budget": 48000000.0,
+      "Median revenue": 157663032.0,
+      "Median ROI": 3.491798983697479,
+      "Share breaking even": 0.618421052631579,
+      "Median rating": 6.8305
+    },
+    {
+      "Production Company": "United Artists",
+      "Films": 140,
+      "Median budget": 6500000.0,
+      "Median revenue": 20375377.0,
+      "Median ROI": 3.4333333333333336,
+      "Share breaking even": 0.5785714285714286,
+      "Median rating": 6.890000000000001
+    },
+    {
+      "Production Company": "RKO Radio Pictures",
+      "Films": 29,
+      "Median budget": 952000.0,
+      "Median revenue": 2727000.0,
+      "Median ROI": 3.375,
+      "Share breaking even": 0.5862068965517241,
+      "Median rating": 6.9
+    },
+    {
+      "Production Company": "DreamWorks Animation",
+      "Films": 44,
+      "Median budget": 127000000.0,
+      "Median revenue": 345130854.5,
+      "Median ROI": 3.21387846118421,
+      "Share breaking even": 0.6818181818181818,
+      "Median rating": 6.9225
+    },
+    {
+      "Production Company": "Malpaso Productions",
+      "Films": 48,
+      "Median budget": 24000000.0,
+      "Median revenue": 47618000.0,
+      "Median ROI": 3.1753167972727274,
+      "Share breaking even": 0.5416666666666666,
+      "Median rating": 6.8145
+    },
+    {
+      "Production Company": "MTV Films",
+      "Films": 29,
+      "Median budget": 13000000.0,
+      "Median revenue": 46118097.0,
+      "Median ROI": 2.942392769230769,
+      "Share breaking even": 0.6206896551724138,
+      "Median rating": 6.297
+    },
+    {
+      "Production Company": "Vertigo Entertainment",
+      "Films": 32,
+      "Median budget": 30000000.0,
+      "Median revenue": 73155552.0,
+      "Median ROI": 2.9410763125,
+      "Share breaking even": 0.5625,
+      "Median rating": 5.9755
+    },
+    {
+      "Production Company": "Original Film",
+      "Films": 49,
+      "Median budget": 58000000.0,
+      "Median revenue": 158162788.0,
+      "Median ROI": 2.9173978909090907,
+      "Share breaking even": 0.6122448979591837,
+      "Median rating": 6.387
+    },
+    {
+      "Production Company": "Working Title Films",
+      "Films": 78,
+      "Median budget": 25000000.0,
+      "Median revenue": 73876293.5,
+      "Median ROI": 2.8718544968287527,
+      "Share breaking even": 0.5769230769230769,
+      "Median rating": 6.723
+    },
+    {
+      "Production Company": "Sony Pictures",
+      "Films": 54,
+      "Median budget": 40000000.0,
+      "Median revenue": 103012195.5,
+      "Median ROI": 2.7813341420454547,
+      "Share breaking even": 0.5555555555555556,
+      "Median rating": 6.250500000000001
+    },
+    {
+      "Production Company": "Screen Gems",
+      "Films": 77,
+      "Median budget": 19000000.0,
+      "Median revenue": 49002684.0,
+      "Median ROI": 2.746476266666667,
+      "Share breaking even": 0.5454545454545454,
+      "Median rating": 6.146
+    },
+    {
+      "Production Company": "Dune Entertainment",
+      "Films": 69,
+      "Median budget": 41000000.0,
+      "Median revenue": 120081841.0,
+      "Median ROI": 2.72339665,
+      "Share breaking even": 0.5507246376811594,
+      "Median rating": 6.1
+    },
+    {
+      "Production Company": "Jerry Bruckheimer Films",
+      "Films": 27,
+      "Median budget": 120000000.0,
+      "Median revenue": 237202299.0,
+      "Median ROI": 2.708318575,
+      "Share breaking even": 0.5925925925925926,
+      "Median rating": 6.538
+    }
+  ],
+  "rating_bands": [
+    {
+      "Rating band": "<5",
+      "Films": 303,
+      "Median budget": 14000000.0,
+      "Median revenue": 9097072.0,
+      "Median ROI": 0.7272727272727273,
+      "Share breaking even": 0.2145214521452145
+    },
+    {
+      "Rating band": "5\u20136",
+      "Films": 1720,
+      "Median budget": 17000000.0,
+      "Median revenue": 17787790.5,
+      "Median ROI": 1.1426989705882353,
+      "Share breaking even": 0.25988372093023254
+    },
+    {
+      "Rating band": "6\u20136.5",
+      "Films": 1770,
+      "Median budget": 19555000.0,
+      "Median revenue": 29219118.5,
+      "Median ROI": 1.7128973063137578,
+      "Share breaking even": 0.3553672316384181
+    },
+    {
+      "Rating band": "6.5\u20137",
+      "Films": 1825,
+      "Median budget": 15000000.0,
+      "Median revenue": 26348156.0,
+      "Median ROI": 2.1026119692307694,
+      "Share breaking even": 0.4383561643835616
+    },
+    {
+      "Rating band": "7\u20137.5",
+      "Films": 1342,
+      "Median budget": 12000000.0,
+      "Median revenue": 30500000.0,
+      "Median ROI": 2.7748126246612466,
+      "Share breaking even": 0.5365126676602087
+    },
+    {
+      "Rating band": "7.5+",
+      "Films": 773,
+      "Median budget": 12000000.0,
+      "Median revenue": 45361000.0,
+      "Median ROI": 4.266447875,
+      "Share breaking even": 0.6998706338939198
+    }
+  ]
+}

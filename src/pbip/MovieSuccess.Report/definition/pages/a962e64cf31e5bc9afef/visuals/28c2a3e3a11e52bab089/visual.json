@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "28c2a3e3a11e52bab089",
+  "position": {
+    "x": 76,
+    "y": 198,
+    "z": 140,
+    "width": 1768,
+    "height": 156,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "KEY TAKEAWAY",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Bigger budgets buy bigger box office, not better payback. What consistently pays is being liked: films rated 7 or above return about twice as much per dollar, in every budget class and every era. One caveat \u2014 this data can measure only 0.8% of its films.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "19pt",
+                      "color": "#F5F1EC"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Key takeaway of the whole report. Bigger budgets buy bigger box office, not better payback. What consistently pays is being liked: films rated 7 or above return about twice as much per dollar, in every budget class and every era. One caveat \u2014 this data can measure only 0.8% of its films.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+pandas>=2.0
+numpy>=1.24
+pyarrow>=14.0
+
+# Reads the VertiPaq DataModel stream out of a .pbix without Power BI Desktop.
+# This is what makes it possible to audit the official starter file's data on a
+# Linux machine. See docs/09-decision-log.md ADR-001.
+pbixray>=0.3

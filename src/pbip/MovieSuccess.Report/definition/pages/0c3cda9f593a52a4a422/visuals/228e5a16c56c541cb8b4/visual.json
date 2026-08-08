@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "228e5a16c56c541cb8b4",
+  "position": {
+    "x": 1308,
+    "y": 606,
+    "z": 170,
+    "width": 536,
+    "height": 356,
+    "tabOrder": 600
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "WHY WE TRUST THIS, AND HOW FAR",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "We tried to explain the rating effect away and could not. Films rated 7.0 or higher out-return the rest in all ten budget deciles and in all five eras, by a median factor of 2.1x and never by less than 1.19x. The effect is not cheap films in disguise, and it is not old films in disguise.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "It also holds at every rating threshold we tested, from 0 to 500 minimum votes.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "But this is an association, not a cause.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "12pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Ratings are collected after release, from people who chose to watch. A film that reached a big, willing audience can be rated highly because it succeeded, not the other way round. Nothing in this dataset can separate the two, so this report does not claim that making a better film causes a better return \u2014 only that the two travel together, everywhere we looked.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Panel explaining how far the rating finding can be trusted. Films rated 7.0 or higher out-return the rest in all ten budget deciles and all five eras, by a median factor of 2.1 times and never less than 1.19 times, and the result holds at every vote threshold from 0 to 500. However this is an association and not a cause: ratings are collected after release from people who chose to watch, so a film that reached a large willing audience may be rated highly because it succeeded. This report does not claim causation.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

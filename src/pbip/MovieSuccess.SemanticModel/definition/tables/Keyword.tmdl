@@ -1,0 +1,40 @@
+table Keyword
+	lineageTag: d580e56d-4862-5060-940b-03cdc6c39b3f
+
+	column Keywords
+		dataType: string
+		lineageTag: d8ce1c46-7f20-50e4-95b1-40ea5bce1b3f
+		summarizeBy: none
+		sourceColumn: Keywords
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Keyword ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2014f41e-58e9-556d-89d8-37673af43a32
+		summarizeBy: none
+		sourceColumn: Keyword ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Keyword = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    Keywords = Table.SelectColumns(Source, {"keywords"}),
+				    SplitKeywords = Table.ExpandListColumn(
+				        Table.TransformColumns(Keywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
+				        "keywords"),
+				    KeywordDimension = Table.AddIndexColumn(
+				        Table.Sort(
+				            Table.Distinct(
+				                Table.SelectRows(SplitKeywords, each [keywords] <> null and [keywords] <> "")),
+				            {{"keywords", Order.Ascending}}),
+				        "KeywordID", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(KeywordDimension,{{"keywords", "Keywords"}, {"KeywordID", "Keyword ID"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2f00ab5fb56e5642a4bf",
+  "position": {
+    "x": 48,
+    "y": 1016,
+    "z": 180,
+    "width": 1824,
+    "height": 48,
+    "tabOrder": -1000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Caution: cheap films are under-reported. See the panel bottom right.  ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
+                      "color": "#A8A29B",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "Movie data sourced from TMDB and distributed via Kaggle under the Open Data Commons Attribution License (ODC-By 1.0). Figures cover only the 7,733 films this dataset can measure. Dollars are nominal and are never compared across eras.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "10pt",
+                      "color": "#78716B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

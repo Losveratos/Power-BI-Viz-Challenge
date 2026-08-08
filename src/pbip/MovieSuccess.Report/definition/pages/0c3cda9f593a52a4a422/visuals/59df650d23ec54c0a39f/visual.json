@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "59df650d23ec54c0a39f",
+  "position": {
+    "x": 48,
+    "y": 122,
+    "z": 120,
+    "width": 1516,
+    "height": 40,
+    "tabOrder": 200
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "One signal survives every control we could apply \u2014 and unlike budget, it does not cost anything.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "15pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Standfirst for page 4: One signal survives every control we could apply \u2014 and unlike budget, it does not cost anything.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+table 'Production Company'
+	lineageTag: 88f6cb96-5082-5ce1-bff3-ce390a2a1f31
+
+	column 'Production Company'
+		dataType: string
+		lineageTag: e2d7b555-21fb-5ac0-8439-89f8c5a11af1
+		summarizeBy: none
+		sourceColumn: Production Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Production Company ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fc22093-f4ee-5114-9298-0e1e34ecfeb2
+		summarizeBy: none
+		sourceColumn: Production Company ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Production Company' = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    Companies = Table.SelectColumns(Source, {"production_companies"}),
+				    SplitCompanies = Table.ExpandListColumn(
+				        Table.TransformColumns(Companies, {{"production_companies", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
+				        "production_companies"),
+				    ProductionCompanyDimension = Table.RenameColumns(
+				        Table.AddIndexColumn(
+				            Table.Sort(
+				                Table.Distinct(
+				                    Table.SelectRows(SplitCompanies, each [production_companies] <> null and [production_companies] <> "")),
+				                {{"production_companies", Order.Ascending}}),
+				            "Production Company ID", 1, 1, Int64.Type),
+				        {{"production_companies", "Production Company"}})
+				in
+				    ProductionCompanyDimension
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "00354cd91c035eff8685",
+  "position": {
+    "x": 48,
+    "y": 122,
+    "z": 120,
+    "width": 1516,
+    "height": 40,
+    "tabOrder": 200
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "A bigger budget reliably buys a bigger opening. It does not buy a better return \u2014 and the middle of the market is the worst place to stand.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "15pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Standfirst for page 3: A bigger budget reliably buys a bigger opening. It does not buy a better return \u2014 and the middle of the market is the worst place to stand.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

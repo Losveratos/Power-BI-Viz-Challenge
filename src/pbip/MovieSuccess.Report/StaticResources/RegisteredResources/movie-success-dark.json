@@ -1,0 +1,236 @@
+{
+  "name": "Movie Success — Dark Editorial",
+  "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.114.json",
+  "dataColors": [
+    "#C98500",
+    "#3987E5",
+    "#E66767",
+    "#199E70",
+    "#9085E9",
+    "#A8A29B",
+    "#DFA234",
+    "#7FA8D8"
+  ],
+  "background": "#131110",
+  "backgroundLight": "#1C1917",
+  "backgroundNeutral": "#2E2A27",
+  "foreground": "#F5F1EC",
+  "foregroundNeutralSecondary": "#A8A29B",
+  "foregroundNeutralTertiary": "#78716B",
+  "tableAccent": "#C98500",
+  "good": "#199E70",
+  "neutral": "#A8A29B",
+  "bad": "#E66767",
+  "maximum": "#C98500",
+  "center": "#A8A29B",
+  "minimum": "#2E2A27",
+  "hyperlink": "#DFA234",
+  "visitedHyperlink": "#C98500",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 13,
+      "color": "#F5F1EC"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#A8A29B"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 40,
+      "color": "#F5F1EC"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 11,
+      "color": "#F5F1EC"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#1C1917" } },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#2E2A27" } },
+            "radius": 6
+          }
+        ],
+        "dropShadow": [{ "show": false }],
+        "visualHeader": [{ "show": false }],
+        "title": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI Semibold",
+            "fontSize": 13,
+            "fontColor": { "solid": { "color": "#F5F1EC" } },
+            "background": { "solid": { "color": "#1C1917" } },
+            "alignment": "left",
+            "titleWrap": true
+          }
+        ],
+        "subTitle": [
+          {
+            "show": true,
+            "fontFamily": "Segoe UI",
+            "fontSize": 10,
+            "fontColor": { "solid": { "color": "#A8A29B" } },
+            "alignment": "left",
+            "titleWrap": true
+          }
+        ],
+        "categoryAxis": [
+          {
+            "show": true,
+            "showAxisTitle": false,
+            "labelColor": { "solid": { "color": "#A8A29B" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI",
+            "gridlineShow": false,
+            "lineColor": { "solid": { "color": "#2E2A27" } }
+          }
+        ],
+        "valueAxis": [
+          {
+            "show": true,
+            "showAxisTitle": false,
+            "labelColor": { "solid": { "color": "#78716B" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI",
+            "gridlineShow": true,
+            "gridlineColor": { "solid": { "color": "#262220" } },
+            "gridlineThickness": 1,
+            "gridlineStyle": "solid"
+          }
+        ],
+        "labels": [
+          {
+            "show": false,
+            "color": { "solid": { "color": "#F5F1EC" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "legend": [
+          {
+            "show": true,
+            "position": "TopCenter",
+            "showTitle": false,
+            "labelColor": { "solid": { "color": "#A8A29B" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI"
+          }
+        ],
+        "plotArea": [{ "transparency": 100 }]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "color": { "solid": { "color": "#F5F1EC" } },
+            "fontSize": 40,
+            "fontFamily": "Segoe UI Semibold"
+          }
+        ],
+        "categoryLabels": [
+          {
+            "show": true,
+            "color": { "solid": { "color": "#A8A29B" } },
+            "fontSize": 11,
+            "fontFamily": "Segoe UI"
+          }
+        ]
+      }
+    },
+    "textbox": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    },
+    "shape": {
+      "*": {
+        "background": [{ "show": false }],
+        "border": [{ "show": false }]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          {
+            "gridVertical": false,
+            "gridHorizontal": true,
+            "gridHorizontalColor": { "solid": { "color": "#2E2A27" } },
+            "outlineColor": { "solid": { "color": "#2E2A27" } },
+            "rowPadding": 6
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontColor": { "solid": { "color": "#A8A29B" } },
+            "backColor": { "solid": { "color": "#1C1917" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI Semibold",
+            "outline": "BottomOnly"
+          }
+        ],
+        "values": [
+          {
+            "fontColor": { "solid": { "color": "#F5F1EC" } },
+            "backColor": { "solid": { "color": "#1C1917" } },
+            "backColorSecondary": { "solid": { "color": "#1C1917" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI"
+          }
+        ],
+        "total": [{ "totals": false }]
+      }
+    },
+    "slicer": {
+      "*": {
+        "background": [
+          { "show": true, "color": { "solid": { "color": "#1C1917" } } }
+        ],
+        "items": [
+          {
+            "fontColor": { "solid": { "color": "#F5F1EC" } },
+            "background": { "solid": { "color": "#1C1917" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI"
+          }
+        ],
+        "header": [
+          {
+            "show": true,
+            "fontColor": { "solid": { "color": "#A8A29B" } },
+            "background": { "solid": { "color": "#1C1917" } },
+            "fontSize": 10,
+            "fontFamily": "Segoe UI Semibold",
+            "outline": "None"
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "outspace": [{ "color": { "solid": { "color": "#131110" } } }],
+        "background": [
+          {
+            "color": { "solid": { "color": "#131110" } },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

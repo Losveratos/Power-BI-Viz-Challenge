@@ -1,0 +1,141 @@
+{
+  "starter_rows": 85394,
+  "source_rows_approx": 930000,
+  "starter_share_of_source": 0.0918,
+  "completeness": {
+    "Title": {
+      "missing": 1,
+      "missing_share": 0.0
+    },
+    "Release Date": {
+      "missing": 26166,
+      "missing_share": 0.3064
+    },
+    "Revenue": {
+      "missing": 0,
+      "missing_share": 0.0,
+      "zero": 67436,
+      "zero_share": 0.7897
+    },
+    "Budget": {
+      "missing": 0,
+      "missing_share": 0.0
+    },
+    "Runtime": {
+      "missing": 0,
+      "missing_share": 0.0,
+      "zero": 18470
+    },
+    "Vote Average": {
+      "missing": 0,
+      "missing_share": 0.0,
+      "zero": 56028
+    },
+    "Vote Count": {
+      "missing": 0,
+      "missing_share": 0.0,
+      "zero": 55958
+    },
+    "Original Language": {
+      "missing": 0,
+      "missing_share": 0.0
+    },
+    "Poster Path": {
+      "missing": 23467,
+      "missing_share": 0.2748
+    },
+    "Tagline": {
+      "missing": 45130,
+      "missing_share": 0.5285
+    }
+  },
+  "top_budget_value": 100,
+  "top_budget_films": 3531,
+  "budget_under_10k": 51634,
+  "budget_under_10k_share": 0.6047,
+  "funnel": [
+    {
+      "Step": "Source dataset (TMDB, as described by the brief)",
+      "Films": 930000,
+      "Why": "Approximate; stated by the challenge brief, not verifiable inside the starter file.",
+      "Retained vs source": 1.0,
+      "Dropped at this step": 0.0
+    },
+    {
+      "Step": "Starter file: Budget > 0",
+      "Films": 85394,
+      "Why": "Applied by the supplied Power Query, before competitors see the data.",
+      "Retained vs source": 0.09182150537634409,
+      "Dropped at this step": 844606.0
+    },
+    {
+      "Step": "Status = Released",
+      "Films": 79222,
+      "Why": "Excludes planned/in-production titles.",
+      "Retained vs source": 0.08518494623655914,
+      "Dropped at this step": 6172.0
+    },
+    {
+      "Step": "Release Date present",
+      "Films": 56072,
+      "Why": "A film with no date cannot be placed in time.",
+      "Retained vs source": 0.06029247311827957,
+      "Dropped at this step": 23150.0
+    },
+    {
+      "Step": "Budget >= $10,000",
+      "Films": 28193,
+      "Why": "Removes placeholder budgets such as the repeated value 100.",
+      "Retained vs source": 0.03031505376344086,
+      "Dropped at this step": 27879.0
+    },
+    {
+      "Step": "Revenue >= $10,000",
+      "Films": 10219,
+      "Why": "Revenue 0 means 'not reported', not 'earned nothing' \u2014 it cannot enter a ratio.",
+      "Retained vs source": 0.010988172043010752,
+      "Dropped at this step": 17974.0
+    },
+    {
+      "Step": "Vote Count >= 50",
+      "Films": 7733,
+      "Why": "A rating from a handful of voters is noise.",
+      "Retained vs source": 0.00831505376344086,
+      "Dropped at this step": 2486.0
+    }
+  ],
+  "analysable_rows": 7733,
+  "analysable_share_of_starter": 0.0906,
+  "analysable_share_of_source": 0.0083,
+  "analysable_year_min": 1915,
+  "analysable_year_max": 2023,
+  "revenue_skew": {
+    "mean": 84932088.3728178,
+    "median": 25155355.0,
+    "p90": 216738739.20000002,
+    "p99": 874875406.1200005,
+    "top1pct_share_of_total": 0.14226621129419745
+  },
+  "roi_skew": {
+    "mean": 6.257179037240224,
+    "median": 1.9576023,
+    "p99": 61.443505920000504,
+    "max": 4143.984983333334,
+    "share_below_1x": 0.3137204189835769,
+    "share_below_2_5x": 0.5859304280356912
+  },
+  "language_mix": {
+    "en": 0.851,
+    "fr": 0.0325,
+    "hi": 0.0226,
+    "es": 0.0146,
+    "ja": 0.0118,
+    "it": 0.0096,
+    "ru": 0.0096,
+    "ko": 0.0087
+  },
+  "pre_1980_share": 0.09427130479762058,
+  "last_decade_share": 0.21259537049010732,
+  "duplicate_titles": 5436,
+  "max_same_title": 40
+}

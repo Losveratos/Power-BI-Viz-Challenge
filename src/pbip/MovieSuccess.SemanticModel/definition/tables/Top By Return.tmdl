@@ -1,0 +1,48 @@
+table 'Top By Return'
+	lineageTag: a160e27a-be1f-5b73-94a0-556e655c876f
+
+	column Rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 94f163f0-1fda-5350-8b55-0a2359deb08c
+		summarizeBy: none
+		sourceColumn: [Rank]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Film
+		dataType: string
+		lineageTag: 1c698ec3-2293-5c60-a6e6-daed5df98869
+		summarizeBy: none
+		sourceColumn: [Film]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		formatString: 0.0\x
+		lineageTag: e845a828-c1d4-57df-88aa-d5f69e8fe5f8
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Top By Return' = calculated
+		mode: import
+		source =
+				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
+				VAR Picked = TOPN ( 10, Pool, 'Movies'[ROI], DESC )
+				VAR Ranked =
+				    ADDCOLUMNS (
+				        Picked,
+				        "@Rank", RANKX ( Picked, 'Movies'[ROI], , DESC, DENSE )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        Ranked,
+				        "Rank", [@Rank],
+				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
+				        "Value", 'Movies'[ROI] * 1.0
+				    )
+
+	annotation PBI_Id = 5108fc066e645630ad4e

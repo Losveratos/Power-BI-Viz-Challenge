@@ -1,0 +1,48 @@
+table 'Top By Box Office'
+	lineageTag: 13100fa3-2807-5574-9423-2ab42831559c
+
+	column Rank
+		dataType: int64
+		formatString: 0
+		lineageTag: b3a29082-32b5-5c0a-b7fc-c74d1534bed8
+		summarizeBy: none
+		sourceColumn: [Rank]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Film
+		dataType: string
+		lineageTag: a8f1da7a-6f73-5f19-94e9-3d1afb853d2e
+		summarizeBy: none
+		sourceColumn: [Film]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 1dde6b3c-28ed-5827-97e5-ec025ada7135
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Top By Box Office' = calculated
+		mode: import
+		source =
+				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
+				VAR Picked = TOPN ( 10, Pool, 'Movies'[Revenue], DESC )
+				VAR Ranked =
+				    ADDCOLUMNS (
+				        Picked,
+				        "@Rank", RANKX ( Picked, 'Movies'[Revenue], , DESC, DENSE )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        Ranked,
+				        "Rank", [@Rank],
+				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
+				        "Value", 'Movies'[Revenue] * 1.0
+				    )
+
+	annotation PBI_Id = fccc8ce0a0aa52ceaa4f
