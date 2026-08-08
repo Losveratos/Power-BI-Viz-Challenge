@@ -3,11 +3,11 @@
   "name": "2514f04adcb352998e2f",
   "position": {
     "x": 972,
-    "y": 188,
-    "z": 150,
+    "y": 252,
+    "z": 170,
     "width": 900,
-    "height": 384,
-    "tabOrder": 400
+    "height": 330,
+    "tabOrder": 600
   },
   "visual": {
     "visualType": "clusteredColumnChart",

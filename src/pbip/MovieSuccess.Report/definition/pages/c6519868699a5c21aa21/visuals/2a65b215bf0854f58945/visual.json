@@ -37,6 +37,20 @@
                       "Entity": "Top By Gross Profit"
                     }
                   },
+                  "Property": "Poster"
+                }
+              },
+              "queryRef": "Top By Gross Profit.Poster",
+              "nativeQueryRef": "Poster"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top By Gross Profit"
+                    }
+                  },
                   "Property": "Film"
                 }
               },

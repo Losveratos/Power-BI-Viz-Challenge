@@ -395,6 +395,43 @@ the build guide. The canonical build remains in `src/pbip` unchanged and stays
 byte-identical across regenerations; the bundled build lives under `work/` and
 is never committed, because ADR-010 keeps raw data out of the repository.
 
+## ADR-012 — Visual upgrade: scatter, slicers, posters, studio ranking
+
+**Context.** After the first successful end-to-end refresh, the entrant asked
+for a visually stronger variant: clusters in a scatter plot relating budget,
+box office and rating, filterable by genre, and a "top directors per category"
+view. Directors do not exist anywhere in the provided dataset, and joining
+IMDb or any other source is prohibited (P-02), so that part cannot be built
+as asked.
+
+**Decision.** Four changes, all inside the existing five pages and the
+existing evidence. Page 3 gains a hero scatter of all 7,733 measurable films —
+budget against revenue on log scales, dot size carrying the audience rating,
+and a two-colour series on the break-even outcome (red below, green at or
+above 2.5x). The visual-level filter that restricts it to the measurable
+subset uses the documented `filterConfig` grammar. Pages 3 and 4 gain genre
+and era dropdown slicers; their page captions state that slicers move the
+charts while figures quoted in titles describe the full subset, so a filtered
+view cannot silently contradict the prose. Page 4 gains "Studios that
+deliver", a production-company ranking whose 25-film reliability gate lives
+inside the measures (`IF ( [Films Measured] >= 25, … )`), so the gate
+re-applies within any slicer context and the requested "top X per category"
+is honest by construction — this is the rule-compliant stand-in for the
+impossible directors view. Page 2's leaderboards gain poster thumbnails via a
+derived `Poster URL` column that prefixes the dataset's own `Poster Path`
+with the TMDB image host, which the rules explicitly allow.
+
+**Consequences.** The theme's first two data colours become red and green so
+the scatter's outcome series colours correctly by sort order; every
+single-series chart sets its colour explicitly and is unaffected. The
+green/red pair triggers the design system's secondary-encoding obligation,
+met by the legend, the stated threshold in the subtitle and the tooltip.
+Poster rendering requires internet access at view time; cells degrade to
+blanks without it. Two properties in the scatter (`axisScale: 'Log'`,
+`fillPoint`) are not documented in Microsoft's authoring reference; if
+rejected they are silently dropped and the chart falls back to linear axes,
+which is degraded but not broken.
+
 ## Superseded or reconsidered
 
 Nothing has been superseded or reversed so far.

@@ -2,10 +2,10 @@
   "name": "movie-success-dark",
   "$schema": "https://raw.githubusercontent.com/microsoft/powerbi-desktop-samples/main/Report%20Theme%20JSON%20Schema/reportThemeSchema-2.114.json",
   "dataColors": [
-    "#C98500",
-    "#3987E5",
     "#E66767",
     "#199E70",
+    "#C98500",
+    "#3987E5",
     "#9085E9",
     "#A8A29B",
     "#DFA234",

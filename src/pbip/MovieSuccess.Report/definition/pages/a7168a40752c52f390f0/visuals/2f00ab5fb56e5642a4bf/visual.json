@@ -4,7 +4,7 @@
   "position": {
     "x": 48,
     "y": 1016,
-    "z": 180,
+    "z": 200,
     "width": 1824,
     "height": 48,
     "tabOrder": -1000
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Caution: cheap films are under-reported. See the panel bottom right.  ",
+                    "value": "Caution: cheap films are under-reported \u2014 see the panel bottom right. Slicers filter the charts; figures quoted in titles describe the full measurable subset.  ",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "10pt",

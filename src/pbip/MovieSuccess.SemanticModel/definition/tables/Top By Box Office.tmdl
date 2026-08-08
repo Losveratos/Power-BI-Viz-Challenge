@@ -10,6 +10,15 @@ table 'Top By Box Office'
 
 		annotation SummarizationSetBy = Automatic
 
+	column Poster
+		dataType: string
+		lineageTag: 7d4a8274-5eb5-50d1-babf-713469055861
+		summarizeBy: none
+		sourceColumn: [Poster]
+		dataCategory: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
 	column Film
 		dataType: string
 		lineageTag: a8f1da7a-6f73-5f19-94e9-3d1afb853d2e
@@ -41,6 +50,7 @@ table 'Top By Box Office'
 				    SELECTCOLUMNS (
 				        Ranked,
 				        "Rank", [@Rank],
+				        "Poster", 'Movies'[Poster URL],
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[Revenue] * 1.0
 				    )

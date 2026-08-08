@@ -171,6 +171,26 @@ table _Measures
 		formatString: 0.00\x
 		lineageTag: d69a562c-f9ac-56d3-b88a-203fa2cbc7fe
 
+	/// Films Measured, suppressed for production companies with fewer than 25 measured films in the current filter context.
+	measure 'Films Measured (studios)' = IF ( [Films Measured] >= 25, [Films Measured] )
+		formatString: #,0
+		lineageTag: 0774b06b-241e-5cf1-9e84-50e4befc8a65
+
+	/// Median Return, suppressed below 25 measured films. The gate re-applies inside any genre or era filter.
+	measure 'Median Return (studios)' = IF ( [Films Measured] >= 25, [Median Return] )
+		formatString: 0.00\x
+		lineageTag: c4f5313b-5cc8-5d4d-b8dc-ba624af2b517
+
+	/// Break-even Rate, suppressed below 25 measured films.
+	measure 'Break-even Rate (studios)' = IF ( [Films Measured] >= 25, [Break-even Rate] )
+		formatString: 0.0%
+		lineageTag: e35fcea8-e663-5efe-a837-27c3b4f56e55
+
+	/// Median Budget, suppressed below 25 measured films.
+	measure 'Median Budget (studios)' = IF ( [Films Measured] >= 25, [Median Budget] )
+		formatString: \$#,0
+		lineageTag: 797fb8c6-16d8-55a1-82cc-9e835a2b78b9
+
 	/// Share of films with a credible budget that also report revenue. This rate climbs steeply with budget size, which is the survivorship problem the report has to disclose.
 	measure 'Revenue Reporting Rate' = ```
 			VAR Pool = CALCULATETABLE ( 'Movies', 'Movies'[Budget] >= 10000 )

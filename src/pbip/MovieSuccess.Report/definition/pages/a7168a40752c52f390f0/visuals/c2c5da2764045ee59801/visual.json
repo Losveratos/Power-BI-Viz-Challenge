@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "c2c5da2764045ee59801",
   "position": {
-    "x": 1000,
-    "y": 606,
-    "z": 170,
-    "width": 844,
-    "height": 356,
-    "tabOrder": 600
+    "x": 1304,
+    "y": 614,
+    "z": 190,
+    "width": 544,
+    "height": 352,
+    "tabOrder": 800
   },
   "visual": {
     "visualType": "textbox",
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "WHAT IS WRONG WITH THE LEFT-HAND SIDE OF THESE CHARTS",
+                    "value": "WHAT IS WRONG WITH THE CHEAP END",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "11pt",
@@ -32,7 +32,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Cheap films look extraordinary here, and they are partly an illusion. Revenue reporting is not random: it depends on how big the film was.",
+                    "value": "Cheap films look extraordinary here, and they are partly an illusion.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
                       "fontSize": "12pt",
@@ -44,7 +44,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Of films budgeted between $10,000 and $100,000, only 7.8% report any revenue at all. Of films budgeted above $50M, 91.1% do.",
+                    "value": "Films budgeted $10k\u2013100k report revenue only 7.8% of the time. Above $50M, 91.1% do.",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "12pt",
@@ -57,10 +57,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "A cheap film that flopped usually never had its revenue recorded, so it is absent from every chart on this page. An expensive flop is recorded and counted. That means the return of the cheapest band is an upper bound on reality, not an expectation \u2014 and it is why this report does not advise anyone to make cheap films.",
+                    "value": "A cheap flop was usually never recorded, so it is missing from this page. An expensive flop is counted. The cheap end is an upper bound on reality, not an expectation.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "12pt",
+                      "fontSize": "11pt",
                       "color": "#A8A29B"
                     }
                   }
@@ -69,10 +69,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Only 2.4% of films in the $10,000-$100,000 band survive into this analysis, against 90.8% of films above $50M.",
+                    "value": "Only 2.4% of $10k\u2013100k films survive into this analysis, against 90.8% above $50M.",
                     "textStyle": {
                       "fontFamily": "Segoe UI",
-                      "fontSize": "11pt",
+                      "fontSize": "10pt",
                       "color": "#78716B"
                     }
                   }
@@ -91,7 +91,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Caution panel. Cheap films look extraordinary on this page partly because of survivorship bias. Of films budgeted between 10,000 and 100,000 dollars, only 7.8% report any revenue, against 91.1% of films budgeted above 50 million. Cheap films that flopped were never recorded, so they are absent from these charts, while expensive flops are counted. The return figure for the cheapest band is therefore an upper bound rather than an expectation. Only 2.4% of films in the 10,000 to 100,000 dollar band survive into this analysis, against 90.8% of films above 50 million.'"
+                  "Value": "'Caution panel. Cheap films look extraordinary partly because of survivorship bias: films budgeted between 10,000 and 100,000 dollars report revenue only 7.8% of the time, against 91.1% above 50 million. Cheap flops were never recorded and are missing from this page, while expensive flops are counted, so the cheap end is an upper bound rather than an expectation. Only 2.4% of the cheapest band survives into this analysis, against 90.8% of films above 50 million.'"
                 }
               }
             }

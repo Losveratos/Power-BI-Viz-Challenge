@@ -10,6 +10,15 @@ table 'Top By Acclaim'
 
 		annotation SummarizationSetBy = Automatic
 
+	column Poster
+		dataType: string
+		lineageTag: bdbc7069-d553-58b8-a59e-c9af464c5d9c
+		summarizeBy: none
+		sourceColumn: [Poster]
+		dataCategory: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
 	column Film
 		dataType: string
 		lineageTag: 4803e0b9-673b-5000-9715-27a04b0fed8c
@@ -41,6 +50,7 @@ table 'Top By Acclaim'
 				    SELECTCOLUMNS (
 				        Ranked,
 				        "Rank", [@Rank],
+				        "Poster", 'Movies'[Poster URL],
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[Vote Average] * 1.0
 				    )

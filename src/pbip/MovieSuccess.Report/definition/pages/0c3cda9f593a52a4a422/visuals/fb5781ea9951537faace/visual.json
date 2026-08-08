@@ -4,7 +4,7 @@
   "position": {
     "x": 48,
     "y": 1016,
-    "z": 180,
+    "z": 210,
     "width": 1824,
     "height": 48,
     "tabOrder": -1000
@@ -19,7 +19,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Association, not causation. Ratings are collected after release.  ",
+                    "value": "Association, not causation \u2014 ratings are collected after release. Slicers filter the charts; quoted figures describe the full measurable subset.  ",
                     "textStyle": {
                       "fontFamily": "Segoe UI Semibold",
                       "fontSize": "10pt",
