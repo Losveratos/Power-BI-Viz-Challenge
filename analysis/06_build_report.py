@@ -1064,8 +1064,12 @@ def main() -> int:
     # ---- project-level files ----------------------------------------------
     (PBIP / "MovieSuccess.pbip").write_text(
         json.dumps({
-            "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/pbip/"
-                       "definitionProperties/1.0.0/schema.json",
+            # The .pbip shortcut uses fabric/pbip/pbipProperties — NOT
+            # fabric/item/pbip/definitionProperties. Getting this wrong makes
+            # Desktop deserialize `artifacts` to nothing and fail with
+            # "ArtifactShortcut: Required artifact is missing".
+            "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/"
+                       "pbipProperties/1.0.0/schema.json",
             "version": "1.0",
             "artifacts": [{"report": {"path": "MovieSuccess.Report"}}],
             "settings": {"enableAutoRecovery": True},
@@ -1085,7 +1089,7 @@ def main() -> int:
     (REPORT / "definition.pbir").write_text(
         json.dumps({
             "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/"
-                       "definitionProperties/1.0.0/schema.json",
+                       "definitionProperties/2.0.0/schema.json",
             "version": "4.0",
             "datasetReference": {"byPath": {"path": "../MovieSuccess.SemanticModel"}},
         }, indent=2) + "\n",
