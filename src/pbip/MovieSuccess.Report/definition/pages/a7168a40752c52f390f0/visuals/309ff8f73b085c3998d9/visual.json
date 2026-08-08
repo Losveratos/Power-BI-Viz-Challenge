@@ -1,16 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "dabcfe664b055c6a90e3",
+  "name": "309ff8f73b085c3998d9",
   "position": {
     "x": 48,
-    "y": 588,
-    "z": 160,
-    "width": 900,
-    "height": 392,
-    "tabOrder": 500
+    "y": 598,
+    "z": 180,
+    "width": 1208,
+    "height": 382,
+    "tabOrder": 700
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "scatterChart",
     "query": {
       "queryState": {
         "Category": {
@@ -23,12 +23,53 @@
                       "Entity": "Movies"
                     }
                   },
-                  "Property": "Budget Band"
+                  "Property": "Title"
                 }
               },
-              "queryRef": "Movies.Budget Band",
-              "nativeQueryRef": "Budget Band",
+              "queryRef": "Movies.Title",
+              "nativeQueryRef": "Title",
               "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Movies"
+                    }
+                  },
+                  "Property": "Outcome"
+                }
+              },
+              "queryRef": "Movies.Outcome",
+              "nativeQueryRef": "Outcome"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Movies"
+                        }
+                      },
+                      "Property": "Budget"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Movies.Budget)",
+              "nativeQueryRef": "Sum of Budget"
             }
           ]
         },
@@ -36,17 +77,45 @@
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Movies"
+                        }
+                      },
+                      "Property": "Revenue"
                     }
                   },
-                  "Property": "Break-even Rate"
+                  "Function": 0
                 }
               },
-              "queryRef": "_Measures.Break-even Rate",
-              "nativeQueryRef": "Break-even Rate"
+              "queryRef": "Sum(Movies.Revenue)",
+              "nativeQueryRef": "Sum of Revenue"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Movies"
+                        }
+                      },
+                      "Property": "Vote Average"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(Movies.Vote Average)",
+              "nativeQueryRef": "Sum of Vote Average"
             }
           ]
         }
@@ -64,6 +133,171 @@
               }
             },
             "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "axisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Log'"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#78716B'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "titleColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A8A29B'"
+                    }
+                  }
+                }
+              }
+            },
+            "titleFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "axisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Log'"
+                }
+              }
+            },
+            "labelColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#78716B'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "gridlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#262220'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridlineThickness": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "titleColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#A8A29B'"
+                    }
+                  }
+                }
+              }
+            },
+            "titleFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top'"
+                }
+              }
+            },
+            "showTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -94,122 +328,17 @@
                   "Value": "'Segoe UI'"
                 }
               }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "lineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#2E2A27'"
-                    }
-                  }
-                }
-              }
             }
           }
         }
       ],
-      "valueAxis": [
+      "fillPoint": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#78716B'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI'"
-                }
-              }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#262220'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineThickness": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "defaultColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#199E70'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }
@@ -223,44 +352,6 @@
               "expr": {
                 "Literal": {
                   "Value": "100D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F5F1EC'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI Semibold'"
                 }
               }
             }
@@ -282,7 +373,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'The mid-budget film is the one that fails'"
+                  "Value": "'Every measurable film at once'"
                 }
               }
             },
@@ -450,7 +541,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Share of films reaching 2.5x their budget. Lowest at $15-30M: 33.5%. Removing the top 5% of earners in every band leaves the U intact, so this is not the work of a few franchises.'"
+                  "Value": "'One dot per film: budget across, revenue up, both on log scales; dot size is the audience rating. Green cleared the 2.5x break-even rule of thumb, red did not. Use the genre and era slicers above to explore a slice.'"
                 }
               }
             },
@@ -502,7 +593,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Column chart of the share of films reaching 2.5 times their budget, by budget band. The share is 65.8% under 1 million dollars, falls to its low of 33.5% in the 15 to 30 million band, and recovers to 53.3% for films of 100 million and above. Removing the highest-earning 5% of films within each band leaves this U-shape intact.'"
+                  "Value": "'Scatter plot of all 7,733 measurable films. The horizontal axis is production budget and the vertical axis is gross revenue, both on logarithmic scales; dot size encodes the audience rating out of ten. Green dots cleared 2.5 times their budget, red dots did not. The red dots concentrate in the middle budgets, and larger dots \u2014 better rated films \u2014 sit visibly higher at every budget level. The chart responds to the genre and era slicers.'"
                 }
               }
             }
@@ -511,5 +602,63 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filtera8459ae532d25a8f86c5beef",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Movies"
+              }
+            },
+            "Property": "Is Measurable"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "Movies",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "m"
+                          }
+                        },
+                        "Property": "Is Measurable"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "true"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
   }
 }

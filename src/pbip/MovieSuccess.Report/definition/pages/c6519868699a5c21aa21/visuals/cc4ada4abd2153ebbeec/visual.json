@@ -37,6 +37,20 @@
                       "Entity": "Top By Acclaim"
                     }
                   },
+                  "Property": "Poster"
+                }
+              },
+              "queryRef": "Top By Acclaim.Poster",
+              "nativeQueryRef": "Poster"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top By Acclaim"
+                    }
+                  },
                   "Property": "Film"
                 }
               },

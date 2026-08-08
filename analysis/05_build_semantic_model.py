@@ -228,9 +228,28 @@ M_MOVIES_DERIVED = f"""
     // The report needs to name the placeholder budgets, so it needs to be able
     // to count them.
     AddPlaceholder = Table.AddColumn(AddEraSort, "Budget Looks Like A Placeholder", each
-        [Budget] < {MIN_BUDGET}, type logical)
+        [Budget] < {MIN_BUDGET}, type logical),
+
+    // Break-even outcome as a category, for the scatter plot's two-colour
+    // series. Text plus a sort key, so red is always the first legend entry.
+    AddOutcome = Table.AddColumn(AddPlaceholder, "Outcome", each
+        if not [Is Measurable] then null
+        else if [ROI] >= {BREAKEVEN} then "Clears 2.5x break-even"
+        else "Below 2.5x break-even", type text),
+
+    AddOutcomeSort = Table.AddColumn(AddOutcome, "Outcome Sort", each
+        if [Outcome] = null then null
+        else if [Outcome] = "Below 2.5x break-even" then 1
+        else 2, Int64.Type),
+
+    // The rules explicitly allow "movie posters ... linked directly from the
+    // provided dataset". Poster Path is a dataset column; this only prefixes
+    // the TMDB image host it belongs to.
+    AddPosterUrl = Table.AddColumn(AddOutcomeSort, "Poster URL", each
+        if [Poster Path] = null or [Poster Path] = "" then null
+        else "https://image.tmdb.org/t/p/w185" & [Poster Path], type text)
 in
-    AddPlaceholder
+    AddPosterUrl
 """
 
 M_MOVIES = M_MOVIES_HEAD.rstrip() + "\n\n" + M_MOVIES_DERIVED.strip("\n")
@@ -430,6 +449,9 @@ MOVIES_COLUMNS = [
     ("Era", "string", None, "none", ["sortByColumn: 'Era Sort'"]),
     ("Era Sort", "int64", "0", "none", ["isHidden"]),
     ("Budget Looks Like A Placeholder", "boolean", None, "none", []),
+    ("Outcome", "string", None, "none", ["sortByColumn: 'Outcome Sort'"]),
+    ("Outcome Sort", "int64", "0", "none", ["isHidden"]),
+    ("Poster URL", "string", None, "none", ["dataCategory: ImageUrl"]),
 ]
 
 SIMPLE_TABLES = [
@@ -662,6 +684,37 @@ RETURN
         "How many times more a film rated 7.0 or better returns, compared with the "
         "rest of the same selection. An association, not a cause.",
     ),
+    # Studio measures share a 25-film reliability gate: a studio's slate is
+    # narrower than a genre, so the 100-film gate would empty the table, but a
+    # median over fewer than 25 films is still noise. The gate re-evaluates
+    # inside the current filter, so "top studios per genre" only ever ranks
+    # studios with at least 25 measured films IN that genre.
+    (
+        "Films Measured (studios)",
+        "IF ( [Films Measured] >= 25, [Films Measured] )",
+        "#,0",
+        "Films Measured, suppressed for production companies with fewer than 25 "
+        "measured films in the current filter context.",
+    ),
+    (
+        "Median Return (studios)",
+        "IF ( [Films Measured] >= 25, [Median Return] )",
+        "0.00\\x",
+        "Median Return, suppressed below 25 measured films. The gate re-applies "
+        "inside any genre or era filter.",
+    ),
+    (
+        "Break-even Rate (studios)",
+        "IF ( [Films Measured] >= 25, [Break-even Rate] )",
+        "0.0%",
+        "Break-even Rate, suppressed below 25 measured films.",
+    ),
+    (
+        "Median Budget (studios)",
+        "IF ( [Films Measured] >= 25, [Median Budget] )",
+        '\$#,0',
+        "Median Budget, suppressed below 25 measured films.",
+    ),
     (
         "Revenue Reporting Rate",
         """VAR Pool = CALCULATETABLE ( 'Movies', 'Movies'[Budget] >= 10000 )
@@ -778,6 +831,7 @@ RETURN
     SELECTCOLUMNS (
         Ranked,
         "Rank", [@Rank],
+        "Poster", 'Movies'[Poster URL],
         "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
         "Value", {order_by} * 1.0
     )
@@ -954,6 +1008,9 @@ def emit_relationships() -> str:
 def main() -> int:
     global MODEL, DEFN
     bundled = "--bundled" in sys.argv
+    data_folder_default = "C:" + chr(92) + "MovieSuccess" + chr(92) + "Data"
+    if "--data-folder" in sys.argv:
+        data_folder_default = sys.argv[sys.argv.index("--data-folder") + 1]
     if bundled:
         MODEL = REPO / "work" / "bundle" / "MovieSuccess" / "MovieSuccess.SemanticModel"
         DEFN = MODEL / "definition"
@@ -1033,8 +1090,8 @@ def main() -> int:
             "/// Full path of the Data folder that ships next to the .pbip,",
             "/// WITHOUT a trailing backslash. This is the one value to set",
             "/// before refreshing.",
-            'expression DataFolder = "C:' + chr(92) + 'MovieSuccess' + chr(92)
-            + 'Data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]',
+            'expression DataFolder = "' + data_folder_default
+            + '" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]',
             f"\tlineageTag: {tag('expression', 'DataFolder')}",
             "",
             "\tannotation PBI_ResultType = Text",
@@ -1099,6 +1156,7 @@ def main() -> int:
                 leaderboard_dax(order_by),
                 [
                     ("Rank", "int64", "0", "none", []),
+                    ("Poster", "string", None, "none", ["dataCategory: ImageUrl"]),
                     ("Film", "string", None, "none", []),
                     ("Value", "double", value_format, "sum", []),
                 ],

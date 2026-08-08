@@ -10,6 +10,15 @@ table 'Top By Gross Profit'
 
 		annotation SummarizationSetBy = Automatic
 
+	column Poster
+		dataType: string
+		lineageTag: 66c3f2f7-a094-5962-ac1a-82a233c8a344
+		summarizeBy: none
+		sourceColumn: [Poster]
+		dataCategory: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
 	column Film
 		dataType: string
 		lineageTag: 12a6a3fe-5f56-5600-a587-e1a7239dac58
@@ -41,6 +50,7 @@ table 'Top By Gross Profit'
 				    SELECTCOLUMNS (
 				        Ranked,
 				        "Rank", [@Rank],
+				        "Poster", 'Movies'[Poster URL],
 				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
 				        "Value", 'Movies'[Gross Profit] * 1.0
 				    )

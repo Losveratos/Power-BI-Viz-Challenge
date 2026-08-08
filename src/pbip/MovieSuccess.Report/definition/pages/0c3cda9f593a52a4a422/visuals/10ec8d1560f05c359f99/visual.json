@@ -1,39 +1,34 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
-  "name": "e617d6b2c68d5d4b9085",
+  "name": "10ec8d1560f05c359f99",
   "position": {
-    "x": 48,
+    "x": 818,
     "y": 568,
-    "z": 180,
-    "width": 746,
+    "z": 190,
+    "width": 1054,
     "height": 310,
-    "tabOrder": 700
+    "tabOrder": 800
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Genres"
+                      "Entity": "Production Company"
                     }
                   },
-                  "Property": "Genre"
+                  "Property": "Production Company"
                 }
               },
-              "queryRef": "Genres.Genre",
-              "nativeQueryRef": "Genre",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
+              "queryRef": "Production Company.Production Company",
+              "nativeQueryRef": "Production Company"
+            },
             {
               "field": {
                 "Measure": {
@@ -42,11 +37,53 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Median Return (reliable)"
+                  "Property": "Films Measured (studios)"
                 }
               },
-              "queryRef": "_Measures.Median Return (reliable)",
-              "nativeQueryRef": "Median Return (reliable)"
+              "queryRef": "_Measures.Films Measured (studios)",
+              "nativeQueryRef": "Films Measured (studios)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Median Budget (studios)"
+                }
+              },
+              "queryRef": "_Measures.Median Budget (studios)",
+              "nativeQueryRef": "Median Budget (studios)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Median Return (studios)"
+                }
+              },
+              "queryRef": "_Measures.Median Return (studios)",
+              "nativeQueryRef": "Median Return (studios)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Break-even Rate (studios)"
+                }
+              },
+              "queryRef": "_Measures.Break-even Rate (studios)",
+              "nativeQueryRef": "Break-even Rate (studios)"
             }
           ]
         }
@@ -61,7 +98,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Median Return (reliable)"
+                "Property": "Median Return (studios)"
               }
             },
             "direction": "Descending"
@@ -71,24 +108,59 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "grid": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showAxisTitle": {
+            "gridVertical": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
             },
-            "labelColor": {
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2E2A27'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2E2A27'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "6L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -99,170 +171,12 @@
                 }
               }
             },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI'"
-                }
-              }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "lineColor": {
+            "backColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#2E2A27'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#78716B'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Segoe UI'"
-                }
-              }
-            },
-            "gridlineShow": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#262220'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineThickness": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "defaultColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#9085E9'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "plotArea": [
-        {
-          "properties": {
-            "transparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "100D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F5F1EC'"
+                      "Value": "'#1C1917'"
                     }
                   }
                 }
@@ -279,6 +193,118 @@
               "expr": {
                 "Literal": {
                   "Value": "'Segoe UI Semibold'"
+                }
+              }
+            },
+            "outline": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomOnly'"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5F1EC'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F5F1EC'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1917'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1917'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -300,7 +326,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Genre matters less than being good'"
+                  "Value": "'Studios that deliver'"
                 }
               }
             },
@@ -468,7 +494,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Median return on budget by genre. Genres with fewer than 100 measured films are suppressed rather than ranked on thin evidence: TV Movie (4 films) and Documentary (66) are excluded.'"
+                  "Value": "'Median return on budget per production company, at least 25 measured films within the current filters. Pick a genre above and the ranking recomputes \u2014 the 25-film floor re-applies, so no studio is ranked on a thin slice.'"
                 }
               }
             },
@@ -514,13 +540,26 @@
           }
         }
       ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'None'"
+                }
+              }
+            }
+          }
+        }
+      ],
       "general": [
         {
           "properties": {
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Horizontal bar chart of median return on budget by genre, sorted highest first. Animation leads at about 2.44 times, followed by Family, Horror, Music, Romance, Adventure and Comedy, all between 2.1 and 2.3 times. History is lowest at about 1.39 times. The spread between the best and worst genre is narrower than the spread between the best and worst rating band, which is the point of the chart. Genres with fewer than 100 measured films are excluded.'"
+                  "Value": "'Table ranking production companies by median return on budget, showing measured film count, median budget, median return and break-even share. Only studios with at least 25 measured films in the current filter context appear. Across all genres Blumhouse Productions leads at about 11.3 times its budget. The table responds to the genre and era slicers.'"
                 }
               }
             }

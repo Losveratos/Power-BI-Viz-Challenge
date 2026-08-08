@@ -271,6 +271,34 @@ table Movies
 
 		annotation SummarizationSetBy = Automatic
 
+	column Outcome
+		dataType: string
+		lineageTag: 2cd2edcb-a2b6-5e0f-9aa3-b8c58d5e1c46
+		summarizeBy: none
+		sourceColumn: Outcome
+		sortByColumn: 'Outcome Sort'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outcome Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 557ed3eb-5428-56d1-bc31-1364264929bf
+		summarizeBy: none
+		sourceColumn: Outcome Sort
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poster URL'
+		dataType: string
+		lineageTag: bbc047e6-cbcb-5cc9-986b-9f2494a95357
+		summarizeBy: none
+		sourceColumn: Poster URL
+		dataCategory: ImageUrl
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Movies = m
 		mode: import
 		source =
@@ -375,8 +403,27 @@ table Movies
 				    // The report needs to name the placeholder budgets, so it needs to be able
 				    // to count them.
 				    AddPlaceholder = Table.AddColumn(AddEraSort, "Budget Looks Like A Placeholder", each
-				        [Budget] < 10000, type logical)
+				        [Budget] < 10000, type logical),
+				
+				    // Break-even outcome as a category, for the scatter plot's two-colour
+				    // series. Text plus a sort key, so red is always the first legend entry.
+				    AddOutcome = Table.AddColumn(AddPlaceholder, "Outcome", each
+				        if not [Is Measurable] then null
+				        else if [ROI] >= 2.5 then "Clears 2.5x break-even"
+				        else "Below 2.5x break-even", type text),
+				
+				    AddOutcomeSort = Table.AddColumn(AddOutcome, "Outcome Sort", each
+				        if [Outcome] = null then null
+				        else if [Outcome] = "Below 2.5x break-even" then 1
+				        else 2, Int64.Type),
+				
+				    // The rules explicitly allow "movie posters ... linked directly from the
+				    // provided dataset". Poster Path is a dataset column; this only prefixes
+				    // the TMDB image host it belongs to.
+				    AddPosterUrl = Table.AddColumn(AddOutcomeSort, "Poster URL", each
+				        if [Poster Path] = null or [Poster Path] = "" then null
+				        else "https://image.tmdb.org/t/p/w185" & [Poster Path], type text)
 				in
-				    AddPlaceholder
+				    AddPosterUrl
 
 	annotation PBI_ResultType = Table

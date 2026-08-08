@@ -37,6 +37,20 @@
                       "Entity": "Top By Return"
                     }
                   },
+                  "Property": "Poster"
+                }
+              },
+              "queryRef": "Top By Return.Poster",
+              "nativeQueryRef": "Poster"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top By Return"
+                    }
+                  },
                   "Property": "Film"
                 }
               },

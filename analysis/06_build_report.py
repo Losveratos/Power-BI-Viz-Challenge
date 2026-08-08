@@ -495,6 +495,134 @@ def table(page: Page, key: str, x: int, y: int, w: int, h: int, *,
     return container(page, key, x, y, w, h, body, alt=alt)
 
 
+def measurable_filter() -> dict:
+    """Visual-level filter restricting a visual to the measurable subset.
+
+    Grammar per Microsoft's filters reference: `field` uses Entity, the Where
+    clause uses the Source alias from From, and `howCreated: "User"`.
+    """
+    return {
+        "filters": [{
+            "name": "Filter" + vid("filter", "measurable") + "beef",
+            "field": column_field("Movies", "Is Measurable"),
+            "type": "Categorical",
+            "filter": {
+                "Version": 2,
+                "From": [{"Name": "m", "Entity": "Movies", "Type": 0}],
+                "Where": [{
+                    "Condition": {
+                        "In": {
+                            "Expressions": [{
+                                "Column": {
+                                    "Expression": {"SourceRef": {"Source": "m"}},
+                                    "Property": "Is Measurable",
+                                }
+                            }],
+                            "Values": [[{"Literal": {"Value": "true"}}]],
+                        }
+                    }
+                }],
+            },
+            "howCreated": "User",
+        }]
+    }
+
+
+def slicer(page: Page, key: str, x: int, y: int, w: int, h: int, *,
+           entity: str, prop: str, label: str, alt: str) -> dict:
+    """A dropdown slicer, grammar taken from the starter file's own slicer."""
+    body = {
+        "visualType": "slicer",
+        "query": {"queryState": {"Values": {"projections": [proj_column(entity, prop)]}}},
+        "objects": {
+            "data": [{"properties": {"mode": lit("'Dropdown'")}}],
+            "header": [{"properties": {
+                "show": lit("true"), "text": slit(label),
+                "fontColor": color(INK_2), "fontSize": num(10),
+                "fontFamily": lit(f"'{FONT_SB}'"), "outline": lit("'None'"),
+            }}],
+            "items": [{"properties": {
+                "fontColor": color(INK), "background": color(CARD_BG),
+                "fontSize": num(10), "fontFamily": lit(f"'{FONT}'"),
+            }}],
+        },
+        "visualContainerObjects": {
+            "background": [{"properties": {"show": lit("true"), "color": color(CARD_BG),
+                                           "transparency": num(0)}}],
+            "border": [{"properties": {"show": lit("true"), "color": color(HAIRLINE),
+                                       "radius": num(6)}}],
+            "padding": [{"properties": {"left": num(8), "right": num(8),
+                                        "top": num(4), "bottom": num(4)}}],
+            "visualHeader": [{"properties": {"show": lit("false")}}],
+        },
+        "drillFilterOtherVisuals": True,
+    }
+    return container(page, key, x, y, w, h, body, alt=alt)
+
+
+def scatter(page: Page, key: str, x: int, y: int, w: int, h: int, *,
+            title: str, subtitle: str, alt: str) -> dict:
+    """The budget/box-office/rating scatter, restricted to measurable films.
+
+    Series is the two-value Outcome column; the theme's first two dataColors
+    are red then green in exactly that sort order, and the legend plus the
+    stated 2.5x threshold carry the meaning for CVD readers.
+    """
+    body = {
+        "visualType": "scatterChart",
+        "query": {"queryState": {
+            "Category": {"projections": [proj_column("Movies", "Title", active=True)]},
+            "Series": {"projections": [proj_column("Movies", "Outcome")]},
+            "X": {"projections": [proj_sum("Movies", "Budget")]},
+            "Y": {"projections": [proj_sum("Movies", "Revenue")]},
+            "Size": {"projections": [proj_sum("Movies", "Vote Average")]},
+        }},
+        "objects": {
+            "categoryAxis": [{"properties": {
+                "show": lit("true"), "showAxisTitle": lit("true"),
+                "axisScale": lit("'Log'"),
+                "labelColor": color(INK_3), "fontSize": num(10),
+                "fontFamily": lit(f"'{FONT}'"),
+                "titleColor": color(INK_2), "titleFontSize": num(10),
+            }}],
+            "valueAxis": [{"properties": {
+                "show": lit("true"), "showAxisTitle": lit("true"),
+                "axisScale": lit("'Log'"),
+                "labelColor": color(INK_3), "fontSize": num(10),
+                "fontFamily": lit(f"'{FONT}'"),
+                "gridlineColor": color("#262220"), "gridlineThickness": num(1),
+                "titleColor": color(INK_2), "titleFontSize": num(10),
+            }}],
+            "legend": [{"properties": {
+                "show": lit("true"), "position": lit("'Top'"),
+                "showTitle": lit("false"), "labelColor": color(INK_2),
+                "fontSize": num(10), "fontFamily": lit(f"'{FONT}'"),
+            }}],
+            "fillPoint": [{"properties": {"show": lit("true")}}],
+            "plotArea": [{"properties": {"transparency": num(100)}}],
+        },
+        "visualContainerObjects": _chart_common(title, subtitle),
+        "drillFilterOtherVisuals": True,
+    }
+    visual = container(page, key, x, y, w, h, body, alt=alt)
+    visual["filterConfig"] = measurable_filter()
+    return visual
+
+
+def add_page_slicers(page: Page) -> None:
+    """Genre and era dropdowns, top right, on the exploration pages."""
+    page.add(slicer(
+        page, "slicer-genre", col_x(8), 170, cols(2), 64,
+        entity="Genres", prop="Genre", label="Filter by genre",
+        alt="Dropdown slicer filtering this page's charts by genre.",
+    ))
+    page.add(slicer(
+        page, "slicer-era", col_x(10), 170, cols(2), 64,
+        entity="Movies", prop="Era", label="Filter by era",
+        alt="Dropdown slicer filtering this page's charts by release era.",
+    ))
+
+
 # --------------------------------------------------------------------------- #
 # Shared page furniture                                                        #
 # --------------------------------------------------------------------------- #
@@ -730,6 +858,7 @@ def page_two() -> Page:
             page, key, col_x(i * 3), 436, cols(3), 476,
             projections=[
                 proj_column(entity, "Rank"),
+                proj_column(entity, "Poster"),
                 proj_column(entity, "Film"),
                 proj_sum(entity, "Value"),
             ],
@@ -758,7 +887,9 @@ def page_two() -> Page:
 
 def page_three() -> Page:
     page = Page("money", "3 · What Money Buys",
-                "Caution: cheap films are under-reported. See the panel bottom right.")
+                "Caution: cheap films are under-reported — see the panel bottom "
+                "right. Slicers filter the charts; figures quoted in titles "
+                "describe the full measurable subset.")
     add_header(
         page,
         "What Money Buys",
@@ -766,9 +897,10 @@ def page_three() -> Page:
         "return — and the middle of the market is the worst place to stand.",
         page_number=3,
     )
+    add_page_slicers(page)
 
     page.add(bar_or_column(
-        page, "revenue-by-band", MARGIN, 188, cols(6), 384,
+        page, "revenue-by-band", MARGIN, 252, cols(6), 330,
         visual_type="clusteredColumnChart",
         category=proj_column("Movies", "Budget Band"),
         value=proj_measure("Median Revenue"),
@@ -784,7 +916,7 @@ def page_three() -> Page:
     ))
 
     page.add(bar_or_column(
-        page, "return-by-band", col_x(6), 188, cols(6), 384,
+        page, "return-by-band", col_x(6), 252, cols(6), 330,
         visual_type="clusteredColumnChart",
         category=proj_column("Movies", "Budget Band"),
         value=proj_measure("Median Return"),
@@ -802,55 +934,47 @@ def page_three() -> Page:
         reference_line=(2.5, "2.5x break-even"),
     ))
 
-    page.add(bar_or_column(
-        page, "breakeven-by-band", MARGIN, 588, cols(6), 392,
-        visual_type="clusteredColumnChart",
-        category=proj_column("Movies", "Budget Band"),
-        value=proj_measure("Break-even Rate"),
-        title="The mid-budget film is the one that fails",
-        subtitle="Share of films reaching 2.5x their budget. Lowest at $15-30M: "
-                 "33.5%. Removing the top 5% of earners in every band leaves the U "
-                 "intact, so this is not the work of a few franchises.",
-        alt="Column chart of the share of films reaching 2.5 times their budget, by "
-            "budget band. The share is 65.8% under 1 million dollars, falls to its "
-            "low of 33.5% in the 15 to 30 million band, and recovers to 53.3% for "
-            "films of 100 million and above. Removing the highest-earning 5% of "
-            "films within each band leaves this U-shape intact.",
-        series_colour=GREEN,
+    page.add(scatter(
+        page, "market-scatter", MARGIN, 598, cols(8), 382,
+        title="Every measurable film at once",
+        subtitle="One dot per film: budget across, revenue up, both on log "
+                 "scales; dot size is the audience rating. Green cleared the "
+                 "2.5x break-even rule of thumb, red did not. Use the genre and "
+                 "era slicers above to explore a slice.",
+        alt="Scatter plot of all 7,733 measurable films. The horizontal axis is "
+            "production budget and the vertical axis is gross revenue, both on "
+            "logarithmic scales; dot size encodes the audience rating out of ten. "
+            "Green dots cleared 2.5 times their budget, red dots did not. The red "
+            "dots concentrate in the middle budgets, and larger dots — better "
+            "rated films — sit visibly higher at every budget level. The chart "
+            "responds to the genre and era slicers.",
     ))
 
-    page.add(panel(page, "warn-bg", col_x(6), 588, cols(6), 392, z=60))
-    page.add(panel(page, "warn-rule", col_x(6), 588, 5, 392, fill=RED, radius=0, z=70))
+    page.add(panel(page, "warn-bg", col_x(8), 598, cols(4), 382, z=60))
+    page.add(panel(page, "warn-rule", col_x(8), 598, 5, 382, fill=RED, radius=0, z=70))
     page.add(textbox(
-        page, "warn", col_x(6) + 28, 606, cols(6) - 56, 356,
+        page, "warn", col_x(8) + 24, 614, cols(4) - 48, 352,
         [
-            [("WHAT IS WRONG WITH THE LEFT-HAND SIDE OF THESE CHARTS",
+            [("WHAT IS WRONG WITH THE CHEAP END",
               style(11, bold=True, colour=RED))],
             [("Cheap films look extraordinary here, and they are partly an "
-              "illusion. Revenue reporting is not random: it depends on how big "
-              "the film was.", style(12, colour=INK))],
-            [("Of films budgeted between $10,000 and $100,000, only 7.8% report any "
-              "revenue at all. Of films budgeted above $50M, 91.1% do.",
-              style(12, bold=True, colour=INK))],
-            [("A cheap film that flopped usually never had its revenue recorded, so "
-              "it is absent from every chart on this page. An expensive flop is "
-              "recorded and counted. That means the return of the cheapest band is "
-              "an upper bound on reality, not an expectation — and it is why this "
-              "report does not advise anyone to make cheap films.",
-              style(12, colour=INK_2))],
-            [("Only 2.4% of films in the $10,000-$100,000 band survive into this "
-              "analysis, against 90.8% of films above $50M.",
-              style(11, colour=INK_3))],
+              "illusion.", style(12, colour=INK))],
+            [("Films budgeted $10k–100k report revenue only 7.8% of the time. "
+              "Above $50M, 91.1% do.", style(12, bold=True, colour=INK))],
+            [("A cheap flop was usually never recorded, so it is missing from "
+              "this page. An expensive flop is counted. The cheap end is an "
+              "upper bound on reality, not an expectation.",
+              style(11, colour=INK_2))],
+            [("Only 2.4% of $10k–100k films survive into this analysis, against "
+              "90.8% above $50M.", style(10, colour=INK_3))],
         ],
-        alt="Caution panel. Cheap films look extraordinary on this page partly "
-            "because of survivorship bias. Of films budgeted between 10,000 and "
-            "100,000 dollars, only 7.8% report any revenue, against 91.1% of films "
-            "budgeted above 50 million. Cheap films that flopped were never "
-            "recorded, so they are absent from these charts, while expensive flops "
-            "are counted. The return figure for the cheapest band is therefore an "
-            "upper bound rather than an expectation. Only 2.4% of films in the "
-            "10,000 to 100,000 dollar band survive into this analysis, against "
-            "90.8% of films above 50 million.",
+        alt="Caution panel. Cheap films look extraordinary partly because of "
+            "survivorship bias: films budgeted between 10,000 and 100,000 dollars "
+            "report revenue only 7.8% of the time, against 91.1% above 50 million. "
+            "Cheap flops were never recorded and are missing from this page, while "
+            "expensive flops are counted, so the cheap end is an upper bound "
+            "rather than an expectation. Only 2.4% of the cheapest band survives "
+            "into this analysis, against 90.8% of films above 50 million.",
     ))
 
     add_footer(page)
@@ -859,7 +983,9 @@ def page_three() -> Page:
 
 def page_four() -> Page:
     page = Page("merit", "4 · What Actually Pays",
-                "Association, not causation. Ratings are collected after release.")
+                "Association, not causation — ratings are collected after "
+                "release. Slicers filter the charts; quoted figures describe "
+                "the full measurable subset.")
     add_header(
         page,
         "What Actually Pays",
@@ -867,9 +993,10 @@ def page_four() -> Page:
         "does not cost anything.",
         page_number=4,
     )
+    add_page_slicers(page)
 
     page.add(bar_or_column(
-        page, "return-by-rating", MARGIN, 188, cols(6), 384,
+        page, "return-by-rating", MARGIN, 252, cols(6), 300,
         visual_type="clusteredColumnChart",
         category=proj_column("Movies", "Rating Band"),
         value=proj_measure("Median Return"),
@@ -887,7 +1014,7 @@ def page_four() -> Page:
     ))
 
     page.add(bar_or_column(
-        page, "budget-by-rating", col_x(6), 188, cols(6), 384,
+        page, "budget-by-rating", col_x(6), 252, cols(6), 300,
         visual_type="clusteredColumnChart",
         category=proj_column("Movies", "Rating Band"),
         value=proj_measure("Median Budget"),
@@ -904,7 +1031,7 @@ def page_four() -> Page:
     ))
 
     page.add(bar_or_column(
-        page, "genre", MARGIN, 588, cols(8), 392,
+        page, "genre", MARGIN, 568, cols(5), 310,
         visual_type="clusteredBarChart",
         category=proj_column("Genres", "Genre"),
         value=proj_measure("Median Return (reliable)"),
@@ -923,36 +1050,50 @@ def page_four() -> Page:
         sort_desc_by_value=True,
     ))
 
-    page.add(panel(page, "caveat-bg", col_x(8), 588, cols(4), 392, z=60))
-    page.add(panel(page, "caveat-rule", col_x(8), 588, 5, 392, fill=GOLD, radius=0, z=70))
+    page.add(table(
+        page, "studios", col_x(5), 568, cols(7), 310,
+        projections=[
+            proj_column("Production Company", "Production Company"),
+            proj_measure("Films Measured (studios)"),
+            proj_measure("Median Budget (studios)"),
+            proj_measure("Median Return (studios)"),
+            proj_measure("Break-even Rate (studios)"),
+        ],
+        title="Studios that deliver",
+        subtitle="Median return on budget per production company, at least 25 "
+                 "measured films within the current filters. Pick a genre above "
+                 "and the ranking recomputes — the 25-film floor re-applies, so "
+                 "no studio is ranked on a thin slice.",
+        alt="Table ranking production companies by median return on budget, "
+            "showing measured film count, median budget, median return and "
+            "break-even share. Only studios with at least 25 measured films in "
+            "the current filter context appear. Across all genres Blumhouse "
+            "Productions leads at about 11.3 times its budget. The table "
+            "responds to the genre and era slicers.",
+        sort=(proj_measure("Median Return (studios)")["field"], "Descending"),
+    ))
+
+    page.add(panel(page, "caveat-bg", MARGIN, 894, CONTENT_W, 100, z=60))
+    page.add(panel(page, "caveat-rule", MARGIN, 894, 5, 100, fill=GOLD, radius=0, z=70))
     page.add(textbox(
-        page, "caveat", col_x(8) + 28, 606, cols(4) - 56, 356,
+        page, "caveat", MARGIN + 24, 906, CONTENT_W - 48, 80,
         [
-            [("WHY WE TRUST THIS, AND HOW FAR", style(11, bold=True, colour=GOLD))],
-            [("We tried to explain the rating effect away and could not. Films "
-              "rated 7.0 or higher out-return the rest in all ten budget deciles "
-              "and in all five eras, by a median factor of 2.1x and never by less "
-              "than 1.19x. The effect is not cheap films in disguise, and it is not "
-              "old films in disguise.", style(11, colour=INK))],
-            [("It also holds at every rating threshold we tested, from 0 to 500 "
-              "minimum votes.", style(11, colour=INK_2))],
-            [("But this is an association, not a cause.",
-              style(12, bold=True, colour=INK))],
-            [("Ratings are collected after release, from people who chose to watch. "
-              "A film that reached a big, willing audience can be rated highly "
-              "because it succeeded, not the other way round. Nothing in this "
-              "dataset can separate the two, so this report does not claim that "
-              "making a better film causes a better return — only that the two "
-              "travel together, everywhere we looked.", style(11, colour=INK_2))],
+            [("WHY WE TRUST THIS, AND HOW FAR — ", style(11, bold=True, colour=GOLD)),
+             ("Films rated 7.0+ out-return the rest in all ten budget deciles and "
+              "all five eras (median uplift 2.1x, never below 1.19x), at every "
+              "vote threshold from 0 to 500. ", style(11, colour=INK)),
+             ("But this is an association, not a cause: ", style(11, bold=True, colour=INK)),
+             ("ratings arrive after release, from people who chose to watch — a "
+              "film that reached a big audience can be rated highly because it "
+              "succeeded. Nothing in this data separates the two, so no causal "
+              "claim is made.", style(11, colour=INK_2))],
         ],
         alt="Panel explaining how far the rating finding can be trusted. Films "
             "rated 7.0 or higher out-return the rest in all ten budget deciles and "
             "all five eras, by a median factor of 2.1 times and never less than "
-            "1.19 times, and the result holds at every vote threshold from 0 to 500. "
-            "However this is an association and not a cause: ratings are collected "
-            "after release from people who chose to watch, so a film that reached a "
-            "large willing audience may be rated highly because it succeeded. This "
-            "report does not claim causation.",
+            "1.19 times, at every vote threshold from 0 to 500. However this is an "
+            "association and not a cause: ratings are collected after release from "
+            "people who chose to watch, so no causal claim is made.",
     ))
 
     add_footer(page)

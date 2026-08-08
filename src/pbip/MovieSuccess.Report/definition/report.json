@@ -11,7 +11,7 @@
       "type": "SharedResources"
     },
     "customTheme": {
-      "name": "movie-success-dark-5b43ea60.json",
+      "name": "movie-success-dark-7cd9c678.json",
       "type": "RegisteredResources"
     }
   },
@@ -60,8 +60,8 @@
       "type": "RegisteredResources",
       "items": [
         {
-          "name": "movie-success-dark-5b43ea60.json",
-          "path": "movie-success-dark-5b43ea60.json",
+          "name": "movie-success-dark-7cd9c678.json",
+          "path": "movie-success-dark-7cd9c678.json",
           "type": "CustomTheme"
         }
       ]

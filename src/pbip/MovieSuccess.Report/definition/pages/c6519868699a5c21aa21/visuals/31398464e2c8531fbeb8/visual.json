@@ -37,6 +37,20 @@
                       "Entity": "Top By Box Office"
                     }
                   },
+                  "Property": "Poster"
+                }
+              },
+              "queryRef": "Top By Box Office.Poster",
+              "nativeQueryRef": "Poster"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Top By Box Office"
+                    }
+                  },
                   "Property": "Film"
                 }
               },
