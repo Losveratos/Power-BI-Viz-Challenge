@@ -157,3 +157,24 @@ Stated plainly, because they are the parts most likely to cost time.
    `analysis/out/`, and `07_validate_pbip.py` cross-checks them against the
    analysis output on every build, but they will not update if the CSV snapshot
    changes.
+
+---
+
+## Alternative: the bundled-data build (no Kaggle account)
+
+If the Kaggle CSV is out of reach, build the variant whose data ships with it:
+
+```bash
+python analysis/01_extract_model.py        # starter .pbix -> work/extract
+python analysis/08_export_bundled_data.py  # model tables -> work/bundle/MovieSuccess/Data
+python analysis/05_build_semantic_model.py --bundled
+# then copy src/pbip/MovieSuccess.pbip and MovieSuccess.Report/ next to the
+# bundled MovieSuccess.SemanticModel under work/bundle/MovieSuccess/
+```
+
+Open `MovieSuccess.pbip` from that folder, set the single `DataFolder`
+parameter to the shipped `Data` folder (default `C:\MovieSuccess\Data`),
+refresh, and continue from Step 4 above. The CSVs are the official starter
+file's model tables exported 1:1 — see ADR-011 in the decision log for the
+provenance reasoning. The expected post-refresh figures are identical to the
+canonical build's.

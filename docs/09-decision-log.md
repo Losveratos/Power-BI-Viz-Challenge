@@ -369,6 +369,32 @@ see immediately whether anything has drifted.
 
 ---
 
+## ADR-011 — Ship a bundled-data build alongside the canonical Kaggle pipeline
+
+**Context.** The canonical semantic model loads the raw Kaggle CSV, exactly as
+the official contest instructions describe ("replace the file path in the
+Source step"). The person producing the final .pbix has no Kaggle account, and
+the build environment cannot reach Kaggle either, so the canonical pipeline
+cannot be refreshed anywhere in this workflow.
+
+**Decision.** `05_build_semantic_model.py --bundled` emits a second build of the
+same model whose Power Query loads per-table CSVs shipped next to the .pbip.
+`08_export_bundled_data.py` produces those CSVs by exporting every table of the
+official starter .pbix's own model — the exact snapshot every competitor
+receives — with no values added, dropped or altered. The two builds share the
+derived-column pipeline, all 24 measures, all calculated tables and all
+relationships verbatim; only the loading steps and the single path parameter
+(`CsvPath` vs `DataFolder`) differ. CSV types are re-applied under a pinned
+en-US culture so the ISO dates and dot decimals parse identically on any
+machine locale.
+
+**Consequences.** A machine without Kaggle access can refresh and produce the
+submission .pbix. The provenance chain lengthens by one documented,
+reproducible step (starter .pbix → parquet → CSV) and is disclosed here and in
+the build guide. The canonical build remains in `src/pbip` unchanged and stays
+byte-identical across regenerations; the bundled build lives under `work/` and
+is never committed, because ADR-010 keeps raw data out of the repository.
+
 ## Superseded or reconsidered
 
 Nothing has been superseded or reversed so far.
