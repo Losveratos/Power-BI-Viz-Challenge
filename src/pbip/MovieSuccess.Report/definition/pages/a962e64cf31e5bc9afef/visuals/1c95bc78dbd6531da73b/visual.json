@@ -1,0 +1,183 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "1c95bc78dbd6531da73b",
+  "position": {
+    "x": 1300,
+    "y": 610,
+    "z": 200,
+    "width": 552,
+    "height": 352,
+    "tabOrder": 800
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "HOW TO READ THIS REPORT",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "1 \u00b7 The Answer",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "  what the data supports, and how little of it there is.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "2 \u00b7 Success Has Four Answers",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "  four defensible definitions, and how little they agree.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "3 \u00b7 What Money Buys",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "  budget buys box office; it does not buy return.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "4 \u00b7 What Actually Pays",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "  the one signal that holds in every budget class and era.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "5 \u00b7 What We Cannot Know",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "  the gaps, the assumptions, and what would change our mind.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "10pt",
+                      "color": "#F5F1EC"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Every page carries its own caveat in the footer. Every dollar figure is a median of nominal dollars within a single era, never a mean and never across eras.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "10pt",
+                      "color": "#78716B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Reading guide. Page 1 states what the data supports and how little of it there is. Page 2 shows four definitions of success and how little they agree. Page 3 shows that budget buys box office but not return. Page 4 identifies the one signal that holds across budget classes and eras. Page 5 lists the gaps and assumptions. Every page footer carries its own caveat.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+table 'Keyword Bridge'
+	lineageTag: 6aeab1a6-eff5-5ab5-b49d-0ffb44c8a7b7
+
+	column 'Movie ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: b1c6fd44-b9c1-5be9-ba25-9db199be1840
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Keyword ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a008a53-6eee-51e9-b318-a72b9492ab48
+		summarizeBy: none
+		sourceColumn: Keyword ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Keyword Bridge' = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    MovieKeywords = Table.SelectColumns(Source, {"id", "keywords"}),
+				    SplitKeywords = Table.SelectRows(
+				        Table.ExpandListColumn(
+				            Table.TransformColumns(MovieKeywords, {{"keywords", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
+				            "keywords"),
+				        each [keywords] <> null and [keywords] <> ""),
+				    MergeKeywords = Table.NestedJoin(SplitKeywords, {"keywords"}, Keyword, {"Keywords"}, "KeywordLookup", JoinKind.LeftOuter),
+				    BridgeMovieKeyword = Table.RenameColumns(
+				        Table.RemoveColumns(
+				            Table.ExpandTableColumn(MergeKeywords, "KeywordLookup", {"Keyword ID"}, {"Keyword ID"}),
+				            {"keywords"}),
+				        {{"id", "Movie ID"}})
+				in
+				    BridgeMovieKeyword
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Source","Schema","Movies","Production Company","Genres","Genre Bridge","Production Company Bridge","Keyword","Keyword Bridge","Date"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+ref table Movies
+ref table Genres
+ref table 'Genre Bridge'
+ref table 'Production Company'
+ref table 'Production Company Bridge'
+ref table Date
+ref table Keyword
+ref table 'Keyword Bridge'
+ref table _Measures
+ref table Funnel
+ref table 'Top By Box Office'
+ref table 'Top By Return'
+ref table 'Top By Acclaim'
+ref table 'Top By Gross Profit'

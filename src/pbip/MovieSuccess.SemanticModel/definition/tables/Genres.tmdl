@@ -1,0 +1,40 @@
+table Genres
+	lineageTag: 8f2154ab-3085-5fe5-bda1-4fde5c54d504
+
+	column Genre
+		dataType: string
+		lineageTag: 3c47527e-ad06-58af-adcd-7d9542831d89
+		summarizeBy: none
+		sourceColumn: Genre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Genre ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a83d421-9716-5324-aaf8-95b5d75dda71
+		summarizeBy: none
+		sourceColumn: Genre ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Genres = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    Genres = Table.SelectColumns(Source, {"genres"}),
+				    SplitGenres = Table.ExpandListColumn(
+				        Table.TransformColumns(Genres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
+				        "genres"),
+				    GenreDimension = Table.AddIndexColumn(
+				        Table.Sort(
+				            Table.Distinct(
+				                Table.SelectRows(SplitGenres, each [genres] <> null and [genres] <> "")),
+				            {{"genres", Order.Ascending}}),
+				        "GenreID", 1, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(GenreDimension,{{"GenreID", "Genre ID"}, {"genres", "Genre"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,428 @@
+{
+  "survivorship": {
+    "table": [
+      {
+        "Budget band": "10k\u2013100k",
+        "Films": 8114,
+        "Revenue reported": 636,
+        "Has 50+ votes": 193,
+        "Revenue reporting rate": 0.07838304165639635,
+        "Enters analysis rate": 0.02378604880453537
+      },
+      {
+        "Budget band": "100k\u20131M",
+        "Films": 6054,
+        "Revenue reported": 1092,
+        "Has 50+ votes": 843,
+        "Revenue reporting rate": 0.18037661050545095,
+        "Enters analysis rate": 0.13924677898909812
+      },
+      {
+        "Budget band": "1M\u20135M",
+        "Films": 5492,
+        "Revenue reported": 1992,
+        "Has 50+ votes": 2115,
+        "Revenue reporting rate": 0.36270939548434084,
+        "Enters analysis rate": 0.38510560815731976
+      },
+      {
+        "Budget band": "5M\u201320M",
+        "Films": 4547,
+        "Revenue reported": 2991,
+        "Has 50+ votes": 3435,
+        "Revenue reporting rate": 0.657796349241258,
+        "Enters analysis rate": 0.7554431493292281
+      },
+      {
+        "Budget band": "20M\u201350M",
+        "Films": 2361,
+        "Revenue reported": 2028,
+        "Has 50+ votes": 2173,
+        "Revenue reporting rate": 0.8589580686149937,
+        "Enters analysis rate": 0.9203727234222787
+      },
+      {
+        "Budget band": "50M+",
+        "Films": 1625,
+        "Revenue reported": 1480,
+        "Has 50+ votes": 1475,
+        "Revenue reporting rate": 0.9107692307692308,
+        "Enters analysis rate": 0.9076923076923077
+      }
+    ],
+    "summary": {
+      "low_band": "10k\u2013100k",
+      "low_reporting_rate": 0.07838304165639635,
+      "high_band": "50M+",
+      "high_reporting_rate": 0.9107692307692308,
+      "ratio": 11.619467827769714
+    }
+  },
+  "rating_within_budget": [
+    {
+      "Budget decile": 1,
+      "Rated < 7.0": 3.465344730769231,
+      "Rated >= 7.0": 4.737694444444445,
+      "Uplift": 1.3671639656447052
+    },
+    {
+      "Budget decile": 2,
+      "Rated < 7.0": 1.868107550925926,
+      "Rated >= 7.0": 3.99361,
+      "Uplift": 2.137783768402719
+    },
+    {
+      "Budget decile": 3,
+      "Rated < 7.0": 1.5757489285714286,
+      "Rated >= 7.0": 2.941339816666667,
+      "Uplift": 1.8666297424255784
+    },
+    {
+      "Budget decile": 4,
+      "Rated < 7.0": 1.2816183125,
+      "Rated >= 7.0": 2.691525589371981,
+      "Uplift": 2.1000991973356973
+    },
+    {
+      "Budget decile": 5,
+      "Rated < 7.0": 1.3379210595238096,
+      "Rated >= 7.0": 3.1430024999999997,
+      "Uplift": 2.3491688673460684
+    },
+    {
+      "Budget decile": 6,
+      "Rated < 7.0": 1.23018275,
+      "Rated >= 7.0": 2.58070835,
+      "Uplift": 2.097825180852195
+    },
+    {
+      "Budget decile": 7,
+      "Rated < 7.0": 1.1423311924242423,
+      "Rated >= 7.0": 2.7642588076923076,
+      "Uplift": 2.4198400831776543
+    },
+    {
+      "Budget decile": 8,
+      "Rated < 7.0": 1.5045598285714286,
+      "Rated >= 7.0": 2.7910201375000003,
+      "Uplift": 1.8550409790949016
+    },
+    {
+      "Budget decile": 9,
+      "Rated < 7.0": 1.67523688,
+      "Rated >= 7.0": 2.532704851851852,
+      "Uplift": 1.5118487911105754
+    },
+    {
+      "Budget decile": 10,
+      "Rated < 7.0": 2.1362360366666664,
+      "Rated >= 7.0": 3.5134600588235294,
+      "Uplift": 1.6446965590496505
+    }
+  ],
+  "rating_within_era": [
+    {
+      "Era": "pre-1980",
+      "Rated < 7.0": 3.763888888888889,
+      "Rated >= 7.0": 4.466143516773361,
+      "Uplift": 1.1865768753050996
+    },
+    {
+      "Era": "1980\u201394",
+      "Rated < 7.0": 1.7821794222222223,
+      "Rated >= 7.0": 3.1142857142857143,
+      "Uplift": 1.7474591365231182
+    },
+    {
+      "Era": "1995\u20132004",
+      "Rated < 7.0": 1.3669073375,
+      "Rated >= 7.0": 3.087664389772727,
+      "Uplift": 2.258868838483155
+    },
+    {
+      "Era": "2005\u201314",
+      "Rated < 7.0": 1.581831475,
+      "Rated >= 7.0": 3.2094463809523806,
+      "Uplift": 2.028943305071345
+    },
+    {
+      "Era": "2015+",
+      "Rated < 7.0": 1.2404270151260506,
+      "Rated >= 7.0": 2.7804878048780486,
+      "Uplift": 2.2415569565739415
+    }
+  ],
+  "rating_uplift_survives_budget_control": true,
+  "rating_uplift_survives_era_control": true,
+  "rating_uplift_min": 1.3671639656447052,
+  "rating_uplift_median": 1.9822274616388866,
+  "thresholds": [
+    {
+      "Min votes": 0,
+      "Min revenue": 1,
+      "Films": 10439,
+      "rho Budget-Revenue": 0.755,
+      "rho Budget-ROI": -0.052,
+      "rho Rating-ROI": 0.281,
+      "Median ROI": 1.79,
+      "Share breaking even": 0.387
+    },
+    {
+      "Min votes": 0,
+      "Min revenue": 10000,
+      "Films": 10219,
+      "rho Budget-Revenue": 0.758,
+      "rho Budget-ROI": -0.087,
+      "rho Rating-ROI": 0.274,
+      "Median ROI": 1.84,
+      "Share breaking even": 0.395
+    },
+    {
+      "Min votes": 0,
+      "Min revenue": 1000000,
+      "Films": 8354,
+      "rho Budget-Revenue": 0.705,
+      "rho Budget-ROI": -0.245,
+      "rho Rating-ROI": 0.265,
+      "Median ROI": 2.18,
+      "Share breaking even": 0.45
+    },
+    {
+      "Min votes": 10,
+      "Min revenue": 1,
+      "Films": 8842,
+      "rho Budget-Revenue": 0.7,
+      "rho Budget-ROI": -0.078,
+      "rho Rating-ROI": 0.34,
+      "Median ROI": 1.85,
+      "Share breaking even": 0.396
+    },
+    {
+      "Min votes": 10,
+      "Min revenue": 10000,
+      "Films": 8765,
+      "rho Budget-Revenue": 0.699,
+      "rho Budget-ROI": -0.093,
+      "rho Rating-ROI": 0.336,
+      "Median ROI": 1.87,
+      "Share breaking even": 0.4
+    },
+    {
+      "Min votes": 10,
+      "Min revenue": 1000000,
+      "Films": 7805,
+      "rho Budget-Revenue": 0.687,
+      "rho Budget-ROI": -0.222,
+      "rho Rating-ROI": 0.308,
+      "Median ROI": 2.13,
+      "Share breaking even": 0.44
+    },
+    {
+      "Min votes": 50,
+      "Min revenue": 1,
+      "Films": 7776,
+      "rho Budget-Revenue": 0.677,
+      "rho Budget-ROI": -0.095,
+      "rho Rating-ROI": 0.333,
+      "Median ROI": 1.94,
+      "Share breaking even": 0.412
+    },
+    {
+      "Min votes": 50,
+      "Min revenue": 10000,
+      "Films": 7733,
+      "rho Budget-Revenue": 0.676,
+      "rho Budget-ROI": -0.105,
+      "rho Rating-ROI": 0.331,
+      "Median ROI": 1.96,
+      "Share breaking even": 0.414
+    },
+    {
+      "Min votes": 50,
+      "Min revenue": 1000000,
+      "Films": 7104,
+      "rho Budget-Revenue": 0.663,
+      "rho Budget-ROI": -0.217,
+      "rho Rating-ROI": 0.309,
+      "Median ROI": 2.17,
+      "Share breaking even": 0.446
+    },
+    {
+      "Min votes": 100,
+      "Min revenue": 1,
+      "Films": 7053,
+      "rho Budget-Revenue": 0.671,
+      "rho Budget-ROI": -0.106,
+      "rho Rating-ROI": 0.331,
+      "Median ROI": 2.03,
+      "Share breaking even": 0.424
+    },
+    {
+      "Min votes": 100,
+      "Min revenue": 10000,
+      "Films": 7022,
+      "rho Budget-Revenue": 0.67,
+      "rho Budget-ROI": -0.114,
+      "rho Rating-ROI": 0.329,
+      "Median ROI": 2.04,
+      "Share breaking even": 0.426
+    },
+    {
+      "Min votes": 100,
+      "Min revenue": 1000000,
+      "Films": 6539,
+      "rho Budget-Revenue": 0.656,
+      "rho Budget-ROI": -0.216,
+      "rho Rating-ROI": 0.312,
+      "Median ROI": 2.21,
+      "Share breaking even": 0.454
+    },
+    {
+      "Min votes": 500,
+      "Min revenue": 1,
+      "Films": 4619,
+      "rho Budget-Revenue": 0.675,
+      "rho Budget-ROI": -0.188,
+      "rho Rating-ROI": 0.273,
+      "Median ROI": 2.53,
+      "Share breaking even": 0.505
+    },
+    {
+      "Min votes": 500,
+      "Min revenue": 10000,
+      "Films": 4614,
+      "rho Budget-Revenue": 0.674,
+      "rho Budget-ROI": -0.192,
+      "rho Rating-ROI": 0.273,
+      "Median ROI": 2.53,
+      "Share breaking even": 0.506
+    },
+    {
+      "Min votes": 500,
+      "Min revenue": 1000000,
+      "Films": 4487,
+      "rho Budget-Revenue": 0.664,
+      "rho Budget-ROI": -0.247,
+      "rho Rating-ROI": 0.279,
+      "Median ROI": 2.61,
+      "Share breaking even": 0.518
+    }
+  ],
+  "budget_roi_weak_at_all_thresholds": true,
+  "rating_roi_positive_at_all_thresholds": true,
+  "ucurve": [
+    {
+      "Budget decile": 1,
+      "Median ROI (all)": 4.0191333333333334,
+      "Median ROI (top 5% revenue removed)": 3.6887417218543046,
+      "Share breaking even": 0.6149870801033591,
+      "Films": 774
+    },
+    {
+      "Budget decile": 2,
+      "Median ROI (all)": 2.7174515235457064,
+      "Median ROI (top 5% revenue removed)": 2.4306609999999997,
+      "Share breaking even": 0.5192069392812887,
+      "Films": 807
+    },
+    {
+      "Budget decile": 3,
+      "Median ROI (all)": 1.8432292142857143,
+      "Median ROI (top 5% revenue removed)": 1.6849825,
+      "Share breaking even": 0.4119047619047619,
+      "Films": 840
+    },
+    {
+      "Budget decile": 4,
+      "Median ROI (all)": 1.6940418,
+      "Median ROI (top 5% revenue removed)": 1.5478166323024054,
+      "Share breaking even": 0.3611111111111111,
+      "Films": 684
+    },
+    {
+      "Budget decile": 5,
+      "Median ROI (all)": 1.7604548988095239,
+      "Median ROI (top 5% revenue removed)": 1.58700213016574,
+      "Share breaking even": 0.3880952380952381,
+      "Films": 840
+    },
+    {
+      "Budget decile": 6,
+      "Median ROI (all)": 1.39877145,
+      "Median ROI (top 5% revenue removed)": 1.3365287142857143,
+      "Share breaking even": 0.33793103448275863,
+      "Films": 725
+    },
+    {
+      "Budget decile": 7,
+      "Median ROI (all)": 1.4119298148148147,
+      "Median ROI (top 5% revenue removed)": 1.2575656,
+      "Share breaking even": 0.3117178612059158,
+      "Films": 879
+    },
+    {
+      "Budget decile": 8,
+      "Median ROI (all)": 1.6575789393939393,
+      "Median ROI (top 5% revenue removed)": 1.5741935483870968,
+      "Share breaking even": 0.3530239099859353,
+      "Films": 711
+    },
+    {
+      "Budget decile": 9,
+      "Median ROI (all)": 1.8082498723076923,
+      "Median ROI (top 5% revenue removed)": 1.7426856,
+      "Share breaking even": 0.34573002754820936,
+      "Films": 726
+    },
+    {
+      "Budget decile": 10,
+      "Median ROI (all)": 2.476044346153846,
+      "Median ROI (top 5% revenue removed)": 2.3329411764705883,
+      "Share breaking even": 0.49129852744310576,
+      "Films": 747
+    }
+  ],
+  "ucurve_survives_trim": true,
+  "eras": [
+    {
+      "Era": "pre-1980",
+      "Films": 780,
+      "Median budget": 2489500.0,
+      "Median revenue": 10000000.0,
+      "Median ROI": 4.028076923076923,
+      "Share breaking even": 0.6653846153846154
+    },
+    {
+      "Era": "1980\u201394",
+      "Films": 1309,
+      "Median budget": 13800000.0,
+      "Median revenue": 21435321.0,
+      "Median ROI": 2.0217966666666665,
+      "Share breaking even": 0.4293353705118411
+    },
+    {
+      "Era": "1995\u20132004",
+      "Films": 1710,
+      "Median budget": 25000000.0,
+      "Median revenue": 33779667.5,
+      "Median ROI": 1.66404606,
+      "Share breaking even": 0.3514619883040936
+    },
+    {
+      "Era": "2005\u201314",
+      "Films": 2537,
+      "Median budget": 18000000.0,
+      "Median revenue": 29523237.0,
+      "Median ROI": 1.8436922666666666,
+      "Share breaking even": 0.3898305084745763
+    },
+    {
+      "Era": "2015+",
+      "Films": 1397,
+      "Median budget": 19000000.0,
+      "Median revenue": 28000000.0,
+      "Median ROI": 1.6773024375,
+      "Share breaking even": 0.380100214745884
+    }
+  ]
+}

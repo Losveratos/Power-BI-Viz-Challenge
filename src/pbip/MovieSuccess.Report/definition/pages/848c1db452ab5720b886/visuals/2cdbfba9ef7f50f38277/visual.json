@@ -1,0 +1,138 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2cdbfba9ef7f50f38277",
+  "position": {
+    "x": 76,
+    "y": 650,
+    "z": 180,
+    "width": 1152,
+    "height": 312,
+    "tabOrder": 700
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "WHAT WOULD CHANGE OUR ANSWER",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Revenue for the films that never reported it. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "This is the big one. If cheap flops were recorded, the low-budget return advantage would shrink and might vanish. Our finding about ratings would survive, because it holds inside every budget class separately.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Marketing spend and the exhibitor's share. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "The dataset has production budget and gross box office. It has no print-and-advertising spend, no exhibitor split, no home video, no streaming licence. So 'return' here is a gross multiple, not profit, and the 2.5x break-even is a borrowed rule of thumb rather than something this data proves.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "An inflation series. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "A CPI table would be an external dataset, which this round forbids, so no dollar figure here is inflation adjusted. That is why every cross-era comparison in this report uses ratios, in which inflation cancels, and never dollars.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "A causal design. ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "11pt",
+                      "color": "#F5F1EC",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "Ratings arrive after release. Without something that moves quality independently of audience size, the direction of the rating effect cannot be established from this data at all.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Panel listing what would change the report''s answer. First, revenue for films that never reported it: if cheap flops were recorded the low-budget return advantage would shrink or vanish, though the rating finding would survive because it holds within each budget class. Second, marketing spend and the exhibitor''s share, which the dataset lacks, meaning return here is a gross multiple rather than profit and the 2.5 times break-even is a borrowed rule of thumb. Third, an inflation series, which the rules forbid as an external dataset, which is why cross-era comparisons use ratios rather than dollars. Fourth, a causal design, without which the direction of the rating effect cannot be established.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

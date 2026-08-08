@@ -1,0 +1,48 @@
+table 'Top By Acclaim'
+	lineageTag: a9b31510-ae4a-5e0f-9286-77ad95bba63c
+
+	column Rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 12fc3c99-fded-5af1-84d6-fc6d3025d8f4
+		summarizeBy: none
+		sourceColumn: [Rank]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Film
+		dataType: string
+		lineageTag: 4803e0b9-673b-5000-9715-27a04b0fed8c
+		summarizeBy: none
+		sourceColumn: [Film]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		formatString: 0.0
+		lineageTag: 90832f2a-432a-57f3-a3a3-246ef6c4e4a0
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Top By Acclaim' = calculated
+		mode: import
+		source =
+				VAR Pool = CALCULATETABLE ( 'Movies', ALL ( 'Movies' ), 'Movies'[Is Measurable] = TRUE() )
+				VAR Picked = TOPN ( 10, Pool, 'Movies'[Vote Average], DESC )
+				VAR Ranked =
+				    ADDCOLUMNS (
+				        Picked,
+				        "@Rank", RANKX ( Picked, 'Movies'[Vote Average], , DESC, DENSE )
+				    )
+				RETURN
+				    SELECTCOLUMNS (
+				        Ranked,
+				        "Rank", [@Rank],
+				        "Film", 'Movies'[Title] & " (" & FORMAT ( 'Movies'[Release Year], "0" ) & ")",
+				        "Value", 'Movies'[Vote Average] * 1.0
+				    )
+
+	annotation PBI_Id = d1b64e422b7258b5846c

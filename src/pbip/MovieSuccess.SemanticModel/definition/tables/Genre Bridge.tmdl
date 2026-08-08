@@ -1,0 +1,42 @@
+table 'Genre Bridge'
+	lineageTag: 9d636fa3-c950-5605-90db-c212d08ae06d
+
+	column 'Movie ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1cd0c815-1794-5854-b71e-e8d172d5318c
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Genre ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: a48522bc-614c-5b30-a526-a0e6cf57326b
+		summarizeBy: none
+		sourceColumn: Genre ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Genre Bridge' = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    MovieGenres = Table.SelectColumns(Source, {"id", "genres"}),
+				    SplitGenres = Table.SelectRows(
+				        Table.ExpandListColumn(
+				            Table.TransformColumns(MovieGenres, {{"genres", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), each Text.Clean(Text.Trim(_))), type {text}}}),
+				            "genres"),
+				        each [genres] <> null and [genres] <> ""),
+				    MergeGenres = Table.NestedJoin(SplitGenres, {"genres"}, Genres, {"Genre"}, "GenreLookup", JoinKind.LeftOuter),
+				    BridgeMovieGenre = Table.RenameColumns(
+				        Table.RemoveColumns(
+				            Table.ExpandTableColumn(MergeGenres, "GenreLookup", {"Genre ID"}, {"Genre ID"}),
+				            {"genres"}),
+				        {{"id", "Movie ID"}})
+				in
+				    BridgeMovieGenre
+
+	annotation PBI_ResultType = Table

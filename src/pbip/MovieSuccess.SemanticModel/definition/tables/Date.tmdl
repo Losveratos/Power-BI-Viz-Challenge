@@ -1,0 +1,65 @@
+table Date
+	lineageTag: b597d244-cf46-51f5-8c6d-ae09b76906b7
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d977d3a8-de30-59a2-b8ad-eb9680cbca6e
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3fd9956c-ed40-541d-b679-8cea1afc8ad5
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 57a783f9-4bf3-500d-b51a-d188b4e3814c
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 9052b411-c7dc-5e5c-bd43-ac152eaefd74
+		summarizeBy: none
+		sourceColumn: Month Name
+		sortByColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Week Number'
+		dataType: int64
+		formatString: 0
+		lineageTag: 42662de2-cfca-5858-a8fb-c98357c827e7
+		summarizeBy: none
+		sourceColumn: Week Number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(1937, 1, 1),
+				    EndDate = Date.From(DateTime.LocalNow()),
+				    DateList = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+				    DateTable = Table.FromList(DateList, Splitter.SplitByNothing(), {"Date"}),
+				    AddedYear = Table.AddColumn(DateTable, "Year", each Date.Year([Date]), Int64.Type),
+				    AddedMonthNumber = Table.AddColumn(AddedYear, "Month Number", each Date.Month([Date]), Int64.Type),
+				    AddedMonthName = Table.AddColumn(AddedMonthNumber, "Month Name", each Date.MonthName([Date]), type text),
+				    AddedWeekNumber = Table.AddColumn(AddedMonthName, "Week Number", each Date.WeekOfYear([Date]), Int64.Type),
+				    #"Changed Type" = Table.TransformColumnTypes(AddedWeekNumber,{{"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table

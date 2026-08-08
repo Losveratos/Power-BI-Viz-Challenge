@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "ae81b17e4567578ba351",
+  "position": {
+    "x": 48,
+    "y": 926,
+    "z": 230,
+    "width": 1824,
+    "height": 72,
+    "tabOrder": 1100
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "So which is right? ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "13pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "All four. That is the problem. A ranking is an argument about what counts, and any report that shows one ranking without naming the others is making that argument silently. This one names it: the rest of this report measures return on budget, and page 3 opens by showing what that choice gets wrong.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "13pt",
+                      "color": "#F5F1EC"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'All four rankings are defensible, which is the problem. A ranking is an argument about what counts. This report measures return on budget and page 3 opens by showing what that choice gets wrong.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

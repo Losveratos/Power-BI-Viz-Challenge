@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "7ef92aa9ecb85165ba8e",
+  "position": {
+    "x": 48,
+    "y": 122,
+    "z": 120,
+    "width": 1516,
+    "height": 40,
+    "tabOrder": 200
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Round 3 \u00b7 Lights, Camera, Insight \u2014 one honest answer, and the 99.2% of this dataset that cannot give one.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "15pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Standfirst for page 1: Round 3 \u00b7 Lights, Camera, Insight \u2014 one honest answer, and the 99.2% of this dataset that cannot give one.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

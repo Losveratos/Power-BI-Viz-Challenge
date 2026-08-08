@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2628602844565aecab9d",
+  "position": {
+    "x": 72,
+    "y": 194,
+    "z": 140,
+    "width": 1776,
+    "height": 70,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Rank the same 7,733 films four defensible ways and you get four different films at the top. Box office and return on budget share nothing at all: not one film in the top hundred by gross revenue also appears in the top hundred by return. Gross profit, by contrast, is almost a copy of gross revenue \u2014 it adds a number, not an insight.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "13pt",
+                      "color": "#F5F1EC"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ranking the same 7,733 films four defensible ways produces four different sets of winners. No film appears in both the top 100 by gross revenue and the top 100 by return on budget. Gross profit is almost identical to gross revenue.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

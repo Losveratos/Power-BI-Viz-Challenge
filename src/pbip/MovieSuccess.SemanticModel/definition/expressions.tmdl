@@ -1,0 +1,39 @@
+/// The full path to TMDB_movie_dataset_v11.csv on this machine.
+/// This is the one value you must set before refreshing. The official
+/// contest instructions ask for exactly this edit.
+expression CsvPath = "C:\Users\Public\Documents\TMDB\TMDB_movie_dataset_v11.csv" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 72fb6360-b471-5bc9-b723-c11920977a7e
+	queryGroup: '00 Source'
+
+	annotation PBI_ResultType = Text
+
+/// The raw CSV, transcribed from the starter file.
+expression Source =
+		let
+		    // Transcribed from the official Round 3 starter file. The only change is
+		    // that the hardcoded path is now the CsvPath parameter.
+		    // Data published at:
+		    // https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies
+		    Source = Csv.Document(File.Contents(CsvPath),[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"id", Int64.Type}, {"title", type text}, {"vote_average", type number}, {"vote_count", Int64.Type}, {"status", type text}, {"release_date", type date}, {"revenue", Int64.Type}, {"runtime", Int64.Type}, {"adult", type logical}, {"backdrop_path", type text}, {"budget", Int64.Type}, {"homepage", type text}, {"imdb_id", type text}, {"original_language", type text}, {"original_title", type text}, {"overview", type text}, {"popularity", type number}, {"poster_path", type text}, {"tagline", type text}, {"genres", type text}, {"production_companies", type text}, {"production_countries", type text}, {"spoken_languages", type text}, {"keywords", type text}})
+		in
+		    #"Changed Type"
+	lineageTag: 5bbd41ca-e281-59ae-8294-c15c16fd0218
+	queryGroup: '00 Source'
+
+	annotation PBI_ResultType = Table
+
+/// Column names and one sample row, as shipped in the starter file.
+expression Schema =
+		let
+		    Source = Csv.Document(File.Contents(CsvPath),[Delimiter=",", Columns=24, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Kept First Rows" = Table.FirstN(Source,2),
+		    #"Transposed Table" = Table.Transpose(#"Kept First Rows"),
+		    #"Renamed Columns" = Table.RenameColumns(#"Transposed Table",{{"Column1", "Column"}, {"Column2", "Sample Entry"}})
+		in
+		    #"Renamed Columns"
+	lineageTag: 0e7280be-07f7-5753-bf7b-7b9418d2447b
+	queryGroup: '00 Source'
+
+	annotation PBI_ResultType = Table

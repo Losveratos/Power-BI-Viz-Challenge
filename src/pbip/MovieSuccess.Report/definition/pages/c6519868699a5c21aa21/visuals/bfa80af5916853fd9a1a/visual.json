@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "bfa80af5916853fd9a1a",
+  "position": {
+    "x": 1452,
+    "y": 306,
+    "z": 180,
+    "width": 402,
+    "height": 104,
+    "tabOrder": 600
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "OUR DEFINITION",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI Semibold",
+                      "fontSize": "10pt",
+                      "color": "#C98500",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Return on production budget, judged against a 2.5x gross break-even. It rewards performance rather than size \u2014 and it systematically favours cheap films, which page 3 discloses.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "10pt",
+                      "color": "#A8A29B"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'This report defines success as return on production budget judged against a 2.5 times gross break-even multiple, because it rewards performance rather than size. The tradeoff is that it favours cheap films, which page 3 discloses.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,382 @@
+table Movies
+	lineageTag: 8d68a392-b0c8-5e37-a671-f2ca39d22779
+
+	column 'Movie ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d335de0-da48-5ec6-ba01-d395f2034f7c
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: 94e628de-f52b-55a0-85fe-ca640482412f
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vote Average'
+		dataType: double
+		formatString: 0.0
+		lineageTag: 42988f55-8f4c-583f-9135-fe1dc4b2cda8
+		summarizeBy: none
+		sourceColumn: Vote Average
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Vote Count'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 61afc195-bdb4-549d-b44a-124300e5236d
+		summarizeBy: none
+		sourceColumn: Vote Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: e0b7bc9c-fd7e-5a60-a6c4-589e7698e7eb
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 46277b36-26da-5c76-819d-6173393874a1
+		summarizeBy: none
+		sourceColumn: Release Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b632604e-4dc0-5524-b72a-8ce7ef530fe0
+		summarizeBy: sum
+		sourceColumn: Revenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Runtime
+		dataType: int64
+		formatString: #,0
+		lineageTag: 69c3a636-0d35-5c19-8f3b-9347d2d525cb
+		summarizeBy: none
+		sourceColumn: Runtime
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adult
+		dataType: boolean
+		lineageTag: b359c7c6-eefd-5243-85b8-f295b5cad967
+		summarizeBy: none
+		sourceColumn: Adult
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Backdrop Path'
+		dataType: string
+		lineageTag: 0b2b88bd-94b8-51e8-b3c4-d2ba30c9f48d
+		summarizeBy: none
+		sourceColumn: Backdrop Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Budget
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 3aa97b07-0e37-50ba-a573-42c5f771558f
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	column Homepage
+		dataType: string
+		lineageTag: ebb7dcad-30e7-5ca6-b811-859559d22509
+		summarizeBy: none
+		sourceColumn: Homepage
+		dataCategory: WebUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Language'
+		dataType: string
+		lineageTag: 43140140-ef0e-59f8-81c9-d91f6ada9e69
+		summarizeBy: none
+		sourceColumn: Original Language
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Title'
+		dataType: string
+		lineageTag: 2b63e9b0-4157-51da-bd2c-a5d51180a355
+		summarizeBy: none
+		sourceColumn: Original Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column Popularity
+		dataType: double
+		formatString: 0.00
+		lineageTag: d1fa2d07-7037-559a-a240-5f1eba0de6dd
+		summarizeBy: none
+		sourceColumn: Popularity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Poster Path'
+		dataType: string
+		lineageTag: 5f38ec67-83a5-512c-ba6b-fed0b71154a1
+		summarizeBy: none
+		sourceColumn: Poster Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tagline
+		dataType: string
+		lineageTag: 0b14acfa-bc7e-58e6-ad7f-c88d0e7e0945
+		summarizeBy: none
+		sourceColumn: Tagline
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Measurable'
+		dataType: boolean
+		lineageTag: dab83a49-d01b-5bce-bfd3-f1bb4e2584a7
+		summarizeBy: none
+		sourceColumn: Is Measurable
+
+		annotation SummarizationSetBy = Automatic
+
+	column ROI
+		dataType: double
+		formatString: 0.00
+		lineageTag: 88da41ba-82a2-59e0-9d0d-d15f733eb77f
+		summarizeBy: none
+		sourceColumn: ROI
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gross Profit'
+		dataType: int64
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 7a3862e8-10ca-56b5-adda-8ec699179c60
+		summarizeBy: sum
+		sourceColumn: Gross Profit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Breaks Even'
+		dataType: boolean
+		lineageTag: 31384f85-55ec-5745-823e-aca6bae1852b
+		summarizeBy: none
+		sourceColumn: Breaks Even
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bad4e83-f35a-5d66-a78c-718d1dc7eba3
+		summarizeBy: none
+		sourceColumn: Release Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Month'
+		dataType: int64
+		formatString: 0
+		lineageTag: 74488135-fbba-5741-82ea-f262b24f7cf9
+		summarizeBy: none
+		sourceColumn: Release Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Month Name'
+		dataType: string
+		lineageTag: e9a31264-0dbe-5395-b6e4-3d43fcdbc3c3
+		summarizeBy: none
+		sourceColumn: Release Month Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Band'
+		dataType: string
+		lineageTag: a0611167-2cc1-5fe7-a5fd-8d29085664a7
+		summarizeBy: none
+		sourceColumn: Budget Band
+		sortByColumn: Budget Band Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Band Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: d2f3bc7b-59a3-52fb-88d7-dec56cf62543
+		summarizeBy: none
+		sourceColumn: Budget Band Sort
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Band'
+		dataType: string
+		lineageTag: 8d842c23-251f-5f42-ad28-d1d38332f4ea
+		summarizeBy: none
+		sourceColumn: Rating Band
+		sortByColumn: Rating Band Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Band Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ab07ce6-4e09-5030-b148-e670a72b27d2
+		summarizeBy: none
+		sourceColumn: Rating Band Sort
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Era
+		dataType: string
+		lineageTag: 5ebc8976-43cc-567b-a174-7c17b8d289c1
+		summarizeBy: none
+		sourceColumn: Era
+		sortByColumn: Era Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Era Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: b5a5d833-1f5c-5b39-999f-0dd22e4bbec4
+		summarizeBy: none
+		sourceColumn: Era Sort
+		isHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Budget Looks Like A Placeholder'
+		dataType: boolean
+		lineageTag: 1a677b3a-7c0d-5ac8-81b6-d1b0f320d3ac
+		summarizeBy: none
+		sourceColumn: Budget Looks Like A Placeholder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Movies = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    // ---- transcribed unchanged from the starter file ----------------------
+				    #"Filtered Rows" = Table.SelectRows(Source, each [budget] > 0),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"id", "Movie ID"}, {"title", "Title"}, {"vote_average", "Vote Average"}, {"vote_count", "Vote Count"}, {"release_date", "Release Date"}, {"revenue", "Revenue"}, {"backdrop_path", "Backdrop Path"}, {"budget", "Budget"}, {"homepage", "Homepage"}, {"popularity", "Popularity"}, {"runtime", "Runtime"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{"genres", "genres"}, {"adult", "Adult"}, {"original_language", "Original Language"}, {"original_title", "Original Title"}, {"tagline", "Tagline"}, {"poster_path", "Poster Path"}, {"status", "Status"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"genres"}),
+
+				    // ---- our additions: derived columns, no source values altered ---------
+				    // "Measurable" is the single gate every financial figure in the report
+				    // passes through. It is a column rather than a report filter so that it is
+				    // visible in the model and cannot be forgotten on a page.
+				    AddMeasurable = Table.AddColumn(#"Removed Columns", "Is Measurable", each
+				        [Status] = "Released"
+				        and [Release Date] <> null
+				        and [Budget] >= 10000
+				        and [Revenue] >= 10000
+				        and [Vote Count] >= 50, type logical),
+
+				    // Return on production budget. Null, never zero, when it cannot be formed:
+				    // a film with unreported revenue has an unknown return, not a zero one.
+				    AddROI = Table.AddColumn(AddMeasurable, "ROI", each
+				        if [Is Measurable] then [Revenue] / [Budget] else null, type number),
+
+				    AddProfit = Table.AddColumn(AddROI, "Gross Profit", each
+				        if [Is Measurable] then [Revenue] - [Budget] else null, Int64.Type),
+
+				    AddBreakEven = Table.AddColumn(AddProfit, "Breaks Even", each
+				        if [Is Measurable] then [ROI] >= 2.5 else null, type logical),
+
+				    AddYear = Table.AddColumn(AddBreakEven, "Release Year", each
+				        if [Release Date] = null then null else Date.Year([Release Date]), Int64.Type),
+
+				    AddMonth = Table.AddColumn(AddYear, "Release Month", each
+				        if [Release Date] = null then null else Date.Month([Release Date]), Int64.Type),
+
+				    AddMonthName = Table.AddColumn(AddMonth, "Release Month Name", each
+				        if [Release Date] = null then null else Date.MonthName([Release Date]), type text),
+
+				    // Fixed dollar bands rather than deciles: a reader understands "$15-30M",
+				    // and a decile boundary shifts every time the filter context changes.
+				    AddBudgetBand = Table.AddColumn(AddMonthName, "Budget Band", each
+				        if not [Is Measurable] then null
+				        else if [Budget] < 1000000 then "Under $1M"
+				        else if [Budget] < 5000000 then "$1M to $5M"
+				        else if [Budget] < 15000000 then "$5M to $15M"
+				        else if [Budget] < 30000000 then "$15M to $30M"
+				        else if [Budget] < 60000000 then "$30M to $60M"
+				        else if [Budget] < 100000000 then "$60M to $100M"
+				        else "$100M and above", type text),
+
+				    AddBudgetBandSort = Table.AddColumn(AddBudgetBand, "Budget Band Sort", each
+				        if [Budget Band] = null then null
+				        else if [Budget Band] = "Under $1M" then 1
+				        else if [Budget Band] = "$1M to $5M" then 2
+				        else if [Budget Band] = "$5M to $15M" then 3
+				        else if [Budget Band] = "$15M to $30M" then 4
+				        else if [Budget Band] = "$30M to $60M" then 5
+				        else if [Budget Band] = "$60M to $100M" then 6
+				        else 7, Int64.Type),
+
+				    AddRatingBand = Table.AddColumn(AddBudgetBandSort, "Rating Band", each
+				        if not [Is Measurable] then null
+				        else if [Vote Average] < 5 then "Below 5.0"
+				        else if [Vote Average] < 6 then "5.0 to 6.0"
+				        else if [Vote Average] < 6.5 then "6.0 to 6.5"
+				        else if [Vote Average] < 7 then "6.5 to 7.0"
+				        else if [Vote Average] < 7.5 then "7.0 to 7.5"
+				        else "7.5 and above", type text),
+
+				    AddRatingBandSort = Table.AddColumn(AddRatingBand, "Rating Band Sort", each
+				        if [Rating Band] = null then null
+				        else if [Rating Band] = "Below 5.0" then 1
+				        else if [Rating Band] = "5.0 to 6.0" then 2
+				        else if [Rating Band] = "6.0 to 6.5" then 3
+				        else if [Rating Band] = "6.5 to 7.0" then 4
+				        else if [Rating Band] = "7.0 to 7.5" then 5
+				        else 6, Int64.Type),
+
+				    // Eras exist so that dollars are never compared across them. See
+				    // docs/09-decision-log.md ADR-006.
+				    AddEra = Table.AddColumn(AddRatingBandSort, "Era", each
+				        if [Release Year] = null then null
+				        else if [Release Year] < 1980 then "Before 1980"
+				        else if [Release Year] < 1995 then "1980 to 1994"
+				        else if [Release Year] < 2005 then "1995 to 2004"
+				        else if [Release Year] < 2015 then "2005 to 2014"
+				        else "2015 onward", type text),
+
+				    AddEraSort = Table.AddColumn(AddEra, "Era Sort", each
+				        if [Era] = null then null
+				        else if [Era] = "Before 1980" then 1
+				        else if [Era] = "1980 to 1994" then 2
+				        else if [Era] = "1995 to 2004" then 3
+				        else if [Era] = "2005 to 2014" then 4
+				        else 5, Int64.Type),
+
+				    // The report needs to name the placeholder budgets, so it needs to be able
+				    // to count them.
+				    AddPlaceholder = Table.AddColumn(AddEraSort, "Budget Looks Like A Placeholder", each
+				        [Budget] < 10000, type logical)
+				in
+				    AddPlaceholder
+
+	annotation PBI_ResultType = Table

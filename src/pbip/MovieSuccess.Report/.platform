@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "MovieSuccess"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6b8818d6-8a99-5e1d-b3b0-16a3cbe3b3ea"
+  }
+}

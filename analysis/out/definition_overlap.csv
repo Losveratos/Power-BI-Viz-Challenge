@@ -1,0 +1,5 @@
+Definition,Box office (Revenue),Return (ROI),Acclaim (Vote Average),Profit (Revenue - Budget)
+Box office (Revenue),1.0,0.0,0.11,0.91
+Return (ROI),0.0,1.0,0.01,0.02
+Acclaim (Vote Average),0.11,0.01,1.0,0.12
+Profit (Revenue - Budget),0.91,0.02,0.12,1.0

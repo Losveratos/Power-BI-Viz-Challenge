@@ -1,0 +1,42 @@
+table 'Production Company Bridge'
+	lineageTag: f54d0b77-4103-5141-8ceb-0f4b21cd11a7
+
+	column 'Movie ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6df3ae9d-7f39-52c1-be4b-3cb0bff7fe89
+		summarizeBy: none
+		sourceColumn: Movie ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Production Company ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 089e39e0-a47e-5042-bf98-853038e40941
+		summarizeBy: none
+		sourceColumn: Production Company ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Production Company Bridge' = m
+		mode: import
+		source =
+				let
+				    Source = Source,
+				    MovieCompanies = Table.SelectColumns(Source, {"id", "production_companies"}),
+				    SplitCompanies = Table.SelectRows(
+				        Table.ExpandListColumn(
+				            Table.TransformColumns(MovieCompanies, {{"production_companies", each List.Transform(Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv)(_), Text.Trim), type {text}}}),
+				            "production_companies"),
+				        each [production_companies] <> null and [production_companies] <> ""),
+				    MergeCompanies = Table.NestedJoin(SplitCompanies, {"production_companies"}, #"Production Company", {"Production Company"}, "CompanyLookup", JoinKind.LeftOuter),
+				    BridgeMovieProductionCompany = Table.RenameColumns(
+				        Table.RemoveColumns(
+				            Table.ExpandTableColumn(MergeCompanies, "CompanyLookup", {"Production Company ID"}, {"Production Company ID"}),
+				            {"production_companies"}),
+				        {{"id", "Movie ID"}})
+				in
+				    BridgeMovieProductionCompany
+
+	annotation PBI_ResultType = Table
