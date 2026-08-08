@@ -35,6 +35,11 @@ PBIP = REPO / "src" / "pbip"
 REPORT = PBIP / "MovieSuccess.Report"
 DEFN = REPORT / "definition"
 THEME_SOURCE = REPO / "assets" / "theme" / "movie-success-dark.json"
+# The base theme the official starter file registers, vendored so the
+# generated report.json can mirror what Power BI Desktop itself writes:
+# a themeCollection with BOTH a baseTheme and a customTheme.
+BASE_THEME_SOURCE = REPO / "assets" / "theme" / "base" / "Fluent2-CY26SU05.json"
+BASE_THEME_NAME = "Fluent2-CY26SU05"
 
 
 def _theme_name() -> str:
@@ -1115,6 +1120,8 @@ def main() -> int:
         shutil.rmtree(REPORT)
     (DEFN / "pages").mkdir(parents=True, exist_ok=True)
     (REPORT / "StaticResources" / "RegisteredResources").mkdir(parents=True, exist_ok=True)
+    (REPORT / "StaticResources" / "SharedResources" / "BaseThemes").mkdir(
+        parents=True, exist_ok=True)
 
     # ---- project-level files ----------------------------------------------
     (PBIP / "MovieSuccess.pbip").write_text(
@@ -1155,6 +1162,11 @@ def main() -> int:
     theme_name = _theme_name()
     theme_target = REPORT / "StaticResources" / "RegisteredResources" / f"{theme_name}.json"
     shutil.copyfile(THEME_SOURCE, theme_target)
+    shutil.copyfile(
+        BASE_THEME_SOURCE,
+        REPORT / "StaticResources" / "SharedResources" / "BaseThemes"
+        / f"{BASE_THEME_NAME}.json",
+    )
 
     (DEFN / "version.json").write_text(
         json.dumps({"$schema": S_VERSION, "version": "2.0.0"}, indent=2) + "\n",
@@ -1163,20 +1175,42 @@ def main() -> int:
     (DEFN / "report.json").write_text(
         json.dumps({
             "$schema": S_REPORT,
+            # The starter file written by Desktop always registers a baseTheme
+            # alongside the customTheme; mirroring that removes one silent
+            # failure mode when the theme collection is resolved at load time.
             "themeCollection": {
-                "customTheme": {"name": f"{theme_name}.json", "type": "RegisteredResources"}
+                "baseTheme": {
+                    "name": BASE_THEME_NAME,
+                    "reportVersionAtImport": {
+                        "visual": "2.9.0", "report": "3.3.0", "page": "2.3.1",
+                    },
+                    "type": "SharedResources",
+                },
+                "customTheme": {"name": f"{theme_name}.json", "type": "RegisteredResources"},
             },
             # Only outspacePane belongs at report level; `outspace` is a page
             # object and every page already sets its own.
             "objects": {
+                "section": [{"properties": {
+                    "verticalAlignment": lit("'Top'"),
+                }}],
                 "outspacePane": [{"properties": {"expanded": lit("false")}}],
             },
-            "resourcePackages": [{
-                "name": "RegisteredResources",
-                "type": "RegisteredResources",
-                "items": [{"name": f"{theme_name}.json", "path": f"{theme_name}.json",
-                           "type": "CustomTheme"}],
-            }],
+            "resourcePackages": [
+                {
+                    "name": "SharedResources",
+                    "type": "SharedResources",
+                    "items": [{"name": BASE_THEME_NAME,
+                               "path": f"BaseThemes/{BASE_THEME_NAME}.json",
+                               "type": "BaseTheme"}],
+                },
+                {
+                    "name": "RegisteredResources",
+                    "type": "RegisteredResources",
+                    "items": [{"name": f"{theme_name}.json", "path": f"{theme_name}.json",
+                               "type": "CustomTheme"}],
+                },
+            ],
             "settings": {
                 "useStylableVisualContainerHeader": True,
                 "exportDataMode": "AllowSummarized",
