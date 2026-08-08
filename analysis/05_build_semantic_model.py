@@ -889,11 +889,15 @@ def main() -> int:
         '}\n',
         encoding="utf-8",
     )
+    # Exactly as Microsoft's PBIP reference specifies. The $schema line is not
+    # decoration: Desktop validates against it.
     (MODEL / "definition.pbism").write_text(
         '{\n'
+        '  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/'
+        'semanticModel/definitionProperties/1.0.0/schema.json",\n'
         '  "version": "4.2",\n'
         '  "settings": {\n'
-        '    "qnaEnabled": false\n'
+        '    "qnaEnabled": true\n'
         '  }\n'
         '}\n',
         encoding="utf-8",

@@ -185,6 +185,30 @@ def main() -> int:
             else:
                 notes.append(f"resource present: {item['path']}")
 
+    # The $schema values are pinned. Getting one wrong is not a cosmetic issue:
+    # a .pbip that named the wrong schema made Power BI Desktop deserialize its
+    # `artifacts` entry to nothing and fail with "ArtifactShortcut: Required
+    # artifact is missing". These three are verified against Microsoft's PBIP
+    # reference (microsoft/skills-for-fabric, semantic-model-authoring/pbip.md).
+    EXPECTED_SCHEMAS = {
+        PBIP / "MovieSuccess.pbip":
+            "https://developer.microsoft.com/json-schemas/fabric/pbip/"
+            "pbipProperties/1.0.0/schema.json",
+        REPORT / "definition.pbir":
+            "https://developer.microsoft.com/json-schemas/fabric/item/report/"
+            "definitionProperties/2.0.0/schema.json",
+        MODEL / "definition.pbism":
+            "https://developer.microsoft.com/json-schemas/fabric/item/"
+            "semanticModel/definitionProperties/1.0.0/schema.json",
+    }
+    for path, expected in EXPECTED_SCHEMAS.items():
+        content = load_json(path) or {}
+        actual = content.get("$schema")
+        if actual != expected:
+            fail(f"{path.name}: $schema is {actual!r}, expected {expected!r}")
+        else:
+            notes.append(f"{path.name} declares the correct $schema")
+
     tables, measures = parse_model()
     print(f"\nmodel surface: {len(tables)} tables, "
           f"{sum(len(c) for c in tables.values())} columns, {len(measures)} measures")
