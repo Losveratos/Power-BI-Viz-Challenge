@@ -31,6 +31,7 @@ Usage
 from __future__ import annotations
 
 import shutil
+import sys
 import uuid
 from pathlib import Path
 
@@ -120,7 +121,7 @@ in
 # Movies: starter M, then our derived columns                                  #
 # --------------------------------------------------------------------------- #
 
-M_MOVIES = f"""
+M_MOVIES_HEAD = f"""
 let
     Src = Source,
     // ---- transcribed unchanged from the starter file ----------------------
@@ -129,7 +130,12 @@ let
     #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{{"Movie ID", "Title", "Vote Average", "Vote Count", "status", "Release Date", "Revenue", "Runtime", "adult", "Backdrop Path", "Budget", "Homepage", "original_language", "original_title", "Popularity", "poster_path", "tagline", "genres"}}),
     #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns",{{{{"genres", "genres"}}, {{"adult", "Adult"}}, {{"original_language", "Original Language"}}, {{"original_title", "Original Title"}}, {{"tagline", "Tagline"}}, {{"poster_path", "Poster Path"}}, {{"status", "Status"}}}}),
     #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{{"genres"}}),
+"""
 
+# The derived-column pipeline, shared verbatim by the canonical build and the
+# bundled-data build. Every head that precedes it must end with a step named
+# #"Removed Columns".
+M_MOVIES_DERIVED = f"""
     // ---- our additions: derived columns, no source values altered ---------
     // "Measurable" is the single gate every financial figure in the report
     // passes through. It is a column rather than a report filter so that it is
@@ -226,6 +232,70 @@ let
 in
     AddPlaceholder
 """
+
+M_MOVIES = M_MOVIES_HEAD.rstrip() + "\n\n" + M_MOVIES_DERIVED.strip("\n")
+
+# --------------------------------------------------------------------------- #
+# Bundled-data mode (--bundled)                                                #
+#                                                                              #
+# The canonical build loads the raw Kaggle CSV, exactly as the official        #
+# instructions describe. The bundled build instead loads per-table CSVs that   #
+# analysis/08_export_bundled_data.py exports from the official starter         #
+# file's own model - the same snapshot every competitor receives - so the      #
+# project can refresh on a machine with no Kaggle account. Only the loading    #
+# steps differ; every derived column, measure, calculated table and            #
+# relationship is identical between the two builds.                            #
+# --------------------------------------------------------------------------- #
+
+BUNDLED_LOAD_TEMPLATE = """
+let
+    Raw = Csv.Document(File.Contents(DataFolder & "{bs}{filename}"),[Delimiter=",", Columns={ncols}, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+    #"Promoted Headers" = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+    // Types are pinned to the en-US culture: the shipped CSVs carry ISO dates
+    // and dot decimals regardless of the machine locale.
+    #"{last}" = Table.TransformColumnTypes(#"Promoted Headers",{{{types}}}, "en-US")
+in
+    #"{last}"
+"""
+
+BUNDLED_TYPES = {
+    "Movies": [
+        ("Movie ID", "Int64.Type"), ("Title", "type text"),
+        ("Vote Average", "type number"), ("Vote Count", "Int64.Type"),
+        ("Release Date", "type date"), ("Revenue", "Int64.Type"),
+        ("Runtime", "Int64.Type"), ("Budget", "Int64.Type"),
+        ("Popularity", "type number"), ("Status", "type text"),
+        ("Adult", "type logical"), ("Backdrop Path", "type text"),
+        ("Homepage", "type text"), ("Original Language", "type text"),
+        ("Original Title", "type text"), ("Poster Path", "type text"),
+        ("Tagline", "type text"),
+    ],
+    "Genres": [("Genre", "type text"), ("Genre ID", "Int64.Type")],
+    "Genre Bridge": [("Movie ID", "Int64.Type"), ("Genre ID", "Int64.Type")],
+    "Production Company": [("Production Company", "type text"),
+                           ("Production Company ID", "Int64.Type")],
+    "Production Company Bridge": [("Movie ID", "Int64.Type"),
+                                  ("Production Company ID", "Int64.Type")],
+    "Keyword": [("Keywords", "type text"), ("Keyword ID", "Int64.Type")],
+    "Keyword Bridge": [("Movie ID", "Int64.Type"), ("Keyword ID", "Int64.Type")],
+}
+
+
+def bundled_load(table: str, last: str = "Typed") -> str:
+    types = BUNDLED_TYPES[table]
+    type_list = ", ".join('{"%s", %s}' % (column, kind) for column, kind in types)
+    return BUNDLED_LOAD_TEMPLATE.format(
+        bs=chr(92), filename=f"{table}.csv", ncols=len(types),
+        last=last, types=type_list,
+    )
+
+
+def bundled_movies_m() -> str:
+    """The bundled Movies pipeline: CSV load, then the shared derived steps."""
+    load = bundled_load("Movies", last="Removed Columns")
+    head, _, _ = load.rpartition("\nin\n")
+    return head.rstrip() + ",\n\n" + M_MOVIES_DERIVED.strip("\n")
+
 
 # --------------------------------------------------------------------------- #
 # The remaining starter tables, transcribed unchanged                          #
@@ -882,6 +952,18 @@ def emit_relationships() -> str:
 
 
 def main() -> int:
+    global MODEL, DEFN
+    bundled = "--bundled" in sys.argv
+    if bundled:
+        MODEL = REPO / "work" / "bundle" / "MovieSuccess" / "MovieSuccess.SemanticModel"
+        DEFN = MODEL / "definition"
+
+    movies_m = bundled_movies_m() if bundled else M_MOVIES
+    override_m = (
+        {name: bundled_load(name) for name in BUNDLED_TYPES if name != "Movies"}
+        if bundled else {}
+    )
+
     if MODEL.exists():
         shutil.rmtree(MODEL)
     (DEFN / "tables").mkdir(parents=True, exist_ok=True)
@@ -946,6 +1028,18 @@ def main() -> int:
         "\tannotation PBI_ResultType = Table",
         "",
     ]
+    if bundled:
+        expressions = [
+            "/// Full path of the Data folder that ships next to the .pbip,",
+            "/// WITHOUT a trailing backslash. This is the one value to set",
+            "/// before refreshing.",
+            'expression DataFolder = "C:' + chr(92) + 'MovieSuccess' + chr(92)
+            + 'Data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]',
+            f"\tlineageTag: {tag('expression', 'DataFolder')}",
+            "",
+            "\tannotation PBI_ResultType = Text",
+            "",
+        ]
     (DEFN / "expressions.tmdl").write_text("\n".join(expressions), encoding="utf-8")
 
     # ---- relationships.tmdl ------------------------------------------------
@@ -955,13 +1049,14 @@ def main() -> int:
     tables_written: list[str] = []
 
     (DEFN / "tables" / "Movies.tmdl").write_text(
-        emit_m_table("Movies", M_MOVIES, MOVIES_COLUMNS), encoding="utf-8"
+        emit_m_table("Movies", movies_m, MOVIES_COLUMNS), encoding="utf-8"
     )
     tables_written.append("Movies")
 
     for name, m_expr, columns in SIMPLE_TABLES:
         (DEFN / "tables" / f"{name}.tmdl").write_text(
-            emit_m_table(name, m_expr, columns), encoding="utf-8"
+            emit_m_table(name, override_m.get(name, m_expr), columns),
+            encoding="utf-8",
         )
         tables_written.append(name)
 
@@ -972,7 +1067,8 @@ def main() -> int:
                                               ("Keyword ID", "int64", "0", "none", [])]),
     ]:
         (DEFN / "tables" / f"{name}.tmdl").write_text(
-            emit_m_table(name, m_expr, columns), encoding="utf-8"
+            emit_m_table(name, override_m.get(name, m_expr), columns),
+            encoding="utf-8",
         )
         tables_written.append(name)
 
@@ -1016,6 +1112,11 @@ def main() -> int:
         '["Source","Schema","Movies","Production Company","Genres","Genre Bridge",'
         '"Production Company Bridge","Keyword","Keyword Bridge","Date"]'
     )
+    if bundled:
+        query_order = (
+            '["DataFolder","Movies","Production Company","Genres","Genre Bridge",'
+            '"Production Company Bridge","Keyword","Keyword Bridge","Date"]'
+        )
     model_lines = [
         "model Model",
         "\tculture: en-US",
